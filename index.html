@@ -261,18 +261,6 @@
     height: 100%;
     border: 0;
   }
-  .test-card .who {
-    font-family: 'Fraunces', serif;
-    font-size: 1rem;
-    margin-top: .7rem;
-    color: var(--parchment);
-  }
-  .test-card .quote {
-    color: var(--stone);
-    font-size: .85rem;
-    margin-top: .3rem;
-    font-style: italic;
-  }
 
   footer{border-top:1px solid #35301F;padding:2.6rem 0;font-size:.85rem;color:var(--stone);}
   .foot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.6rem;}
@@ -840,20 +828,37 @@ function extraerYouTubeID(url) {
   return null;
 }
 
+// ============================================
+// CARGA DE TESTIMONIOS (SOLO VIDEOS)
+// ============================================
 fetch(SHEET_TESTIMONIOS)
   .then(r => r.text())
   .then(txt => {
     const testimonios = parseCSV(txt);
     const cont = document.getElementById("test-grid");
-    if (!testimonios.length) { cont.innerHTML = '<div class="empty">Aún no hay testimonios cargados.</div>'; return; }
-    cont.innerHTML = testimonios.map(t => {
-      const videoId = extraerYouTubeID(t.video);
+
+    const videosValidos = testimonios.filter(t => {
+      const url = t.video || t.link || t['video'] || t['video'] || "";
+      return url.trim() !== "";
+    });
+
+    if (!videosValidos.length) { 
+      cont.innerHTML = '<div class="empty">Aún no hay testimonios cargados.</div>'; 
+      return; 
+    }
+
+    cont.innerHTML = videosValidos.map(t => {
+      const urlVideo = t.video || t.link || t['video'] || "";
+      const videoId = extraerYouTubeID(urlVideo);
       const embed = videoId ? `https://www.youtube.com/embed/${videoId}` : "";
+
+      if (!embed) return "";
+
       return `
         <div class="test-card">
-          ${embed ? `<div class="test-card-video-wrapper"><iframe src="${embed}" allowfullscreen></iframe></div>` : ""}
-          <div class="who">${t.nombre_cliente || ""}</div>
-          <div class="quote">${t.comentario || ""}</div>
+          <div class="test-card-video-wrapper">
+            <iframe src="${embed}" allowfullscreen></iframe>
+          </div>
         </div>`;
     }).join("");
   })
@@ -878,7 +883,6 @@ function showSlide(index) {
   slides.forEach((slide, i) => {
     slide.classList.toggle('active', i === currentSlideIndex);
   });
-
   dots.forEach((dot, i) => {
     dot.classList.toggle('active', i === currentSlideIndex);
   });
