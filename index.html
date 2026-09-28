@@ -220,7 +220,7 @@
     gap:1rem;
   }
 
-  /* --- Testimonios (CARRUSEL HORIZONTAL DESLIZABLE) --- */
+  /* --- Testimonios (CARRUSEL HORIZONTAL DESLIZABLE + SEGUNDO PLANO) --- */
   .test-grid {
     display: flex;
     gap: 1.2rem;
@@ -250,16 +250,56 @@
     flex-direction: column;
   }
   .test-card-video-wrapper {
+    position: relative;
     width: 100%;
     aspect-ratio: 9 / 16; /* Formato Shorts Vertical */
     background: #000;
     border-radius: 6px;
     overflow: hidden;
   }
-  .test-card iframe {
+  .test-card-video-wrapper iframe {
     width: 100%;
     height: 100%;
     border: 0;
+    pointer-events: none; /* Desactiva interacción directa para segundo plano */
+  }
+
+  /* Capa superpuesta para hacer clic y ver el video */
+  .video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    z-index: 5;
+  }
+  .video-overlay:hover {
+    background: rgba(0, 0, 0, 0.4);
+  }
+  .play-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(18, 18, 18, 0.85);
+    color: var(--bronze);
+    border: 1px solid var(--bronze);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    padding-left: 3px;
+    transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+  }
+  .video-overlay:hover .play-icon {
+    transform: scale(1.15);
+    background: var(--bronze);
+    color: var(--onyx);
   }
 
   footer{border-top:1px solid #35301F;padding:2.6rem 0;font-size:.85rem;color:var(--stone);}
@@ -503,7 +543,7 @@
     </div>
   </section>
 
-  <!-- CARRUSEL DE TESTIMONIOS -->
+  <!-- CARRUSEL DE TESTIMONIOS CON REPRODUCCIÓN EN SEGUNDO PLANO Y CLICK PARA VER -->
   <section class="section" id="testimonios">
     <div class="section-head"><h2>Lo que dicen nuestros clientes</h2></div>
     <div class="test-grid" id="test-grid"><div class="empty">Cargando testimonios...</div></div>
@@ -829,7 +869,7 @@ function extraerYouTubeID(url) {
 }
 
 // ============================================
-// CARGA DE TESTIMONIOS (SOLO VIDEOS)
+// CARGA DE TESTIMONIOS (MODO SEGUNDO PLANO Y CLICK PARA VER)
 // ============================================
 fetch(SHEET_TESTIMONIOS)
   .then(r => r.text())
@@ -838,7 +878,7 @@ fetch(SHEET_TESTIMONIOS)
     const cont = document.getElementById("test-grid");
 
     const videosValidos = testimonios.filter(t => {
-      const url = t.video || t.link || t['video'] || t['video'] || "";
+      const url = t.video || t.link || t['vídeo'] || t['video'] || "";
       return url.trim() !== "";
     });
 
@@ -848,16 +888,24 @@ fetch(SHEET_TESTIMONIOS)
     }
 
     cont.innerHTML = videosValidos.map(t => {
-      const urlVideo = t.video || t.link || t['video'] || "";
+      const urlVideo = t.video || t.link || t['vídeo'] || "";
       const videoId = extraerYouTubeID(urlVideo);
-      const embed = videoId ? `https://www.youtube.com/embed/${videoId}` : "";
 
-      if (!embed) return "";
+      if (!videoId) return "";
+
+      // Configuración de video en segundo plano:
+      // autoplay=1 & mute=1 -> Se reproduce solo sin audio
+      // controls=0 & loop=1 -> Sin botones y en bucle continuo
+      const embedBackground = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoId}&playsinline=1&enablejsapi=1`;
+      const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
       return `
         <div class="test-card">
           <div class="test-card-video-wrapper">
-            <iframe src="${embed}" allowfullscreen></iframe>
+            <iframe src="${embedBackground}" allow="autoplay; encrypted-media" tabindex="-1"></iframe>
+            <a class="video-overlay" href="${watchUrl}" target="_blank" title="Haz clic para ver el video completo">
+              <span class="play-icon">▶</span>
+            </a>
           </div>
         </div>`;
     }).join("");
@@ -876,15 +924,16 @@ const dots = document.querySelectorAll('.dot');
 let autoSlideInterval;
 
 function showSlide(index) {
+  if (slides.length === 0) return;
   if (index >= slides.length) currentSlideIndex = 0;
   else if (index < 0) currentSlideIndex = slides.length - 1;
   else currentSlideIndex = index;
 
-  slides.forEach((slide, i) => {
-    slide.classList.toggle('active', i === currentSlideIndex);
+  slides.forEach((s, i) => {
+    s.classList.toggle('active', i === currentSlideIndex);
   });
-  dots.forEach((dot, i) => {
-    dot.classList.toggle('active', i === currentSlideIndex);
+  dots.forEach((d, i) => {
+    d.classList.toggle('active', i === currentSlideIndex);
   });
 }
 
@@ -900,8 +949,8 @@ function currentSlide(index) {
 
 function startAutoSlide() {
   autoSlideInterval = setInterval(() => {
-    showSlide(currentSlideIndex + 1);
-  }, 5000);
+    moveSlide(1);
+  }, 5000); // Cambia cada 5 segundos
 }
 
 function resetAutoSlide() {
@@ -909,6 +958,7 @@ function resetAutoSlide() {
   startAutoSlide();
 }
 
+// Iniciar carrusel al cargar la página
 startAutoSlide();
 </script>
 </body>
