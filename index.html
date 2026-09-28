@@ -63,16 +63,30 @@
   .hero p{max-width:46ch;color:var(--stone);margin-top:.9rem;font-size:1.02rem;}
   .cta-row{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
   .btn{display:inline-block;padding:.7rem 1.4rem;font-size:.85rem;text-decoration:none;
-    border:1px solid var(--bronze);letter-spacing:.03em;}
+    border:1px solid var(--bronze);letter-spacing:.03em;cursor:pointer;}
   .btn-solid{background:var(--bronze);color:var(--onyx);}
   .btn-outline{color:var(--parchment);}
 
   /* Section title */
   .section{padding:3.2rem 0;}
-  .section-head{display:flex;justify-content:space-between;align-items:baseline;
-    border-bottom:1px solid #35301F;padding-bottom:.8rem;margin-bottom:1.8rem;flex-wrap:wrap;gap:.5rem;}
+  .section-head{display:flex;justify-content:space-between;align-items:center;
+    border-bottom:1px solid #35301F;padding-bottom:.8rem;margin-bottom:1.8rem;flex-wrap:wrap;gap:.8rem;}
   .section-head h2{font-size:1.7rem;}
   .section-head .sub{color:var(--stone);font-size:.85rem;}
+
+  /* Controles Filtro Catálogo */
+  .catalog-controls{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;}
+  .select-genero{
+    background:var(--onyx-2);
+    border:1px solid #35301F;
+    color:var(--parchment);
+    padding:.5rem .8rem;
+    font-family:'Jost',sans-serif;
+    font-size:.88rem;
+    outline:none;
+    cursor:pointer;
+  }
+  .select-genero option{background:var(--onyx-2);color:var(--parchment);}
 
   /* Categorías */
   .cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;
@@ -88,9 +102,9 @@
     cursor:pointer;background:transparent;color:var(--parchment);font-family:'Jost',sans-serif;}
   .brand-chip.active,.brand-chip:hover{background:var(--bronze);color:var(--onyx);border-color:var(--bronze);}
 
-  /* Catálogo */
+  /* Catálogo y Tarjetas */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.8rem;}
-  .card{border-top:1px solid var(--bronze);padding-top:.9rem;}
+  .card{border-top:1px solid var(--bronze);padding-top:.9rem;cursor:pointer;position:relative;}
   .card img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#1a1a1a;transition:opacity 0.3s ease;}
   .card .house{font-size:.72rem;color:var(--stone);letter-spacing:.05em;margin-top:.7rem;}
   .card .name{font-family:'Fraunces',serif;font-size:1.25rem;margin-top:.2rem;}
@@ -99,6 +113,117 @@
   .card .price{font-family:'Fraunces',serif;font-size:1.2rem;color:var(--bronze);}
   .card .wa{font-size:.76rem;text-decoration:none;border-bottom:1px solid var(--bronze);}
   .empty{color:var(--stone);font-size:.9rem;padding:2rem 0;}
+
+  /* --- REQUERIMIENTO 1: Carrusel Horizontal para Recomendados (PC + Móvil) --- */
+  .horizontal-scroll-wrapper{
+    position:relative;
+    width:100%;
+    display:flex;
+    align-items:center;
+  }
+  .scroll-container{
+    display:flex;
+    gap:1.5rem;
+    overflow-x:auto;
+    scroll-behavior:smooth;
+    padding-bottom:1rem;
+    width:100%;
+    scrollbar-width:thin;
+    scrollbar-color:var(--bronze-dim) transparent;
+  }
+  .scroll-container::-webkit-scrollbar{height:6px;}
+  .scroll-container::-webkit-scrollbar-thumb{background:var(--bronze-dim);border-radius:3px;}
+  .scroll-container .card{
+    flex:0 0 260px;
+    min-width:260px;
+  }
+  .scroll-arrow{
+    position:absolute;
+    top:40%;
+    transform:translateY(-50%);
+    background:rgba(18, 18, 18, 0.85);
+    color:var(--parchment);
+    border:1px solid var(--bronze-dim);
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    z-index:15;
+    transition:all 0.2s ease;
+  }
+  .scroll-arrow:hover{background:var(--bronze);color:var(--onyx);}
+  .scroll-arrow.left{left:-15px;}
+  .scroll-arrow.right{right:-15px;}
+
+  /* --- REQUERIMIENTO 3: Vista Detalle de Producto --- */
+  .breadcrumbs{
+    font-size:.82rem;
+    color:var(--stone);
+    margin-bottom:1.5rem;
+  }
+  .breadcrumbs a{
+    color:var(--parchment);
+    text-decoration:none;
+    margin:0 .3rem;
+  }
+  .breadcrumbs a:hover{border-bottom:1px solid var(--bronze);}
+
+  .product-detail-layout{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:2.5rem;
+    margin-top:1rem;
+  }
+  .detail-gallery img{
+    width:100%;
+    max-height:550px;
+    object-fit:cover;
+    background:#1a1a1a;
+    border:1px solid var(--bronze-dim);
+  }
+  .detail-info{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .detail-brand{
+    font-size:.8rem;
+    color:var(--stone);
+    letter-spacing:.1em;
+    text-transform:uppercase;
+  }
+  .detail-title{
+    font-size:clamp(1.8rem,4vw,2.5rem);
+    margin:.3rem 0 .8rem 0;
+  }
+  .detail-price{
+    font-family:'Fraunces',serif;
+    font-size:1.8rem;
+    color:var(--bronze);
+    margin-bottom:1.2rem;
+  }
+  .detail-desc{
+    font-size:.95rem;
+    color:var(--stone);
+    line-height:1.6;
+    margin-bottom:1.8rem;
+    border-top:1px solid #35301F;
+    border-bottom:1px solid #35301F;
+    padding:1.2rem 0;
+  }
+  .detail-actions{
+    display:flex;
+    flex-direction:column;
+    gap:1rem;
+  }
+
+  @media (max-width:768px){
+    .product-detail-layout{grid-template-columns:1fr;gap:1.5rem;}
+    .scroll-arrow{display:none;} /* En móviles se usa el dedo directamente */
+  }
 
   /* Testimonios */
   .test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.6rem;}
@@ -137,7 +262,7 @@
   .volver{display:inline-block;margin-bottom:1rem;font-size:.85rem;color:var(--bronze);
     text-decoration:none;border-bottom:1px solid var(--bronze);cursor:pointer;}
 
-  /* --- Estilos del Carrusel Responsive --- */
+  /* --- Estilos del Carrusel Hero Responsive --- */
   .carousel-container {
     position: relative;
     width: 100%;
@@ -159,9 +284,9 @@
     to { opacity: 1; }
   }
 
-  /* Control de visibilidad PC vs Móvil */
+  /* Control de visibilidad PC vs Móvil Hero */
   .mobile-slide {
-    display: none !important; /* Oculto en PC por defecto */
+    display: none !important;
   }
 
   .pc-slide {
@@ -214,16 +339,15 @@
     border-radius: 10px;
   }
 
-  /* --- REGLAS EXCLUSIVAS PARA CELULAR --- */
   @media (max-width: 768px) {
     .pc-slide {
-      display: none !important; /* Oculta versión de PC en Celular */
+      display: none !important;
     }
 
     .mobile-slide {
-      display: block !important; /* Muestra versión de Celular */
+      display: block !important;
       width: 100%;
-      height: auto !important;   /* Renderiza la imagen completa en vertical */
+      height: auto !important;
       object-fit: contain;
     }
   }
@@ -310,9 +434,16 @@
 
   <div class="volver oculto" id="volver-inicio-bar" onclick="verInicio()" style="margin-top:1.5rem;">← Volver al inicio</div>
 
+  <!-- REQUERIMIENTO 1: Recomendados en carrusel horizontal con flechas -->
   <section class="section" id="recomendados">
     <div class="section-head"><h2>New Arrivals / Recomendados</h2></div>
-    <div class="grid" id="recomendados-grid"><div class="empty">Cargando...</div></div>
+    <div class="horizontal-scroll-wrapper">
+      <button class="scroll-arrow left" onclick="scrollRecomendados(-300)">&#10094;</button>
+      <div class="scroll-container" id="recomendados-grid">
+        <div class="empty">Cargando...</div>
+      </div>
+      <button class="scroll-arrow right" onclick="scrollRecomendados(300)">&#10095;</button>
+    </div>
   </section>
 
   <section class="section oculto" id="categorias">
@@ -328,14 +459,44 @@
     <div class="brand-row" id="brand-row"></div>
   </section>
 
+  <!-- REQUERIMIENTO 2: Catálogo con filtro de género -->
   <section class="section oculto" id="catalogo">
     <div class="section-head">
       <h2 id="catalogo-titulo">Catálogo completo</h2>
-      <input id="buscador" placeholder="Buscar perfume..." style="background:transparent;border:1px solid #35301F;color:var(--parchment);padding:.5rem .8rem;font-family:'Jost',sans-serif;">
+      <div class="catalog-controls">
+        <select id="filtro-genero" class="select-genero" onchange="cambiarGenero(this.value)">
+          <option value="Todas">Todos los géneros</option>
+          <option value="Hombre">Hombre</option>
+          <option value="Mujer">Mujer</option>
+          <option value="Unisex">Unisex</option>
+        </select>
+        <input id="buscador" placeholder="Buscar perfume..." style="background:transparent;border:1px solid #35301F;color:var(--parchment);padding:.5rem .8rem;font-family:'Jost',sans-serif;">
+      </div>
     </div>
     <div class="grid" id="catalogo-grid"><div class="empty">Cargando catálogo...</div></div>
   </section>
 
+  <!-- REQUERIMIENTO 3: Vista de Detalle de Producto con Migas de Pan -->
+  <section class="section oculto" id="detalle-producto">
+    <div class="breadcrumbs" id="detail-breadcrumbs"></div>
+    <div class="product-detail-layout">
+      <div class="detail-gallery">
+        <img id="detail-img" src="" alt="" onerror="this.src=FOTO_RESPALDO">
+      </div>
+      <div class="detail-info">
+        <div class="detail-brand" id="detail-brand"></div>
+        <h1 class="detail-title" id="detail-title"></h1>
+        <div class="detail-price" id="detail-price"></div>
+        <div class="detail-desc" id="detail-desc"></div>
+        <div class="detail-actions">
+          <a class="btn btn-solid" id="detail-wa-btn" href="#" target="_blank" style="text-align:center;">Añadir al Carrito / Pedir por WhatsApp</a>
+          <button class="btn btn-outline" id="btn-volver-anterior" onclick="volverOrigenDetalle()">← Volver atrás</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonios -->
   <section class="section" id="testimonios">
     <div class="section-head"><h2>Lo que dicen nuestros clientes</h2></div>
     <div class="test-grid" id="test-grid"><div class="empty">Cargando testimonios...</div></div>
@@ -437,8 +598,10 @@ let CATALOGO = [];
 let filtroCategoria = "Todas";
 let filtroMarca = "Todas";
 let filtroEtiqueta = "Todas";
+let filtroGenero = "Todas";
+let seccionAnterior = "inicio";
 
-const SECCIONES = ["hero", "recomendados", "categorias", "marcas", "catalogo", "testimonios"];
+const SECCIONES = ["hero", "recomendados", "categorias", "marcas", "catalogo", "detalle-producto", "testimonios"];
 
 function mostrarSoloSeccion(idMostrar) {
   SECCIONES.forEach(id => {
@@ -450,6 +613,7 @@ function mostrarSoloSeccion(idMostrar) {
 }
 
 function verColeccion(tipo, valor) {
+  seccionAnterior = "catalogo";
   if (tipo === "categoria") filtroCategoria = valor;
   if (tipo === "marca") filtroMarca = valor;
   if (tipo === "etiqueta") filtroEtiqueta = valor;
@@ -460,18 +624,23 @@ function verColeccion(tipo, valor) {
 }
 
 function verCatalogoCompleto() {
-  filtroCategoria = "Todas"; filtroMarca = "Todas"; filtroEtiqueta = "Todas";
+  seccionAnterior = "catalogo";
+  filtroCategoria = "Todas"; filtroMarca = "Todas"; filtroEtiqueta = "Todas"; filtroGenero = "Todas";
+  document.getElementById("filtro-genero").value = "Todas";
   renderCategorias(); renderMarcas(); renderCatalogo();
   mostrarSoloSeccion("catalogo");
 }
 
-function verSoloMarcas() { mostrarSoloSeccion("marcas"); }
-function verSoloTestimonios() { mostrarSoloSeccion("testimonios"); }
+function verSoloMarcas() { seccionAnterior = "marcas"; mostrarSoloSeccion("marcas"); }
+function verSoloTestimonios() { seccionAnterior = "testimonios"; mostrarSoloSeccion("testimonios"); }
 
 function verInicio() {
+  seccionAnterior = "inicio";
   filtroCategoria = "Todas";
   filtroMarca = "Todas";
   filtroEtiqueta = "Todas";
+  filtroGenero = "Todas";
+  if(document.getElementById("filtro-genero")) document.getElementById("filtro-genero").value = "Todas";
   
   SECCIONES.forEach(id => {
     const el = id === "hero" ? document.querySelector(".hero") : document.getElementById(id);
@@ -486,6 +655,16 @@ function verInicio() {
   document.getElementById("volver-inicio-bar").classList.add("oculto");
   renderRecomendados();
   window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function scrollRecomendados(amount) {
+  const container = document.getElementById("recomendados-grid");
+  if (container) container.scrollBy({ left: amount, behavior: 'smooth' });
+}
+
+function cambiarGenero(valor) {
+  filtroGenero = valor;
+  renderCatalogo();
 }
 
 function renderCategorias() {
@@ -515,7 +694,7 @@ function renderMarcas() {
   });
 }
 
-// Función auxiliar para obtener las fotos de cada producto
+// Obtener las fotos del producto
 function obtenerFotos(p) {
   const fotos = (p.foto || "").split(",").map(f => f.trim()).filter(Boolean);
   const principal = fotos[0] || FOTO_RESPALDO;
@@ -523,44 +702,96 @@ function obtenerFotos(p) {
   return { principal, secundaria };
 }
 
+// Genera el HTML de una tarjeta respetando la estructura y el evento de ver detalle
+function crearTarjetaHTML(p) {
+  const { principal, secundaria } = obtenerFotos(p);
+  const nombreLimpio = (p.nombre || "Sin nombre").replace(/'/g, "\\'");
+  return `
+    <div class="card" onclick="verDetalleProducto('${nombreLimpio}')">
+      <img src="${principal}" alt="${p.nombre || ""}" 
+           onmouseover="if('${secundaria}' !== '${principal}') this.src='${secundaria}'" 
+           onmouseout="this.src='${principal}'"
+           onerror="this.src='${FOTO_RESPALDO}'">
+      <div class="house">${(p.marca || "").toUpperCase()}${p.categoria ? " · " + p.categoria : ""}${p.etiqueta ? " · " + p.etiqueta.toUpperCase() : ""}</div>
+      <div class="name">${p.nombre || "Sin nombre"}</div>
+      <div class="desc">${p.descripcion || ""}</div>
+      <div class="foot">
+        <span class="price">${p.precio ? "$" + p.precio : "Consultar"}</span>
+        <a class="wa" href="${linkWhatsapp(p.nombre || "", p.precio || "")}" onclick="event.stopPropagation();" target="_blank">Pedir por WhatsApp →</a>
+      </div>
+    </div>
+  `;
+}
+
 function renderCatalogo() {
   const busqueda = document.getElementById("buscador").value.toLowerCase();
   let lista = CATALOGO;
+
   if (filtroCategoria !== "Todas") lista = lista.filter(p => p.categoria === filtroCategoria);
   if (filtroMarca !== "Todas") lista = lista.filter(p => p.marca === filtroMarca);
   if (filtroEtiqueta !== "Todas") lista = lista.filter(p => (p.etiqueta || "").toLowerCase() === filtroEtiqueta.toLowerCase());
+  
+  // REQUERIMIENTO 2: Filtro por género (soporta si está en columna 'categoria', 'genero' o en el nombre)
+  if (filtroGenero !== "Todas") {
+    lista = lista.filter(p => {
+      const gen = (p.genero || p.categoria || p.descripcion || "").toLowerCase();
+      return gen.includes(filtroGenero.toLowerCase());
+    });
+  }
+
   if (busqueda) lista = lista.filter(p => (p.nombre || "").toLowerCase().includes(busqueda));
 
   let titulo = "Catálogo completo";
   if (filtroEtiqueta !== "Todas") titulo = filtroEtiqueta === "Nuevo" ? "Nuevas referencias" : "Ofertas";
   else if (filtroMarca !== "Todas") titulo = filtroMarca;
   else if (filtroCategoria !== "Todas") titulo = `Categoría: ${filtroCategoria}`;
+  
+  if (filtroGenero !== "Todas") titulo += ` (${filtroGenero})`;
   document.getElementById("catalogo-titulo").textContent = titulo;
 
   const cont = document.getElementById("catalogo-grid");
   if (!lista.length) { cont.innerHTML = '<div class="empty">No hay perfumes con estos filtros.</div>'; return; }
 
-  cont.innerHTML = lista.map(p => {
-    const { principal, secundaria } = obtenerFotos(p);
-    return `
-      <div class="card">
-        <img src="${principal}" alt="${p.nombre || ""}" 
-             onmouseover="if('${secundaria}' !== '${principal}') this.src='${secundaria}'" 
-             onmouseout="this.src='${principal}'"
-             onerror="this.src='${FOTO_RESPALDO}'">
-        <div class="house">${(p.marca || "").toUpperCase()}${p.categoria ? " · " + p.categoria : ""}${p.etiqueta ? " · " + p.etiqueta.toUpperCase() : ""}</div>
-        <div class="name">${p.nombre || "Sin nombre"}</div>
-        <div class="desc">${p.descripcion || ""}</div>
-        <div class="foot">
-          <span class="price">${p.precio ? "$" + p.precio : "Consultar"}</span>
-          <a class="wa" href="${linkWhatsapp(p.nombre || "", p.precio || "")}" target="_blank">Pedir por WhatsApp →</a>
-        </div>
-      </div>
-    `;
-  }).join("");
+  cont.innerHTML = lista.map(p => crearTarjetaHTML(p)).join("");
 }
 
 document.getElementById("buscador").addEventListener("input", renderCatalogo);
+
+// ============================================
+// REQUERIMIENTO 3: VISTA DETALLE DE PRODUCTO
+// ============================================
+function verDetalleProducto(nombreProducto) {
+  const producto = CATALOGO.find(p => p.nombre === nombreProducto);
+  if (!producto) return;
+
+  const { principal } = obtenerFotos(producto);
+
+  // Llenar vista
+  document.getElementById("detail-img").src = principal;
+  document.getElementById("detail-brand").textContent = (producto.marca || "").toUpperCase() + (producto.categoria ? " · " + producto.categoria : "");
+  document.getElementById("detail-title").textContent = producto.nombre || "Sin nombre";
+  document.getElementById("detail-price").textContent = producto.precio ? "$" + producto.precio : "Consultar";
+  document.getElementById("detail-desc").textContent = producto.descripcion || "Perfume 100% original con garantía Fortezza Perfums.";
+  document.getElementById("detail-wa-btn").href = linkWhatsapp(producto.nombre || "", producto.precio || "");
+
+  // Breadcrumbs dinámicos
+  const bc = document.getElementById("detail-breadcrumbs");
+  bc.innerHTML = `
+    <a href="#" onclick="verInicio();return false;">Inicio</a> / 
+    <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a> / 
+    <span>${producto.nombre || ""}</span>
+  `;
+
+  mostrarSoloSeccion("detalle-producto");
+}
+
+function volverOrigenDetalle() {
+  if (seccionAnterior === "catalogo") {
+    mostrarSoloSeccion("catalogo");
+  } else {
+    verInicio();
+  }
+}
 
 // ============================================
 // CARGA DE DATOS
@@ -575,23 +806,7 @@ function renderRecomendados() {
   const lista = destacados.length ? destacados : CATALOGO;
   if (!lista.length) { cont.innerHTML = '<div class="empty">Agrega perfumes a tu Sheet para verlos aquí.</div>'; return; }
   
-  cont.innerHTML = lista.map(p => {
-    const { principal, secundaria } = obtenerFotos(p);
-    return `
-      <div class="card">
-        <img src="${principal}" alt="${p.nombre || ""}" 
-             onmouseover="if('${secundaria}' !== '${principal}') this.src='${secundaria}'" 
-             onmouseout="this.src='${principal}'"
-             onerror="this.src='${FOTO_RESPALDO}'">
-        <div class="house">${(p.marca || "").toUpperCase()}</div>
-        <div class="name">${p.nombre || "Sin nombre"}</div>
-        <div class="foot">
-          <span class="price">${p.precio ? "$" + p.precio : "Consultar"}</span>
-          <a class="wa" href="${linkWhatsapp(p.nombre || "", p.precio || "")}" target="_blank">Pedir por WhatsApp →</a>
-        </div>
-      </div>
-    `;
-  }).join("");
+  cont.innerHTML = lista.map(p => crearTarjetaHTML(p)).join("");
 }
 
 fetch(SHEET_PERFUMES)
@@ -631,7 +846,7 @@ fetch(SHEET_TESTIMONIOS)
   });
 
 // ============================================
-// LÓGICA DEL CARRUSEL DE IMÁGENES
+// LÓGICA DEL CARRUSEL DE IMÁGENES HERO
 // ============================================
 let currentSlideIndex = 0;
 const slides = document.querySelectorAll('.slide');
