@@ -114,7 +114,7 @@
   .card .wa{font-size:.76rem;text-decoration:none;border-bottom:1px solid var(--bronze);}
   .empty{color:var(--stone);font-size:.9rem;padding:2rem 0;}
 
-  /* --- REQUERIMIENTO 1: Carrusel Horizontal para Recomendados (PC + Móvil) --- */
+  /* --- Carrusel Horizontal Recomendados --- */
   .horizontal-scroll-wrapper{
     position:relative;
     width:100%;
@@ -158,7 +158,7 @@
   .scroll-arrow.left{left:-15px;}
   .scroll-arrow.right{right:-15px;}
 
-  /* --- REQUERIMIENTO 3: Vista Detalle de Producto --- */
+  /* --- Vista Detalle de Producto --- */
   .breadcrumbs{
     font-size:.82rem;
     color:var(--stone);
@@ -220,17 +220,59 @@
     gap:1rem;
   }
 
-  @media (max-width:768px){
-    .product-detail-layout{grid-template-columns:1fr;gap:1.5rem;}
-    .scroll-arrow{display:none;} /* En móviles se usa el dedo directamente */
+  /* --- Testimonios (CARRUSEL HORIZONTAL DESLIZABLE) --- */
+  .test-grid {
+    display: flex;
+    gap: 1.2rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding: 0.5rem 0.5rem 1.2rem 0.5rem;
   }
-
-  /* Testimonios */
-  .test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.6rem;}
-  .test-card{border:1px solid #35301F;padding:1rem;}
-  .test-card iframe{width:100%;aspect-ratio:16/9;border:0;}
-  .test-card .who{font-family:'Fraunces',serif;font-size:1rem;margin-top:.7rem;}
-  .test-card .quote{color:var(--stone);font-size:.85rem;margin-top:.3rem;font-style:italic;}
+  .test-grid::-webkit-scrollbar {
+    height: 6px;
+  }
+  .test-grid::-webkit-scrollbar-thumb {
+    background: var(--bronze-dim);
+    border-radius: 10px;
+  }
+  .test-card {
+    flex: 0 0 240px;
+    min-width: 240px;
+    scroll-snap-align: start;
+    border: 1px solid #35301F;
+    background: var(--onyx-2);
+    padding: 0.8rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+  .test-card-video-wrapper {
+    width: 100%;
+    aspect-ratio: 9 / 16; /* Formato Shorts Vertical */
+    background: #000;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .test-card iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .test-card .who {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    margin-top: .7rem;
+    color: var(--parchment);
+  }
+  .test-card .quote {
+    color: var(--stone);
+    font-size: .85rem;
+    margin-top: .3rem;
+    font-style: italic;
+  }
 
   footer{border-top:1px solid #35301F;padding:2.6rem 0;font-size:.85rem;color:var(--stone);}
   .foot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.6rem;}
@@ -241,6 +283,12 @@
   .wa-float{position:fixed;bottom:1.3rem;right:1.3rem;background:#25D366;color:#fff;
     width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;
     text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4);font-size:1.5rem;z-index:99;}
+
+  @media (max-width:768px){
+    .product-detail-layout{grid-template-columns:1fr;gap:1.5rem;}
+    .scroll-arrow{display:none;}
+    .test-card { flex: 0 0 210px; min-width: 210px; }
+  }
 
   @media (max-width:640px){
     .navlinks{display:none;}
@@ -262,40 +310,32 @@
   .volver{display:inline-block;margin-bottom:1rem;font-size:.85rem;color:var(--bronze);
     text-decoration:none;border-bottom:1px solid var(--bronze);cursor:pointer;}
 
-  /* --- Estilos del Carrusel Hero Responsive --- */
+  /* --- Estilos Carrusel Hero --- */
   .carousel-container {
     position: relative;
     width: 100%;
     overflow: hidden;
   }
-
   .slide {
     display: none;
     width: 100%;
   }
-
   .slide.active {
     display: block;
     animation: fade 0.8s ease-in-out;
   }
-
   @keyframes fade {
     from { opacity: 0.4; }
     to { opacity: 1; }
   }
-
-  /* Control de visibilidad PC vs Móvil Hero */
   .mobile-slide {
     display: none !important;
   }
-
   .pc-slide {
     display: block;
     width: 100%;
     height: auto;
   }
-
-  /* Flechas de navegación */
   .carousel-btn {
     position: absolute;
     top: 50%;
@@ -309,12 +349,9 @@
     z-index: 10;
     border-radius: 4px;
   }
-
   .carousel-btn.prev { left: 10px; }
   .carousel-btn.next { right: 10px; }
   .carousel-btn:hover { background: rgba(0, 0, 0, 0.8); }
-
-  /* Puntos indicadores */
   .carousel-dots {
     position: absolute;
     bottom: 15px;
@@ -324,7 +361,6 @@
     gap: 8px;
     z-index: 10;
   }
-
   .dot {
     width: 10px;
     height: 10px;
@@ -332,7 +368,6 @@
     border-radius: 50%;
     cursor: pointer;
   }
-
   .dot.active {
     background: var(--bronze, #c5a059);
     width: 25px;
@@ -340,10 +375,7 @@
   }
 
   @media (max-width: 768px) {
-    .pc-slide {
-      display: none !important;
-    }
-
+    .pc-slide { display: none !important; }
     .mobile-slide {
       display: block !important;
       width: 100%;
@@ -383,37 +415,27 @@
 </div>
 
 <section class="hero">
-  <!-- Contenedor del Carrusel Responsive -->
   <div class="carousel-container">
-    <!-- Slide 1 -->
     <div class="slide active">
       <img class="hero-img pc-slide" src="imagenes/banners/banner.jpg" alt="Banner PC 1">
       <img class="hero-img mobile-slide" src="imagenes/banners/banner_mobile.png" alt="Banner Móvil 1">
     </div>
-
-    <!-- Slide 2 -->
     <div class="slide">
       <img class="hero-img pc-slide" src="imagenes/banners/banner2.jpg" alt="Banner PC 2">
       <img class="hero-img mobile-slide" src="imagenes/banners/banner2_mobile.png" alt="Banner Móvil 2">
     </div>
-
-    <!-- Slide 3 -->
     <div class="slide">
       <img class="hero-img pc-slide" src="imagenes/banners/banner3.jpg.png" alt="Banner PC 3">
       <img class="hero-img mobile-slide" src="imagenes/banners/banner3_mobile.png" alt="Banner Móvil 3">
     </div>
-
-    <!-- Slide 4 -->
     <div class="slide">
       <img class="hero-img pc-slide" src="imagenes/banners/banner4.jpg" alt="Banner PC 4">
       <img class="hero-img mobile-slide" src="imagenes/banners/banner4_mobile.png" alt="Banner Móvil 4">
     </div>
     
-    <!-- Botones de navegación (Flechas) -->
     <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
     <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
     
-    <!-- Indicadores -->
     <div class="carousel-dots">
       <span class="dot active" onclick="currentSlide(0)"></span>
       <span class="dot" onclick="currentSlide(1)"></span>
@@ -434,7 +456,6 @@
 
   <div class="volver oculto" id="volver-inicio-bar" onclick="verInicio()" style="margin-top:1.5rem;">← Volver al inicio</div>
 
-  <!-- REQUERIMIENTO 1: Recomendados en carrusel horizontal con flechas -->
   <section class="section" id="recomendados">
     <div class="section-head"><h2>New Arrivals / Recomendados</h2></div>
     <div class="horizontal-scroll-wrapper">
@@ -459,7 +480,6 @@
     <div class="brand-row" id="brand-row"></div>
   </section>
 
-  <!-- REQUERIMIENTO 2: Catálogo con filtro de género -->
   <section class="section oculto" id="catalogo">
     <div class="section-head">
       <h2 id="catalogo-titulo">Catálogo completo</h2>
@@ -476,7 +496,6 @@
     <div class="grid" id="catalogo-grid"><div class="empty">Cargando catálogo...</div></div>
   </section>
 
-  <!-- REQUERIMIENTO 3: Vista de Detalle de Producto con Migas de Pan -->
   <section class="section oculto" id="detalle-producto">
     <div class="breadcrumbs" id="detail-breadcrumbs"></div>
     <div class="product-detail-layout">
@@ -496,7 +515,7 @@
     </div>
   </section>
 
-  <!-- Testimonios -->
+  <!-- CARRUSEL DE TESTIMONIOS -->
   <section class="section" id="testimonios">
     <div class="section-head"><h2>Lo que dicen nuestros clientes</h2></div>
     <div class="test-grid" id="test-grid"><div class="empty">Cargando testimonios...</div></div>
@@ -533,13 +552,11 @@
 const WHATSAPP_NUMBER = "573215207592"; 
 const INSTAGRAM_USER = "_fortezzaperfums";
 
-// Links de tus Google Sheets publicados como CSV
 const SHEET_PERFUMES = "https://docs.google.com/spreadsheets/d/e/2PACX-1vThi2UEsqwB_uX_EXkCO9HnaMPiLoJsf1eQtcOCAZm6kbT9soLLGxlC5ovIn2MI_eA2G17ZM_Me0JZG/pub?output=csv";
 const SHEET_TESTIMONIOS = "PEGA_AQUI_EL_LINK_CSV_DE_TESTIMONIOS";
 
 const FOTO_RESPALDO = "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400";
 
-// Parser CSV
 function parseCSV(texto) {
   if (texto.charCodeAt(0) === 0xFEFF) texto = texto.slice(1);
 
@@ -580,7 +597,6 @@ function linkWhatsapp(nombre, precio) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 }
 
-// Botones fijos de WhatsApp e Instagram
 document.getElementById("wa-float").href = `https://wa.me/${WHATSAPP_NUMBER}`;
 document.getElementById("wa-footer").href = `https://wa.me/${WHATSAPP_NUMBER}`;
 document.getElementById("wa-hero").href = `https://wa.me/${WHATSAPP_NUMBER}`;
@@ -591,9 +607,6 @@ function toggleMenuMovil() {
   document.getElementById("mobile-menu").classList.toggle("abierto");
 }
 
-// ============================================
-// ESTADO
-// ============================================
 let CATALOGO = [];
 let filtroCategoria = "Todas";
 let filtroMarca = "Todas";
@@ -694,7 +707,6 @@ function renderMarcas() {
   });
 }
 
-// Obtener las fotos del producto
 function obtenerFotos(p) {
   const fotos = (p.foto || "").split(",").map(f => f.trim()).filter(Boolean);
   const principal = fotos[0] || FOTO_RESPALDO;
@@ -702,7 +714,6 @@ function obtenerFotos(p) {
   return { principal, secundaria };
 }
 
-// Genera el HTML de una tarjeta respetando la estructura y el evento de ver detalle
 function crearTarjetaHTML(p) {
   const { principal, secundaria } = obtenerFotos(p);
   const nombreLimpio = (p.nombre || "Sin nombre").replace(/'/g, "\\'");
@@ -731,7 +742,6 @@ function renderCatalogo() {
   if (filtroMarca !== "Todas") lista = lista.filter(p => p.marca === filtroMarca);
   if (filtroEtiqueta !== "Todas") lista = lista.filter(p => (p.etiqueta || "").toLowerCase() === filtroEtiqueta.toLowerCase());
   
-  // REQUERIMIENTO 2: Filtro por género (soporta si está en columna 'categoria', 'genero' o en el nombre)
   if (filtroGenero !== "Todas") {
     lista = lista.filter(p => {
       const gen = (p.genero || p.categoria || p.descripcion || "").toLowerCase();
@@ -757,16 +767,12 @@ function renderCatalogo() {
 
 document.getElementById("buscador").addEventListener("input", renderCatalogo);
 
-// ============================================
-// REQUERIMIENTO 3: VISTA DETALLE DE PRODUCTO
-// ============================================
 function verDetalleProducto(nombreProducto) {
   const producto = CATALOGO.find(p => p.nombre === nombreProducto);
   if (!producto) return;
 
   const { principal } = obtenerFotos(producto);
 
-  // Llenar vista
   document.getElementById("detail-img").src = principal;
   document.getElementById("detail-brand").textContent = (producto.marca || "").toUpperCase() + (producto.categoria ? " · " + producto.categoria : "");
   document.getElementById("detail-title").textContent = producto.nombre || "Sin nombre";
@@ -774,7 +780,6 @@ function verDetalleProducto(nombreProducto) {
   document.getElementById("detail-desc").textContent = producto.descripcion || "Perfume 100% original con garantía Fortezza Perfums.";
   document.getElementById("detail-wa-btn").href = linkWhatsapp(producto.nombre || "", producto.precio || "");
 
-  // Breadcrumbs dinámicos
   const bc = document.getElementById("detail-breadcrumbs");
   bc.innerHTML = `
     <a href="#" onclick="verInicio();return false;">Inicio</a> / 
@@ -793,9 +798,6 @@ function volverOrigenDetalle() {
   }
 }
 
-// ============================================
-// CARGA DE DATOS
-// ============================================
 function renderRecomendados() {
   const cont = document.getElementById("recomendados-grid");
   const destacados = CATALOGO.filter(p => {
@@ -823,6 +825,21 @@ fetch(SHEET_PERFUMES)
       '<div class="empty">No se pudo cargar el catálogo. Revisa el link de Google Sheets (SHEET_PERFUMES) en el código.</div>';
   });
 
+// Extrae el ID de YouTube (compatible con Shorts, enlaces normales y compartidos)
+function extraerYouTubeID(url) {
+  if (!url) return null;
+  if (url.includes("/shorts/")) {
+    return url.split("/shorts/")[1]?.split("?")[0]?.split("&")[0];
+  }
+  if (url.includes("v=")) {
+    return url.split("v=")[1]?.split("&")[0];
+  }
+  if (url.includes("youtu.be/")) {
+    return url.split("youtu.be/")[1]?.split("?")[0];
+  }
+  return null;
+}
+
 fetch(SHEET_TESTIMONIOS)
   .then(r => r.text())
   .then(txt => {
@@ -830,11 +847,11 @@ fetch(SHEET_TESTIMONIOS)
     const cont = document.getElementById("test-grid");
     if (!testimonios.length) { cont.innerHTML = '<div class="empty">Aún no hay testimonios cargados.</div>'; return; }
     cont.innerHTML = testimonios.map(t => {
-      const videoId = (t.video || "").split("v=")[1]?.split("&")[0] || (t.video || "").split("youtu.be/")[1];
+      const videoId = extraerYouTubeID(t.video);
       const embed = videoId ? `https://www.youtube.com/embed/${videoId}` : "";
       return `
         <div class="test-card">
-          ${embed ? `<iframe src="${embed}" allowfullscreen></iframe>` : ""}
+          ${embed ? `<div class="test-card-video-wrapper"><iframe src="${embed}" allowfullscreen></iframe></div>` : ""}
           <div class="who">${t.nombre_cliente || ""}</div>
           <div class="quote">${t.comentario || ""}</div>
         </div>`;
@@ -859,38 +876,36 @@ function showSlide(index) {
   else currentSlideIndex = index;
 
   slides.forEach((slide, i) => {
-    slide.classList.remove('active');
-    if (dots[i]) dots[i].classList.remove('active');
+    slide.classList.toggle('active', i === currentSlideIndex);
   });
 
-  if(slides[currentSlideIndex]) slides[currentSlideIndex].classList.add('active');
-  if(dots[currentSlideIndex]) dots[currentSlideIndex].classList.add('active');
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === currentSlideIndex);
+  });
 }
 
 function moveSlide(step) {
   showSlide(currentSlideIndex + step);
-  resetTimer();
+  resetAutoSlide();
 }
 
 function currentSlide(index) {
   showSlide(index);
-  resetTimer();
+  resetAutoSlide();
 }
 
 function startAutoSlide() {
   autoSlideInterval = setInterval(() => {
     showSlide(currentSlideIndex + 1);
-  }, 4000); 
+  }, 5000);
 }
 
-function resetTimer() {
+function resetAutoSlide() {
   clearInterval(autoSlideInterval);
   startAutoSlide();
 }
 
-// Iniciar carrusel al cargar
 startAutoSlide();
 </script>
-
 </body>
 </html>
