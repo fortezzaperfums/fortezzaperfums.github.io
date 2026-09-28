@@ -7,7 +7,8 @@
 <link rel="icon" type="image/png" href="imagenes/sitio/logo.png">
 <meta name="description" content="Catálogo de perfumes árabes y de nicho originales. Domicilios gratis en Pereira y Dosquebradas, envíos a toda Colombia.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@600;700&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --onyx:#121212;
@@ -24,15 +25,17 @@
     margin:0;
     background:var(--onyx);
     color:var(--parchment);
-    font-family:'Jost',sans-serif;
+    font-family:'Montserrat', sans-serif;
     font-weight:300;
-    line-height:1.5;
+    line-height:1.6;
+    letter-spacing:0.02em;
   }
   h1,h2,h3,.display{
-    font-family:'Fraunces',serif;
+    font-family:'Cinzel', serif;
     font-weight:600;
     color:var(--parchment);
     margin:0;
+    letter-spacing:0.05em;
   }
   a{color:inherit;}
   img{max-width:100%;display:block;}
@@ -40,30 +43,62 @@
 
   /* Promo bar */
   .promo{background:var(--bronze);color:var(--onyx);text-align:center;
-    font-size:.78rem;letter-spacing:.04em;padding:.55rem 1rem;font-weight:500;}
+    font-size:.78rem;letter-spacing:.08em;padding:.55rem 1rem;font-weight:500;text-transform:uppercase;}
 
   /* Nav */
   nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-top:1.1rem;padding-bottom:1.1rem;
     position:relative;background:var(--onyx);z-index:80;border-bottom:1px solid transparent;
-    transition:border-color .2s, box-shadow .2s;}
+    transition:border-color .2s, box-shadow .2s;gap:1rem;}
   .brandmark{display:flex;align-items:center;gap:.6rem;}
   .brandmark img{height:38px;width:38px;object-fit:contain;border-radius:2px;}
-  .brandmark span{font-family:'Fraunces',serif;font-size:1.25rem;letter-spacing:.02em;}
-  .navlinks{display:flex;gap:1.6rem;font-size:.85rem;}
-  .navlinks a{text-decoration:none;border-bottom:1px solid transparent;}
-  .navlinks a:hover{border-color:var(--bronze);}
+  .brandmark span{font-family:'Cinzel Decorative', 'Cinzel', serif;font-size:1.15rem;letter-spacing:.08em;font-weight:600;}
+  
+  .nav-right-container{display:flex;align-items:center;gap:1.5rem;}
+  .navlinks{display:flex;gap:1.6rem;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;}
+  .navlinks a{text-decoration:none;border-bottom:1px solid transparent;transition:all 0.2s;}
+  .navlinks a:hover{border-color:var(--bronze);color:var(--bronze);}
+
+  /* Buscador Lupa Superior */
+  .nav-search-box{
+    position:relative;
+    display:flex;
+    align-items:center;
+  }
+  .nav-search-input{
+    background:var(--onyx-2);
+    border:1px solid #35301F;
+    border-radius:20px;
+    color:var(--parchment);
+    padding:.35rem .8rem .35rem 2rem;
+    font-family:'Montserrat',sans-serif;
+    font-size:.8rem;
+    outline:none;
+    width:160px;
+    transition:all 0.3s ease;
+  }
+  .nav-search-input:focus{
+    width:210px;
+    border-color:var(--bronze);
+  }
+  .nav-search-icon{
+    position:absolute;
+    left:8px;
+    font-size:.85rem;
+    color:var(--stone);
+    pointer-events:none;
+  }
 
   /* Hero */
   .hero{position:relative;background:var(--onyx);border-bottom:1px solid var(--bronze-dim);
     display:flex;flex-direction:column;width:100%;}
   .hero-img{width:100%;height:auto;object-fit:cover;display:block;}
   .hero-inner{padding:1.6rem 1.5rem;max-width:1180px;margin:0 auto;width:100%;}
-  .eyebrow{font-size:.78rem;letter-spacing:.14em;color:var(--bronze);margin-bottom:.6rem;}
-  .hero h1{font-size:clamp(2.2rem,5vw,3.6rem);max-width:14ch;line-height:1.05;}
-  .hero p{max-width:46ch;color:var(--stone);margin-top:.9rem;font-size:1.02rem;}
+  .eyebrow{font-size:.78rem;letter-spacing:.14em;color:var(--bronze);margin-bottom:.6rem;text-transform:uppercase;}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.6rem);max-width:14ch;line-height:1.1;}
+  .hero p{max-width:46ch;color:var(--stone);margin-top:.9rem;font-size:1.02rem;font-family:'Cormorant Garamond', serif;}
   .cta-row{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
-  .btn{display:inline-block;padding:.7rem 1.4rem;font-size:.85rem;text-decoration:none;
-    border:1px solid var(--bronze);letter-spacing:.03em;cursor:pointer;}
+  .btn{display:inline-block;padding:.7rem 1.4rem;font-size:.82rem;text-decoration:none;
+    border:1px solid var(--bronze);letter-spacing:.08em;cursor:pointer;text-transform:uppercase;font-weight:500;}
   .btn-solid{background:var(--bronze);color:var(--onyx);}
   .btn-outline{color:var(--parchment);}
 
@@ -71,8 +106,8 @@
   .section{padding:3.2rem 0;}
   .section-head{display:flex;justify-content:space-between;align-items:center;
     border-bottom:1px solid #35301F;padding-bottom:.8rem;margin-bottom:1.8rem;flex-wrap:wrap;gap:.8rem;}
-  .section-head h2{font-size:1.7rem;}
-  .section-head .sub{color:var(--stone);font-size:.85rem;}
+  .section-head h2{font-size:1.7rem;font-family:'Cinzel', serif;}
+  .section-head .sub{color:var(--stone);font-size:.85rem;font-family:'Cormorant Garamond', serif;font-style:italic;}
 
   /* Controles Filtro Catálogo */
   .catalog-controls{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;}
@@ -81,8 +116,8 @@
     border:1px solid #35301F;
     color:var(--parchment);
     padding:.5rem .8rem;
-    font-family:'Jost',sans-serif;
-    font-size:.88rem;
+    font-family:'Montserrat',sans-serif;
+    font-size:.85rem;
     outline:none;
     cursor:pointer;
   }
@@ -92,27 +127,27 @@
   .cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;
     background:#35301F;border:1px solid #35301F;}
   .cat-tile{background:var(--onyx-2);padding:2.2rem 1rem;text-align:center;cursor:pointer;
-    font-family:'Fraunces',serif;font-size:1.15rem;transition:background .2s;}
+    font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:.05em;transition:background .2s;}
   .cat-tile:hover{background:#26221680;}
   .cat-tile.active{background:var(--bronze);color:var(--onyx);}
 
   /* Marcas */
   .brand-row{display:flex;flex-wrap:wrap;gap:.6rem;}
-  .brand-chip{border:1px solid var(--bronze-dim);padding:.45rem 1rem;font-size:.82rem;
-    cursor:pointer;background:transparent;color:var(--parchment);font-family:'Jost',sans-serif;}
+  .brand-chip{border:1px solid var(--bronze-dim);padding:.45rem 1rem;font-size:.8rem;
+    cursor:pointer;background:transparent;color:var(--parchment);font-family:'Montserrat',sans-serif;letter-spacing:.05em;}
   .brand-chip.active,.brand-chip:hover{background:var(--bronze);color:var(--onyx);border-color:var(--bronze);}
 
   /* Catálogo y Tarjetas */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.8rem;}
   .card{border-top:1px solid var(--bronze);padding-top:.9rem;cursor:pointer;position:relative;}
   .card img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#1a1a1a;transition:opacity 0.3s ease;}
-  .card .house{font-size:.72rem;color:var(--stone);letter-spacing:.05em;margin-top:.7rem;}
-  .card .name{font-family:'Fraunces',serif;font-size:1.25rem;margin-top:.2rem;}
-  .card .desc{font-size:.82rem;color:var(--stone);margin-top:.4rem;min-height:2.2rem;}
+  .card .house{font-size:.7rem;color:var(--stone);letter-spacing:.1em;margin-top:.7rem;text-transform:uppercase;}
+  .card .name{font-family:'Cinzel',serif;font-size:1.15rem;margin-top:.2rem;letter-spacing:.03em;}
+  .card .desc{font-size:.88rem;color:var(--stone);margin-top:.4rem;min-height:2.4rem;font-family:'Cormorant Garamond',serif;font-style:italic;}
   .card .foot{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem;}
-  .card .price{font-family:'Fraunces',serif;font-size:1.2rem;color:var(--bronze);}
-  .card .wa{font-size:.76rem;text-decoration:none;border-bottom:1px solid var(--bronze);}
-  .empty{color:var(--stone);font-size:.9rem;padding:2rem 0;}
+  .card .price{font-family:'Cinzel',serif;font-size:1.15rem;color:var(--bronze);}
+  .card .wa{font-size:.76rem;text-decoration:none;border-bottom:1px solid var(--bronze);letter-spacing:.04em;}
+  .empty{color:var(--stone);font-size:.9rem;padding:2rem 0;font-family:'Cormorant Garamond',serif;}
 
   /* --- Carrusel Horizontal Recomendados --- */
   .horizontal-scroll-wrapper{
@@ -160,9 +195,10 @@
 
   /* --- Vista Detalle de Producto --- */
   .breadcrumbs{
-    font-size:.82rem;
+    font-size:.8rem;
     color:var(--stone);
     margin-bottom:1.5rem;
+    letter-spacing:.04em;
   }
   .breadcrumbs a{
     color:var(--parchment);
@@ -192,27 +228,30 @@
   .detail-brand{
     font-size:.8rem;
     color:var(--stone);
-    letter-spacing:.1em;
+    letter-spacing:.12em;
     text-transform:uppercase;
   }
   .detail-title{
     font-size:clamp(1.8rem,4vw,2.5rem);
     margin:.3rem 0 .8rem 0;
+    font-family:'Cinzel', serif;
   }
   .detail-price{
-    font-family:'Fraunces',serif;
+    font-family:'Cinzel',serif;
     font-size:1.8rem;
     color:var(--bronze);
     margin-bottom:1.2rem;
   }
   .detail-desc{
-    font-size:.95rem;
+    font-size:1.05rem;
     color:var(--stone);
     line-height:1.6;
     margin-bottom:1.8rem;
     border-top:1px solid #35301F;
     border-bottom:1px solid #35301F;
     padding:1.2rem 0;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
   }
   .detail-actions{
     display:flex;
@@ -220,7 +259,7 @@
     gap:1rem;
   }
 
-  /* --- Testimonios (CARRUSEL HORIZONTAL DESLIZABLE + SEGUNDO PLANO) --- */
+  /* --- Testimonios --- */
   .test-grid {
     display: flex;
     gap: 1.2rem;
@@ -252,7 +291,7 @@
   .test-card-video-wrapper {
     position: relative;
     width: 100%;
-    aspect-ratio: 9 / 16; /* Formato Shorts Vertical */
+    aspect-ratio: 9 / 16;
     background: #000;
     border-radius: 6px;
     overflow: hidden;
@@ -261,10 +300,9 @@
     width: 100%;
     height: 100%;
     border: 0;
-    pointer-events: none; /* Desactiva interacción directa para segundo plano */
+    pointer-events: none;
   }
 
-  /* Capa superpuesta para hacer clic y ver el video */
   .video-overlay {
     position: absolute;
     top: 0;
@@ -304,13 +342,18 @@
 
   footer{border-top:1px solid #35301F;padding:2.6rem 0;font-size:.85rem;color:var(--stone);}
   .foot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.6rem;}
-  footer strong{color:var(--parchment);font-weight:500;}
+  footer strong{color:var(--parchment);font-weight:500;font-family:'Cinzel',serif;letter-spacing:.04em;}
   footer a{text-decoration:none;border-bottom:1px solid var(--bronze-dim);}
-  .foot-bottom{text-align:center;margin-top:2rem;color:#605A4C;font-size:.75rem;}
+  .foot-bottom{text-align:center;margin-top:2rem;color:#605A4C;font-size:.75rem;letter-spacing:.05em;}
 
   .wa-float{position:fixed;bottom:1.3rem;right:1.3rem;background:#25D366;color:#fff;
     width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;
     text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4);font-size:1.5rem;z-index:99;}
+
+  @media (max-width:850px){
+    .nav-search-input{width:120px;}
+    .nav-search-input:focus{width:150px;}
+  }
 
   @media (max-width:768px){
     .product-detail-layout{grid-template-columns:1fr;gap:1.5rem;}
@@ -318,7 +361,7 @@
     .test-card { flex: 0 0 210px; min-width: 210px; }
   }
 
-  @media (max-width:640px){
+  @media (max-width:680px){
     .navlinks{display:none;}
     .menu-toggle{display:block !important;}
   }
@@ -331,12 +374,12 @@
   .mobile-menu{display:none;flex-direction:column;background:var(--onyx-2);
     border-top:1px solid var(--bronze-dim);border-bottom:1px solid var(--bronze-dim);}
   .mobile-menu.abierto{display:flex;}
-  .mobile-menu a{padding:1rem 1.5rem;font-size:1rem;text-decoration:none;
-    border-bottom:1px solid #2a251a;}
+  .mobile-menu a{padding:1rem 1.5rem;font-size:.9rem;text-decoration:none;
+    border-bottom:1px solid #2a251a;text-transform:uppercase;letter-spacing:.05em;}
 
   .oculto{display:none !important;}
   .volver{display:inline-block;margin-bottom:1rem;font-size:.85rem;color:var(--bronze);
-    text-decoration:none;border-bottom:1px solid var(--bronze);cursor:pointer;}
+    text-decoration:none;border-bottom:1px solid var(--bronze);cursor:pointer;letter-spacing:.04em;}
 
   /* --- Estilos Carrusel Hero --- */
   .carousel-container {
@@ -422,15 +465,25 @@
     <img id="logo-img" src="imagenes/sitio/logo.png" alt="Fortezza Perfums" onerror="this.style.display='none'">
     <span>Fortezza Perfums</span>
   </div>
-  <div class="navlinks">
-    <a href="#" onclick="verInicio();return false;">Inicio</a>
-    <a href="#" onclick="verColeccion('etiqueta','Nuevo');return false;">Nuevos</a>
-    <a href="#" onclick="verColeccion('etiqueta','Oferta');return false;">Ofertas</a>
-    <a href="#" onclick="verSoloMarcas();return false;">Marcas</a>
-    <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a>
-    <a href="#" onclick="verSoloTestimonios();return false;">Testimonios</a>
+
+  <div class="nav-right-container">
+    <div class="navlinks">
+      <a href="#" onclick="verInicio();return false;">Inicio</a>
+      <a href="#" onclick="verColeccion('etiqueta','Nuevo');return false;">Nuevos</a>
+      <a href="#" onclick="verColeccion('etiqueta','Oferta');return false;">Ofertas</a>
+      <a href="#" onclick="verSoloMarcas();return false;">Marcas</a>
+      <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a>
+      <a href="#" onclick="verSoloTestimonios();return false;">Testimonios</a>
+    </div>
+
+    <!-- Buscador Superior Global con Lupa -->
+    <div class="nav-search-box">
+      <span class="nav-search-icon">🔍</span>
+      <input id="buscador-global" class="nav-search-input" type="text" placeholder="Buscar..." oninput="buscarGlobal(this.value)">
+    </div>
+
+    <button class="menu-toggle" id="menu-toggle" onclick="toggleMenuMovil()">☰</button>
   </div>
-  <button class="menu-toggle" id="menu-toggle" onclick="toggleMenuMovil()">☰</button>
 </nav>
 
 <div class="mobile-menu" id="mobile-menu">
@@ -518,7 +571,10 @@
           <option value="Mujer">Mujer</option>
           <option value="Unisex">Unisex</option>
         </select>
-        <input id="buscador" placeholder="Buscar perfume..." style="background:transparent;border:1px solid #35301F;color:var(--parchment);padding:.5rem .8rem;font-family:'Jost',sans-serif;">
+        <div style="position:relative;display:flex;align-items:center;">
+          <span style="position:absolute;left:8px;font-size:.85rem;color:var(--stone);">🔍</span>
+          <input id="buscador" placeholder="Buscar perfume..." style="background:transparent;border:1px solid #35301F;color:var(--parchment);padding:.5rem .8rem .5rem 2rem;font-family:'Montserrat',sans-serif;font-size:.85rem;outline:none;">
+        </div>
       </div>
     </div>
     <div class="grid" id="catalogo-grid"><div class="empty">Cargando catálogo...</div></div>
@@ -543,7 +599,7 @@
     </div>
   </section>
 
-  <!-- CARRUSEL DE TESTIMONIOS CON REPRODUCCIÓN EN SEGUNDO PLANO Y CLICK PARA VER -->
+  <!-- CARRUSEL DE TESTIMONIOS -->
   <section class="section" id="testimonios">
     <div class="section-head"><h2>Experiencias en Fortezza Perfums</h2></div>
     <div class="test-grid" id="test-grid"><div class="empty">Cargando testimonios...</div></div>
@@ -795,6 +851,12 @@ function renderCatalogo() {
 
 document.getElementById("buscador").addEventListener("input", renderCatalogo);
 
+// Función de búsqueda desde la lupa superior
+function buscarGlobal(valor) {
+  document.getElementById("buscador").value = valor;
+  verCatalogoCompleto();
+}
+
 function verDetalleProducto(nombreProducto) {
   const producto = CATALOGO.find(p => p.nombre === nombreProducto);
   if (!producto) return;
@@ -853,7 +915,6 @@ fetch(SHEET_PERFUMES)
       '<div class="empty">No se pudo cargar el catálogo. Revisa el link de Google Sheets (SHEET_PERFUMES) en el código.</div>';
   });
 
-// Extrae el ID de YouTube (compatible con Shorts, enlaces normales y compartidos)
 function extraerYouTubeID(url) {
   if (!url) return null;
   if (url.includes("/shorts/")) {
@@ -868,9 +929,6 @@ function extraerYouTubeID(url) {
   return null;
 }
 
-// ============================================
-// CARGA DE TESTIMONIOS (MODO SEGUNDO PLANO Y CLICK PARA VER)
-// ============================================
 fetch(SHEET_TESTIMONIOS)
   .then(r => r.text())
   .then(txt => {
@@ -878,88 +936,81 @@ fetch(SHEET_TESTIMONIOS)
     const cont = document.getElementById("test-grid");
 
     const videosValidos = testimonios.filter(t => {
-      const url = t.video || t.link || t['vídeo'] || t['video'] || "";
-      return url.trim() !== "";
+      const url = t.video || t.link || t['video url'] || t['link video'];
+      return extraerYouTubeID(url);
     });
 
-    if (!videosValidos.length) { 
-      cont.innerHTML = '<div class="empty">Aún no hay testimonios cargados.</div>'; 
-      return; 
+    if (!videosValidos.length) {
+      cont.innerHTML = '<div class="empty">No hay testimonios disponibles en este momento.</div>';
+      return;
     }
 
     cont.innerHTML = videosValidos.map(t => {
-      const urlVideo = t.video || t.link || t['vídeo'] || "";
-      const videoId = extraerYouTubeID(urlVideo);
-
-      if (!videoId) return "";
-
-      // Configuración de video en segundo plano:
-      // autoplay=1 & mute=1 -> Se reproduce solo sin audio
-      // controls=0 & loop=1 -> Sin botones y en bucle continuo
-      const embedBackground = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoId}&playsinline=1&enablejsapi=1`;
-      const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
+      const rawUrl = t.video || t.link || t['video url'] || t['link video'];
+      const videoId = extraerYouTubeID(rawUrl);
+      const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&rel=0&playsinline=1`;
+      const directUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
       return `
         <div class="test-card">
           <div class="test-card-video-wrapper">
-            <iframe src="${embedBackground}" allow="autoplay; encrypted-media" tabindex="-1"></iframe>
-            <a class="video-overlay" href="${watchUrl}" target="_blank" title="Haz clic para ver el video completo">
-              <span class="play-icon">▶</span>
+            <iframe src="${embedUrl}" loading="lazy" allow="autoplay"></iframe>
+            <a href="${directUrl}" target="_blank" class="video-overlay" title="Ver video completo en YouTube">
+              <div class="play-icon">▶</div>
             </a>
           </div>
-        </div>`;
+        </div>
+      `;
     }).join("");
   })
   .catch(() => {
-    document.getElementById("test-grid").innerHTML =
-      '<div class="empty">Aún no hay testimonios cargados (o falta el link SHEET_TESTIMONIOS).</div>';
+    document.getElementById("test-grid").innerHTML = '<div class="empty">Error al cargar testimonios.</div>';
   });
 
-// ============================================
-// LÓGICA DEL CARRUSEL DE IMÁGENES HERO
-// ============================================
-let currentSlideIndex = 0;
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
-let autoSlideInterval;
+/* --- LÓGICA DE CARRUSEL HERO --- */
+let slideIndex = 0;
+let slideInterval;
 
 function showSlide(index) {
+  const slides = document.querySelectorAll(".slide");
+  const dots = document.querySelectorAll(".dot");
+  
   if (slides.length === 0) return;
-  if (index >= slides.length) currentSlideIndex = 0;
-  else if (index < 0) currentSlideIndex = slides.length - 1;
-  else currentSlideIndex = index;
+  
+  if (index >= slides.length) slideIndex = 0;
+  else if (index < 0) slideIndex = slides.length - 1;
+  else slideIndex = index;
 
-  slides.forEach((s, i) => {
-    s.classList.toggle('active', i === currentSlideIndex);
-  });
-  dots.forEach((d, i) => {
-    d.classList.toggle('active', i === currentSlideIndex);
-  });
+  slides.forEach(s => s.classList.remove("active"));
+  dots.forEach(d => d.classList.remove("active"));
+
+  slides[slideIndex].classList.add("active");
+  if(dots[slideIndex]) dots[slideIndex].classList.add("active");
 }
 
-function moveSlide(step) {
-  showSlide(currentSlideIndex + step);
-  resetAutoSlide();
+function moveSlide(n) {
+  showSlide(slideIndex + n);
+  resetTimer();
 }
 
-function currentSlide(index) {
-  showSlide(index);
-  resetAutoSlide();
+function currentSlide(n) {
+  showSlide(n);
+  resetTimer();
 }
 
-function startAutoSlide() {
-  autoSlideInterval = setInterval(() => {
+function startTimer() {
+  slideInterval = setInterval(() => {
     moveSlide(1);
-  }, 5000); // Cambia cada 5 segundos
+  }, 5000);
 }
 
-function resetAutoSlide() {
-  clearInterval(autoSlideInterval);
-  startAutoSlide();
+function resetTimer() {
+  clearInterval(slideInterval);
+  startTimer();
 }
 
-// Iniciar carrusel al cargar la página
-startAutoSlide();
+startTimer();
 </script>
+
 </body>
 </html>
