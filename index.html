@@ -262,7 +262,7 @@
     gap:1rem;
   }
 
-  /* --- Testimonios (Ocultando elementos nativos de Shorts) --- */
+  /* --- Testimonios (Sin nada encima y enmascarado total) --- */
   .test-grid {
     display: flex;
     gap: 1.2rem;
@@ -300,52 +300,27 @@
     overflow: hidden;
   }
   
-  /* Escalar y recortar el iframe para ocultar bordes nativos y botones de YouTube */
+  /* Escalar y sobre-dimensionar para recortar títulos, barras e íconos de YouTube */
   .test-card-video-wrapper iframe {
     position: absolute;
-    top: -5%;
-    left: -5%;
-    width: 110%;
-    height: 110%;
+    top: -20%;
+    left: -20%;
+    width: 140%;
+    height: 140%;
     border: 0;
-    pointer-events: none;
+    pointer-events: none; /* Bloquea clics dentro del iframe */
   }
 
+  /* Capa transparente total para interacción de audio y bloqueo de redirección */
   .video-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    transition: background 0.3s ease;
-    z-index: 5;
-  }
-  .video-overlay:hover {
-    background: rgba(0, 0, 0, 0.4);
-  }
-  .play-icon {
-    width: 52px;
-    height: 52px;
-    background: rgba(18, 18, 18, 0.85);
-    color: var(--bronze);
-    border: 1px solid var(--bronze);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    padding-left: 3px;
-    transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
-  }
-  .video-overlay:hover .play-icon {
-    transform: scale(1.15);
-    background: var(--bronze);
-    color: var(--onyx);
+    background: transparent;
+    cursor: pointer;
+    z-index: 10;
   }
 
   footer{border-top:1px solid #35301F;padding:2.6rem 0;font-size:.85rem;color:var(--stone);font-family:'DM Sans', sans-serif;}
@@ -607,7 +582,7 @@
     </div>
   </section>
 
-  <!-- CARRUSEL DE TESTIMONIOS -->
+  <!-- CARRUSEL DE TESTIMONIOS SIN NADA ENCIMA -->
   <section class="section" id="testimonios">
     <div class="section-head"><h2>Experiencias en Fortezza Perfums</h2></div>
     <div class="test-grid" id="test-grid"><div class="empty">Cargando testimonios...</div></div>
@@ -637,6 +612,9 @@
 
 <a class="wa-float" id="wa-float" href="#" target="_blank">💬</a>
 
+<!-- CARGA DE API DE YOUTUBE -->
+<script src="https://www.youtube.com/iframe_api"></script>
+
 <script>
 // ============================================
 // CONFIGURA AQUÍ TUS DATOS REALES
@@ -648,6 +626,8 @@ const SHEET_PERFUMES = "https://docs.google.com/spreadsheets/d/e/2PACX-1vThi2UEs
 const SHEET_TESTIMONIOS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSV6Zw5vY7-GYhQDio_ATBA-HEU5KEo8MKAzvSDFbD8q9vfZf6ClL3IxUYqf66emduMgWGTMlfl3g8i/pub?output=csv";
 
 const FOTO_RESPALDO = "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400";
+
+let playersYT = [];
 
 function parseCSV(texto) {
   if (texto.charCodeAt(0) === 0xFEFF) texto = texto.slice(1);
@@ -859,7 +839,6 @@ function renderCatalogo() {
 
 document.getElementById("buscador").addEventListener("input", renderCatalogo);
 
-// Búsqueda desde la lupa superior
 function buscarGlobal(valor) {
   document.getElementById("buscador").value = valor;
   verCatalogoCompleto();
@@ -869,158 +848,132 @@ function verDetalleProducto(nombreProducto) {
   const producto = CATALOGO.find(p => p.nombre === nombreProducto);
   if (!producto) return;
 
-  const { principal } = obtenerFotos(producto);
-
-  document.getElementById("detail-img").src = principal;
-  document.getElementById("detail-brand").textContent = (producto.marca || "").toUpperCase() + (producto.categoria ? " · " + producto.categoria : "");
-  document.getElementById("detail-title").textContent = producto.nombre || "Sin nombre";
+  document.getElementById("detail-img").src = obtenerFotos(producto).principal;
+  document.getElementById("detail-brand").textContent = (producto.marca || "").toUpperCase();
+  document.getElementById("detail-title").textContent = producto.nombre || "";
   document.getElementById("detail-price").textContent = producto.precio ? "$" + producto.precio : "Consultar";
-  document.getElementById("detail-desc").textContent = producto.descripcion || "Perfume 100% original con garantía Fortezza Perfums.";
-  document.getElementById("detail-wa-btn").href = linkWhatsapp(producto.nombre || "", producto.precio || "");
-
-  // Breadcrumbs
+  document.getElementById("detail-desc").textContent = producto.descripcion || "Perfume original de excelente fijación y proyección.";
+  document.getElementById("detail-wa-btn").href = linkWhatsapp(producto.nombre, producto.precio);
+  
   document.getElementById("detail-breadcrumbs").innerHTML = `
     <a href="#" onclick="verInicio();return false;">Inicio</a> / 
     <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a> / 
-    <span>${producto.nombre || ""}</span>
+    <span>${producto.nombre}</span>
   `;
 
   mostrarSoloSeccion("detalle-producto");
 }
 
 function volverOrigenDetalle() {
-  if (seccionAnterior === "catalogo") {
-    mostrarSoloSeccion("catalogo");
-  } else {
-    verInicio();
-  }
+  if (seccionAnterior === "catalogo") mostrarSoloSeccion("catalogo");
+  else verInicio();
 }
 
 function renderRecomendados() {
   const cont = document.getElementById("recomendados-grid");
-  const recomendados = CATALOGO.filter(p => (p.etiqueta || "").toLowerCase() === "nuevo" || (p.etiqueta || "").toLowerCase() === "recomendado").slice(0, 8);
-  
-  const lista = recomendados.length ? recomendados : CATALOGO.slice(0, 8);
-  if (!lista.length) { cont.innerHTML = '<div class="empty">No hay datos disponibles.</div>'; return; }
-
+  if (!cont) return;
+  const recomendados = CATALOGO.filter(p => (p.etiqueta || "").toLowerCase() === "nuevo" || (p.etiqueta || "").toLowerCase() === "destacado").slice(0, 10);
+  const lista = recomendados.length ? recomendados : CATALOGO.slice(0, 10);
   cont.innerHTML = lista.map(p => crearTarjetaHTML(p)).join("");
 }
 
-// Lógica de Carrusel Hero
-let slideIndex = 0;
-let slideInterval;
-
-function showSlides(n) {
-  const slides = document.querySelectorAll(".slide");
-  const dots = document.querySelectorAll(".dot");
-  
-  if (!slides.length) return;
-  if (n >= slides.length) slideIndex = 0;
-  if (n < 0) slideIndex = slides.length - 1;
-
-  slides.forEach(s => s.classList.remove("active"));
-  dots.forEach(d => d.classList.remove("active"));
-
-  slides[slideIndex].classList.add("active");
-  if(dots[slideIndex]) dots[slideIndex].classList.add("active");
+// Extrae el ID de YouTube desde varios formatos de enlace
+function obtenerIDYoutube(url) {
+  if (!url) return null;
+  let match = url.match(/(?:shorts\/|v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
 }
 
-function moveSlide(n) {
-  slideIndex += n;
-  showSlides(slideIndex);
-  resetTimer();
-}
-
-function currentSlide(n) {
-  slideIndex = n;
-  showSlides(slideIndex);
-  resetTimer();
-}
-
-function startTimer() {
-  slideInterval = setInterval(() => {
-    slideIndex++;
-    showSlides(slideIndex);
-  }, 4000);
-}
-
-function resetTimer() {
-  clearInterval(slideInterval);
-  startTimer();
-}
-
-// Convertir URL de YouTube normal o Short en URL Embed limpia sin controles
-function obtenerEmbedUrl(url) {
-  if (!url) return "";
-  let videoId = "";
-  
-  if (url.includes("shorts/")) {
-    videoId = url.split("shorts/")[1].split("?")[0].split("&")[0];
-  } else if (url.includes("watch?v=")) {
-    videoId = url.split("watch?v=")[1].split("&")[0];
-  } else if (url.includes("youtu.be/")) {
-    videoId = url.split("youtu.be/")[1].split("?")[0];
-  } else if (url.includes("embed/")) {
-    videoId = url.split("embed/")[1].split("?")[0];
-  }
-  
-  if (videoId) {
-    return `https://www.youtube.com/embed/${videoId}?controls=0&rel=0&showinfo=0&modestbranding=1&loop=1&playlist=${videoId}`;
-  }
-  return url;
-}
-
-// Cargar datos de Google Sheets
-async function cargarDatos() {
-  try {
-    const resP = await fetch(SHEET_PERFUMES);
-    const textP = await resP.text();
-    CATALOGO = parseCSV(textP);
-    
-    renderRecomendados();
-    renderCategorias();
-    renderMarcas();
-    renderCatalogo();
-  } catch(e) {
-    console.error("Error cargando perfumes:", e);
-  }
-
-  try {
-    const resT = await fetch(SHEET_TESTIMONIOS);
-    const textT = await resT.text();
-    const testimonios = parseCSV(textT);
-    const contT = document.getElementById("test-grid");
-    
-    const testimoniosValidos = testimonios.filter(t => (t.video || t.url || "").trim() !== "");
-
-    if (testimoniosValidos.length) {
-      contT.innerHTML = testimoniosValidos.map(t => {
-        const rawUrl = (t.video || t.url || "").trim();
-        const embedUrl = obtenerEmbedUrl(rawUrl);
-        return `
-          <div class="test-card">
-            <div class="test-card-video-wrapper">
-              <iframe src="${embedUrl}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-              <a class="video-overlay" href="${rawUrl}" target="_blank">
-                <div class="play-icon">▶</div>
-              </a>
-            </div>
-          </div>
-        `;
-      }).join("");
+// Activar o desactivar sonido al hacer clic en la pantalla
+function toggleAudioVideo(idx) {
+  if (playersYT[idx]) {
+    if (playersYT[idx].isMuted()) {
+      playersYT[idx].unMute();
     } else {
-      contT.innerHTML = '<div class="empty">No hay testimonios disponibles.</div>';
+      playersYT[idx].mute();
     }
-  } catch(e) {
-    console.error("Error cargando testimonios:", e);
-    document.getElementById("test-grid").innerHTML = '<div class="empty">No se pudieron cargar los testimonios.</div>';
   }
 }
 
-window.onload = () => {
-  cargarDatos();
-  startTimer();
-};
+function cargarTestimonios() {
+  fetch(SHEET_TESTIMONIOS)
+    .then(r => r.text())
+    .then(data => {
+      const testimonios = parseCSV(data);
+      const grid = document.getElementById("test-grid");
+      grid.innerHTML = "";
+      playersYT = [];
+
+      testimonios.forEach((t, i) => {
+        const videoId = obtenerIDYoutube(t.video_url || t.video || t.url);
+        if (videoId) {
+          const card = document.createElement("div");
+          card.className = "test-card";
+          card.innerHTML = `
+            <div class="test-card-video-wrapper">
+              <div id="yt-player-${i}"></div>
+              <div class="video-overlay" onclick="toggleAudioVideo(${i})"></div>
+            </div>
+          `;
+          grid.appendChild(card);
+
+          // Inicializar reproductor mediante la API de YouTube
+          setTimeout(() => {
+            if (window.YT && window.YT.Player) {
+              playersYT[i] = new YT.Player(`yt-player-${i}`, {
+                videoId: videoId,
+                playerVars: {
+                  'autoplay': 1,
+                  'controls': 0,
+                  'loop': 1,
+                  'playlist': videoId,
+                  'mute': 1,
+                  'modestbranding': 1,
+                  'rel': 0,
+                  'showinfo': 0,
+                  'disablekb': 1
+                },
+                events: {
+                  'onReady': function(e) { e.target.playVideo(); }
+                }
+              });
+            }
+          }, 500);
+        }
+      });
+    });
+}
+
+function cargarDatos() {
+  fetch(SHEET_PERFUMES)
+    .then(r => r.text())
+    .then(data => {
+      CATALOGO = parseCSV(data);
+      renderCategorias();
+      renderMarcas();
+      renderRecomendados();
+      renderCatalogo();
+    });
+  cargarTestimonios();
+}
+
+// Lógica de Carrusel Banner
+let currentSlideIndex = 0;
+function showSlide(index) {
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  if (index >= slides.length) currentSlideIndex = 0;
+  if (index < 0) currentSlideIndex = slides.length - 1;
+  slides.forEach(s => s.classList.remove('active'));
+  dots.forEach(d => d.classList.remove('active'));
+  if (slides[currentSlideIndex]) slides[currentSlideIndex].classList.add('active');
+  if (dots[currentSlideIndex]) dots[currentSlideIndex].classList.add('active');
+}
+function moveSlide(step) { currentSlideIndex += step; showSlide(currentSlideIndex); }
+function currentSlide(index) { currentSlideIndex = index; showSlide(currentSlideIndex); }
+setInterval(() => { moveSlide(1); }, 5000);
+
+window.onload = cargarDatos;
 </script>
 </body>
 </html>
