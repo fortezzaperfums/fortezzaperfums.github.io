@@ -8,7 +8,7 @@
 <meta name="description" content="Catálogo de perfumes árabes y de nicho originales. Domicilios gratis en Pereira y Dosquebradas, envíos a toda Colombia.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@600;700&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --onyx:#121212;
@@ -25,17 +25,17 @@
     margin:0;
     background:var(--onyx);
     color:var(--parchment);
-    font-family:'Montserrat', sans-serif;
+    font-family:'DM Sans', sans-serif;
     font-weight:300;
     line-height:1.6;
     letter-spacing:0.02em;
   }
   h1,h2,h3,.display{
-    font-family:'Cinzel', serif;
+    font-family:'DM Sans', sans-serif;
     font-weight:600;
     color:var(--parchment);
     margin:0;
-    letter-spacing:0.05em;
+    letter-spacing:0.03em;
   }
   a{color:inherit;}
   img{max-width:100%;display:block;}
@@ -43,7 +43,7 @@
 
   /* Promo bar */
   .promo{background:var(--bronze);color:var(--onyx);text-align:center;
-    font-size:.78rem;letter-spacing:.08em;padding:.55rem 1rem;font-weight:500;text-transform:uppercase;}
+    font-family:'DM Sans', sans-serif;font-size:.78rem;letter-spacing:.08em;padding:.55rem 1rem;font-weight:500;text-transform:uppercase;}
 
   /* Nav */
   nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-top:1.1rem;padding-bottom:1.1rem;
@@ -51,10 +51,10 @@
     transition:border-color .2s, box-shadow .2s;gap:1rem;}
   .brandmark{display:flex;align-items:center;gap:.6rem;}
   .brandmark img{height:38px;width:38px;object-fit:contain;border-radius:2px;}
-  .brandmark span{font-family:'Cinzel Decorative', 'Cinzel', serif;font-size:1.15rem;letter-spacing:.08em;font-weight:600;}
+  .brandmark span{font-family:'DM Sans', sans-serif;font-size:1.15rem;letter-spacing:.08em;font-weight:700;text-transform:uppercase;}
   
   .nav-right-container{display:flex;align-items:center;gap:1.5rem;}
-  .navlinks{display:flex;gap:1.6rem;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;}
+  .navlinks{display:flex;gap:1.6rem;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;font-family:'DM Sans', sans-serif;}
   .navlinks a{text-decoration:none;border-bottom:1px solid transparent;transition:all 0.2s;}
   .navlinks a:hover{border-color:var(--bronze);color:var(--bronze);}
 
@@ -70,7 +70,7 @@
     border-radius:20px;
     color:var(--parchment);
     padding:.35rem .8rem .35rem 2rem;
-    font-family:'Montserrat',sans-serif;
+    font-family:'DM Sans', sans-serif;
     font-size:.8rem;
     outline:none;
     width:160px;
@@ -93,12 +93,12 @@
     display:flex;flex-direction:column;width:100%;}
   .hero-img{width:100%;height:auto;object-fit:cover;display:block;}
   .hero-inner{padding:1.6rem 1.5rem;max-width:1180px;margin:0 auto;width:100%;}
-  .eyebrow{font-size:.78rem;letter-spacing:.14em;color:var(--bronze);margin-bottom:.6rem;text-transform:uppercase;}
+  .eyebrow{font-size:.78rem;letter-spacing:.14em;color:var(--bronze);margin-bottom:.6rem;text-transform:uppercase;font-family:'DM Sans', sans-serif;}
   .hero h1{font-size:clamp(2.2rem,5vw,3.6rem);max-width:14ch;line-height:1.1;}
-  .hero p{max-width:46ch;color:var(--stone);margin-top:.9rem;font-size:1.02rem;font-family:'Cormorant Garamond', serif;}
+  .hero p{max-width:46ch;color:var(--stone);margin-top:.9rem;font-size:1.02rem;font-family:'DM Sans', sans-serif;}
   .cta-row{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
   .btn{display:inline-block;padding:.7rem 1.4rem;font-size:.82rem;text-decoration:none;
-    border:1px solid var(--bronze);letter-spacing:.08em;cursor:pointer;text-transform:uppercase;font-weight:500;}
+    border:1px solid var(--bronze);letter-spacing:.08em;cursor:pointer;text-transform:uppercase;font-weight:500;font-family:'DM Sans', sans-serif;}
   .btn-solid{background:var(--bronze);color:var(--onyx);}
   .btn-outline{color:var(--parchment);}
 
@@ -106,8 +106,8 @@
   .section{padding:3.2rem 0;}
   .section-head{display:flex;justify-content:space-between;align-items:center;
     border-bottom:1px solid #35301F;padding-bottom:.8rem;margin-bottom:1.8rem;flex-wrap:wrap;gap:.8rem;}
-  .section-head h2{font-size:1.7rem;font-family:'Cinzel', serif;}
-  .section-head .sub{color:var(--stone);font-size:.85rem;font-family:'Cormorant Garamond', serif;font-style:italic;}
+  .section-head h2{font-size:1.7rem;font-family:'DM Sans', sans-serif;}
+  .section-head .sub{color:var(--stone);font-size:.85rem;font-family:'DM Sans', sans-serif;}
 
   /* Controles Filtro Catálogo */
   .catalog-controls{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;}
@@ -116,7 +116,7 @@
     border:1px solid #35301F;
     color:var(--parchment);
     padding:.5rem .8rem;
-    font-family:'Montserrat',sans-serif;
+    font-family:'DM Sans', sans-serif;
     font-size:.85rem;
     outline:none;
     cursor:pointer;
@@ -127,27 +127,27 @@
   .cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;
     background:#35301F;border:1px solid #35301F;}
   .cat-tile{background:var(--onyx-2);padding:2.2rem 1rem;text-align:center;cursor:pointer;
-    font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:.05em;transition:background .2s;}
+    font-family:'DM Sans', sans-serif;font-size:1.1rem;letter-spacing:.05em;transition:background .2s;}
   .cat-tile:hover{background:#26221680;}
   .cat-tile.active{background:var(--bronze);color:var(--onyx);}
 
   /* Marcas */
   .brand-row{display:flex;flex-wrap:wrap;gap:.6rem;}
   .brand-chip{border:1px solid var(--bronze-dim);padding:.45rem 1rem;font-size:.8rem;
-    cursor:pointer;background:transparent;color:var(--parchment);font-family:'Montserrat',sans-serif;letter-spacing:.05em;}
+    cursor:pointer;background:transparent;color:var(--parchment);font-family:'DM Sans', sans-serif;letter-spacing:.05em;}
   .brand-chip.active,.brand-chip:hover{background:var(--bronze);color:var(--onyx);border-color:var(--bronze);}
 
   /* Catálogo y Tarjetas */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.8rem;}
   .card{border-top:1px solid var(--bronze);padding-top:.9rem;cursor:pointer;position:relative;}
   .card img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#1a1a1a;transition:opacity 0.3s ease;}
-  .card .house{font-size:.7rem;color:var(--stone);letter-spacing:.1em;margin-top:.7rem;text-transform:uppercase;}
-  .card .name{font-family:'Cinzel',serif;font-size:1.15rem;margin-top:.2rem;letter-spacing:.03em;}
-  .card .desc{font-size:.88rem;color:var(--stone);margin-top:.4rem;min-height:2.4rem;font-family:'Cormorant Garamond',serif;font-style:italic;}
+  .card .house{font-size:.7rem;color:var(--stone);letter-spacing:.1em;margin-top:.7rem;text-transform:uppercase;font-family:'DM Sans', sans-serif;}
+  .card .name{font-family:'Oswald', sans-serif;font-size:1.25rem;margin-top:.2rem;letter-spacing:.03em;text-transform:uppercase;}
+  .card .desc{font-size:.88rem;color:var(--stone);margin-top:.4rem;min-height:2.4rem;font-family:'DM Sans', sans-serif;}
   .card .foot{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem;}
-  .card .price{font-family:'Cinzel',serif;font-size:1.15rem;color:var(--bronze);}
-  .card .wa{font-size:.76rem;text-decoration:none;border-bottom:1px solid var(--bronze);letter-spacing:.04em;}
-  .empty{color:var(--stone);font-size:.9rem;padding:2rem 0;font-family:'Cormorant Garamond',serif;}
+  .card .price{font-family:'Oswald', sans-serif;font-size:1.25rem;color:var(--bronze);font-weight:600;}
+  .card .wa{font-size:.76rem;text-decoration:none;border-bottom:1px solid var(--bronze);letter-spacing:.04em;font-family:'DM Sans', sans-serif;}
+  .empty{color:var(--stone);font-size:.9rem;padding:2rem 0;font-family:'DM Sans', sans-serif;}
 
   /* --- Carrusel Horizontal Recomendados --- */
   .horizontal-scroll-wrapper{
@@ -199,6 +199,7 @@
     color:var(--stone);
     margin-bottom:1.5rem;
     letter-spacing:.04em;
+    font-family:'DM Sans', sans-serif;
   }
   .breadcrumbs a{
     color:var(--parchment);
@@ -230,17 +231,20 @@
     color:var(--stone);
     letter-spacing:.12em;
     text-transform:uppercase;
+    font-family:'DM Sans', sans-serif;
   }
   .detail-title{
     font-size:clamp(1.8rem,4vw,2.5rem);
     margin:.3rem 0 .8rem 0;
-    font-family:'Cinzel', serif;
+    font-family:'Oswald', sans-serif;
+    text-transform:uppercase;
   }
   .detail-price{
-    font-family:'Cinzel',serif;
+    font-family:'Oswald', sans-serif;
     font-size:1.8rem;
     color:var(--bronze);
     margin-bottom:1.2rem;
+    font-weight:600;
   }
   .detail-desc{
     font-size:1.05rem;
@@ -250,8 +254,7 @@
     border-top:1px solid #35301F;
     border-bottom:1px solid #35301F;
     padding:1.2rem 0;
-    font-family:'Cormorant Garamond', serif;
-    font-style:italic;
+    font-family:'DM Sans', sans-serif;
   }
   .detail-actions{
     display:flex;
@@ -340,9 +343,9 @@
     color: var(--onyx);
   }
 
-  footer{border-top:1px solid #35301F;padding:2.6rem 0;font-size:.85rem;color:var(--stone);}
+  footer{border-top:1px solid #35301F;padding:2.6rem 0;font-size:.85rem;color:var(--stone);font-family:'DM Sans', sans-serif;}
   .foot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.6rem;}
-  footer strong{color:var(--parchment);font-weight:500;font-family:'Cinzel',serif;letter-spacing:.04em;}
+  footer strong{color:var(--parchment);font-weight:500;font-family:'DM Sans', sans-serif;letter-spacing:.04em;}
   footer a{text-decoration:none;border-bottom:1px solid var(--bronze-dim);}
   .foot-bottom{text-align:center;margin-top:2rem;color:#605A4C;font-size:.75rem;letter-spacing:.05em;}
 
@@ -372,14 +375,14 @@
   }
 
   .mobile-menu{display:none;flex-direction:column;background:var(--onyx-2);
-    border-top:1px solid var(--bronze-dim);border-bottom:1px solid var(--bronze-dim);}
+    border-top:1px solid var(--bronze-dim);border-bottom:1px solid var(--bronze-dim);font-family:'DM Sans', sans-serif;}
   .mobile-menu.abierto{display:flex;}
   .mobile-menu a{padding:1rem 1.5rem;font-size:.9rem;text-decoration:none;
     border-bottom:1px solid #2a251a;text-transform:uppercase;letter-spacing:.05em;}
 
   .oculto{display:none !important;}
   .volver{display:inline-block;margin-bottom:1rem;font-size:.85rem;color:var(--bronze);
-    text-decoration:none;border-bottom:1px solid var(--bronze);cursor:pointer;letter-spacing:.04em;}
+    text-decoration:none;border-bottom:1px solid var(--bronze);cursor:pointer;letter-spacing:.04em;font-family:'DM Sans', sans-serif;}
 
   /* --- Estilos Carrusel Hero --- */
   .carousel-container {
@@ -573,7 +576,7 @@
         </select>
         <div style="position:relative;display:flex;align-items:center;">
           <span style="position:absolute;left:8px;font-size:.85rem;color:var(--stone);">🔍</span>
-          <input id="buscador" placeholder="Buscar perfume..." style="background:transparent;border:1px solid #35301F;color:var(--parchment);padding:.5rem .8rem .5rem 2rem;font-family:'Montserrat',sans-serif;font-size:.85rem;outline:none;">
+          <input id="buscador" placeholder="Buscar perfume..." style="background:transparent;border:1px solid #35301F;color:var(--parchment);padding:.5rem .8rem .5rem 2rem;font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;">
         </div>
       </div>
     </div>
@@ -870,8 +873,8 @@ function verDetalleProducto(nombreProducto) {
   document.getElementById("detail-desc").textContent = producto.descripcion || "Perfume 100% original con garantía Fortezza Perfums.";
   document.getElementById("detail-wa-btn").href = linkWhatsapp(producto.nombre || "", producto.precio || "");
 
-  const bc = document.getElementById("detail-breadcrumbs");
-  bc.innerHTML = `
+  // Breadcrumbs
+  document.getElementById("detail-breadcrumbs").innerHTML = `
     <a href="#" onclick="verInicio();return false;">Inicio</a> / 
     <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a> / 
     <span>${producto.nombre || ""}</span>
@@ -890,96 +893,25 @@ function volverOrigenDetalle() {
 
 function renderRecomendados() {
   const cont = document.getElementById("recomendados-grid");
-  const destacados = CATALOGO.filter(p => {
-    const et = (p.etiqueta || "").toLowerCase();
-    return et === "nuevo" || et === "recomendado";
-  });
+  const recomendados = CATALOGO.filter(p => (p.etiqueta || "").toLowerCase() === "nuevo" || (p.etiqueta || "").toLowerCase() === "recomendado").slice(0, 8);
   
-  const lista = destacados.length ? destacados : CATALOGO;
-  if (!lista.length) { cont.innerHTML = '<div class="empty">Agrega perfumes a tu Sheet para verlos aquí.</div>'; return; }
-  
+  const lista = recomendados.length ? recomendados : CATALOGO.slice(0, 8);
+  if (!lista.length) { cont.innerHTML = '<div class="empty">No hay datos disponibles.</div>'; return; }
+
   cont.innerHTML = lista.map(p => crearTarjetaHTML(p)).join("");
 }
 
-fetch(SHEET_PERFUMES)
-  .then(r => r.text())
-  .then(txt => {
-    CATALOGO = parseCSV(txt);
-    renderRecomendados();
-    renderCategorias();
-    renderMarcas();
-    renderCatalogo();
-  })
-  .catch(() => {
-    document.getElementById("catalogo-grid").innerHTML =
-      '<div class="empty">No se pudo cargar el catálogo. Revisa el link de Google Sheets (SHEET_PERFUMES) en el código.</div>';
-  });
-
-function extraerYouTubeID(url) {
-  if (!url) return null;
-  if (url.includes("/shorts/")) {
-    return url.split("/shorts/")[1]?.split("?")[0]?.split("&")[0];
-  }
-  if (url.includes("v=")) {
-    return url.split("v=")[1]?.split("&")[0];
-  }
-  if (url.includes("youtu.be/")) {
-    return url.split("youtu.be/")[1]?.split("?")[0];
-  }
-  return null;
-}
-
-fetch(SHEET_TESTIMONIOS)
-  .then(r => r.text())
-  .then(txt => {
-    const testimonios = parseCSV(txt);
-    const cont = document.getElementById("test-grid");
-
-    const videosValidos = testimonios.filter(t => {
-      const url = t.video || t.link || t['video url'] || t['link video'];
-      return extraerYouTubeID(url);
-    });
-
-    if (!videosValidos.length) {
-      cont.innerHTML = '<div class="empty">No hay testimonios disponibles en este momento.</div>';
-      return;
-    }
-
-    cont.innerHTML = videosValidos.map(t => {
-      const rawUrl = t.video || t.link || t['video url'] || t['link video'];
-      const videoId = extraerYouTubeID(rawUrl);
-      const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&rel=0&playsinline=1`;
-      const directUrl = `https://www.youtube.com/watch?v=${videoId}`;
-
-      return `
-        <div class="test-card">
-          <div class="test-card-video-wrapper">
-            <iframe src="${embedUrl}" loading="lazy" allow="autoplay"></iframe>
-            <a href="${directUrl}" target="_blank" class="video-overlay" title="Ver video completo en YouTube">
-              <div class="play-icon">▶</div>
-            </a>
-          </div>
-        </div>
-      `;
-    }).join("");
-  })
-  .catch(() => {
-    document.getElementById("test-grid").innerHTML = '<div class="empty">Error al cargar testimonios.</div>';
-  });
-
-/* --- LÓGICA DE CARRUSEL HERO --- */
+// Lógica de Carrusel Hero
 let slideIndex = 0;
 let slideInterval;
 
-function showSlide(index) {
+function showSlides(n) {
   const slides = document.querySelectorAll(".slide");
   const dots = document.querySelectorAll(".dot");
   
-  if (slides.length === 0) return;
-  
-  if (index >= slides.length) slideIndex = 0;
-  else if (index < 0) slideIndex = slides.length - 1;
-  else slideIndex = index;
+  if (!slides.length) return;
+  if (n >= slides.length) slideIndex = 0;
+  if (n < 0) slideIndex = slides.length - 1;
 
   slides.forEach(s => s.classList.remove("active"));
   dots.forEach(d => d.classList.remove("active"));
@@ -989,19 +921,22 @@ function showSlide(index) {
 }
 
 function moveSlide(n) {
-  showSlide(slideIndex + n);
+  slideIndex += n;
+  showSlides(slideIndex);
   resetTimer();
 }
 
 function currentSlide(n) {
-  showSlide(n);
+  slideIndex = n;
+  showSlides(slideIndex);
   resetTimer();
 }
 
 function startTimer() {
   slideInterval = setInterval(() => {
-    moveSlide(1);
-  }, 5000);
+    slideIndex++;
+    showSlides(slideIndex);
+  }, 4000);
 }
 
 function resetTimer() {
@@ -1009,8 +944,54 @@ function resetTimer() {
   startTimer();
 }
 
-startTimer();
-</script>
+// Cargar datos
+async function cargarDatos() {
+  try {
+    const resP = await fetch(SHEET_PERFUMES);
+    const textP = await resP.text();
+    CATALOGO = parseCSV(textP);
+    
+    renderRecomendados();
+    renderCategorias();
+    renderMarcas();
+    renderCatalogo();
+  } catch(e) {
+    console.error("Error cargando perfumes:", e);
+  }
 
+  try {
+    const resT = await fetch(SHEET_TESTIMONIOS);
+    const textT = await resT.text();
+    const testimonios = parseCSV(textT);
+    const contT = document.getElementById("test-grid");
+    
+    if (testimonios.length) {
+      contT.innerHTML = testimonios.map(t => {
+        const videoUrl = t.video || t.url || "";
+        const embedUrl = videoUrl.replace("watch?v=", "embed/");
+        return `
+          <div class="test-card">
+            <div class="test-card-video-wrapper">
+              <iframe src="${embedUrl}" allowfullscreen></iframe>
+              <a class="video-overlay" href="${videoUrl}" target="_blank">
+                <div class="play-icon">▶</div>
+              </a>
+            </div>
+          </div>
+        `;
+      }).join("");
+    } else {
+      contT.innerHTML = '<div class="empty">No hay testimonios disponibles.</div>';
+    }
+  } catch(e) {
+    console.error("Error cargando testimonios:", e);
+  }
+}
+
+window.onload = () => {
+  cargarDatos();
+  startTimer();
+};
+</script>
 </body>
 </html>
