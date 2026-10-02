@@ -479,8 +479,8 @@ const SHEET_TESTIMONIOS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSV6Z
 
 const FOTO_RESPALDO = "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400";
 
-let playersYT = {};
 let CATALOGO = [];
+let TESTIMONIOS = [];
 let filtroCategoria = "Todas";
 let filtroMarca = "Todas";
 let filtroEtiqueta = "Todas";
@@ -513,6 +513,8 @@ function parseCSV(texto) {
   }
   if (campo !== "" || fila.length) { fila.push(campo); filas.push(fila); }
 
+  if (filas.length === 0) return [];
+
   const sinTildes = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   const encabezados = filas.shift().map(h => sinTildes(h.trim().toLowerCase()));
 
@@ -521,6 +523,26 @@ function parseCSV(texto) {
     encabezados.forEach((h, idx) => { obj[h] = (f[idx] || "").trim(); });
     return obj;
   });
+}
+
+function normalizarProducto(item) {
+  const getVal = (claves) => {
+    for (let k of claves) {
+      if (item[k] !== undefined && item[k] !== "") return item[k];
+    }
+    return "";
+  };
+
+  return {
+    nombre: getVal(["nombre", "producto", "title", "perfume"]),
+    marca: getVal(["marca", "brand"]),
+    precio: getVal(["precio", "price", "valor"]),
+    categoria: getVal(["categoria", "category"]),
+    genero: getVal(["genero", "gender", "genero/categoria"]),
+    etiqueta: getVal(["etiqueta", "tag", "estado"]),
+    descripcion: getVal(["descripcion", "description", "desc"]),
+    imagen: getVal(["imagen", "foto", "image", "url", "img"]) || FOTO_RESPALDO
+  };
 }
 
 function linkWhatsapp(nombre, precio) {
@@ -663,257 +685,181 @@ function renderMarcas() {
   if (carruselInicio) carruselInicio.innerHTML = htmlLogos;
   if (carruselSeccion) carruselSeccion.innerHTML = htmlLogos;
 
-  const contBotones = document.getElementById("brand-row");
-  if (contBotones) {
-    contBotones.innerHTML = "";
-    marcas.forEach(m => {
-      const b = document.createElement("button");
-      b.className = "brand-chip" + (m === filtroMarca ? " active" : "");
-      b.textContent = m;
-      b.onclick = () => verColeccion("marca", m);
-      contBotones.appendChild(b);
-    });
+  const brandRow = document.getElementById("brand-row");
+  if (brandRow) {
+    brandRow.innerHTML = marcas.map(m => {
+      const mEsc = m.replace(/'/g, "\\'");
+      return `<button class="brand-chip ${m === filtroMarca ? 'active' : ''}" onclick="verColeccion('marca', '${mEsc}')">${m}</button>`;
+    }).join("");
   }
-}
-
-function obtenerFotos(p) {
-  const fotosRaw = p.foto || p.imagen || p.imagenes || p.fotos || "";
-  const fotos = fotosRaw.split(",").map(f => f.trim()).filter(Boolean);
-  const principal = fotos[0] || FOTO_RESPALDO;
-  const secundaria = fotos[1] || principal;
-  return { principal, secundaria };
-}
-
-function crearTarjetaHTML(p) {
-  const { principal } = obtenerFotos(p);
-  const nombreLimpio = (p.nombre || "Sin nombre").replace(/'/g, "\\'");
-  const precioFormateado = p.precio ? `$${p.precio}` : 'Consultar';
-
-  return `
-    <div class="card" onclick="verDetalleProducto('${nombreLimpio}')">
-      <div class="card-img-wrap">
-        <img src="${principal}" alt="${p.nombre || ''}" onerror="this.src='${FOTO_RESPALDO}'">
-      </div>
-      <div class="card-info">
-        <div class="card-brand">${p.marca || 'Fortezza'}</div>
-        <div class="card-title">${p.nombre || 'Perfume'}</div>
-        <div class="card-price">${precioFormateado}</div>
-      </div>
-    </div>
-  `;
 }
 
 function renderRecomendados() {
   const cont = document.getElementById("recomendados-grid");
   if (!cont) return;
-  const lista = CATALOGO.filter(p => (p.etiqueta || "").toLowerCase().includes("nuevo") || (p.etiqueta || "").toLowerCase().includes("destacado")).slice(0, 10);
-  const items = lista.length ? lista : CATALOGO.slice(0, 8);
-  if (!items.length) { cont.innerHTML = '<div class="empty">Próximamente productos.</div>'; return; }
-  cont.innerHTML = items.map(p => crearTarjetaHTML(p)).join("");
-}
+  
+  const lista = CATALOGO.filter(p => p.etiqueta.toLowerCase().includes("nuevo") || p.etiqueta.toLowerCase().includes("lanzamiento") || p.etiqueta.toLowerCase().includes("destacado"));
+  const aMostrar = lista.length > 0 ? lista : CATALOGO.slice(0, 10);
 
-// BÚSQUEDA INTELIGENTE DE GÉNERO
-function coincideGenero(p, filtro) {
-  if (filtro === "Todas") return true;
-
-  // Se concatenan Marca, Nombre, Descripción, Categoría y Etiqueta sin tildes ni mayúsculas
-  const texto = `${p.marca || ''} ${p.nombre || ''} ${p.descripcion || ''} ${p.categoria || ''} ${p.etiqueta || ''}`
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
-
-  const f = filtro.toLowerCase();
-
-  if (f === "hombre") {
-    return texto.includes("hombre") || texto.includes("masculino") || texto.includes("men") || texto.includes("caballero");
-  }
-  if (f === "mujer") {
-    return texto.includes("mujer") || texto.includes("femenino") || texto.includes("women") || texto.includes("dama");
-  }
-  if (f === "unisex") {
-    return texto.includes("unisex") || texto.includes("compartida") || texto.includes("todos");
+  if (aMostrar.length === 0) {
+    cont.innerHTML = `<div class="empty">Próximamente productos.</div>`;
+    return;
   }
 
-  return false;
+  cont.innerHTML = aMostrar.map((p, idx) => `
+    <div class="card" onclick="verDetalle(${CATALOGO.indexOf(p)})">
+      <div class="card-img-wrap">
+        <img src="${p.imagen}" alt="${p.nombre}" onerror="this.src=FOTO_RESPALDO">
+      </div>
+      <div class="card-info">
+        <div class="card-brand">${p.marca}</div>
+        <div class="card-title">${p.nombre}</div>
+        <div class="card-price">$${p.precio}</div>
+      </div>
+    </div>
+  `).join("");
 }
 
 function renderCatalogo() {
-  const grid = document.getElementById("catalogo-grid");
-  if (!grid) return;
-  
-  const q = (document.getElementById("buscador") ? document.getElementById("buscador").value : "").toLowerCase().trim();
+  const cont = document.getElementById("catalogo-grid");
+  if (!cont) return;
+
+  const txtBuscar = (document.getElementById("buscador")?.value || "").toLowerCase().trim();
 
   const filtrados = CATALOGO.filter(p => {
-    const matchCat = filtroCategoria === "Todas" || (p.categoria || "").toLowerCase() === filtroCategoria.toLowerCase();
-    const matchMarca = filtroMarca === "Todas" || (p.marca || "").toLowerCase() === filtroMarca.toLowerCase();
-    const matchEtiq = filtroEtiqueta === "Todas" || (p.etiqueta || "").toLowerCase().includes(filtroEtiqueta.toLowerCase());
+    const matchCat = filtroCategoria === "Todas" || p.categoria.toLowerCase() === filtroCategoria.toLowerCase();
+    const matchMarca = filtroMarca === "Todas" || p.marca.toLowerCase() === filtroMarca.toLowerCase();
+    const matchEtiq = filtroEtiqueta === "Todas" || p.etiqueta.toLowerCase().includes(filtroEtiqueta.toLowerCase());
     
-    // Evaluador de Género
-    const matchGen = coincideGenero(p, filtroGenero);
+    let matchGen = true;
+    if (filtroGenero !== "Todas") {
+      const g = filtroGenero.toLowerCase();
+      const pGen = (p.genero || p.categoria || "").toLowerCase();
+      const pNom = p.nombre.toLowerCase();
+      const pDesc = p.descripcion.toLowerCase();
 
-    const matchQ = !q || (p.nombre || "").toLowerCase().includes(q) || (p.marca || "").toLowerCase().includes(q) || (p.categoria || "").toLowerCase().includes(q) || (p.descripcion || "").toLowerCase().includes(q);
+      if (g === "hombre") matchGen = pGen.includes("hombre") || pGen.includes("masculino") || pNom.includes("homme") || pNom.includes("man");
+      else if (g === "mujer") matchGen = pGen.includes("mujer") || pGen.includes("femenino") || pNom.includes("femme") || pNom.includes("woman");
+      else if (g === "unisex") matchGen = pGen.includes("unisex") || pNom.includes("unisex");
+    }
 
-    return matchCat && matchMarca && matchEtiq && matchGen && matchQ;
+    const matchSearch = !txtBuscar || 
+      p.nombre.toLowerCase().includes(txtBuscar) || 
+      p.marca.toLowerCase().includes(txtBuscar) || 
+      p.descripcion.toLowerCase().includes(txtBuscar);
+
+    return matchCat && matchMarca && matchEtiq && matchGen && matchSearch;
   });
 
-  if (!filtrados.length) {
-    grid.innerHTML = '<div class="empty">No se encontraron perfumes con estos criterios.</div>';
+  if (filtrados.length === 0) {
+    cont.innerHTML = `<div class="empty">No se encontraron perfumes con estos criterios.</div>`;
     return;
   }
-  grid.innerHTML = filtrados.map(p => crearTarjetaHTML(p)).join("");
+
+  cont.innerHTML = filtrados.map(p => `
+    <div class="card" onclick="verDetalle(${CATALOGO.indexOf(p)})">
+      <div class="card-img-wrap">
+        <img src="${p.imagen}" alt="${p.nombre}" onerror="this.src=FOTO_RESPALDO">
+      </div>
+      <div class="card-info">
+        <div class="card-brand">${p.marca}</div>
+        <div class="card-title">${p.nombre}</div>
+        <div class="card-price">$${p.precio}</div>
+      </div>
+    </div>
+  `).join("");
 }
 
-function verDetalleProducto(nombre) {
-  const p = CATALOGO.find(item => item.nombre === nombre);
+function verDetalle(index) {
+  const p = CATALOGO[index];
   if (!p) return;
-  
-  const { principal } = obtenerFotos(p);
-  
-  document.getElementById("detail-img").src = principal;
-  document.getElementById("detail-brand").textContent = p.marca || "Fortezza";
-  document.getElementById("detail-title").textContent = p.nombre || "";
-  document.getElementById("detail-price").textContent = p.precio ? `$${p.precio}` : "Consultar Precio";
-  document.getElementById("detail-desc").textContent = p.descripcion || p.detalle || "Fragancia de lujo garantizada 100% original.";
-  
-  const btnWA = document.getElementById("detail-wa-btn");
-  btnWA.href = linkWhatsapp(p.nombre, p.precio);
-  
-  document.getElementById("detail-breadcrumbs").innerHTML = `
-    <a href="#" onclick="verInicio();return false;">Inicio</a> / 
-    <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a> / 
-    <span>${p.nombre}</span>
-  `;
-  
+
+  document.getElementById("detail-img").src = p.imagen;
+  document.getElementById("detail-brand").textContent = p.marca;
+  document.getElementById("detail-title").textContent = p.nombre;
+  document.getElementById("detail-price").textContent = `$${p.precio}`;
+  document.getElementById("detail-desc").textContent = p.descripcion || "Fragancia exclusiva de alta durabilidad y proyección.";
+  document.getElementById("detail-wa-btn").href = linkWhatsapp(p.nombre, p.precio);
+
+  const bc = document.getElementById("detail-breadcrumbs");
+  if (bc) {
+    bc.innerHTML = `<a href="#" onclick="verInicio();return false;">Inicio</a> / <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a> / <span>${p.nombre}</span>`;
+  }
+
   mostrarSoloSeccion("detalle-producto");
 }
 
 function volverOrigenDetalle() {
-  if (seccionAnterior === "catalogo") {
-    mostrarSoloSeccion("catalogo");
-  } else {
-    verInicio();
-  }
+  if (seccionAnterior === "catalogo") mostrarSoloSeccion("catalogo");
+  else verInicio();
 }
 
-/* CAROUSEL HERO */
+/* Carrusel Banner Principal */
 function showSlide(index) {
   const slides = document.querySelectorAll(".slide");
   const dots = document.querySelectorAll(".dot");
-  if (!slides.length) return;
+  if (slides.length === 0) return;
+  
   if (index >= slides.length) slideIndex = 0;
   if (index < 0) slideIndex = slides.length - 1;
+
   slides.forEach((s, i) => s.classList.toggle("active", i === slideIndex));
   dots.forEach((d, i) => d.classList.toggle("active", i === slideIndex));
 }
+
 function moveSlide(n) { showSlide(slideIndex += n); }
 function currentSlide(n) { showSlide(slideIndex = n); }
-setInterval(() => moveSlide(1), 5000);
 
-/* TESTIMONIOS Y YOUTUBE */
-function extraerIDYoutube(url) {
-  if (!url) return null;
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  const match = url.match(regExp);
-  return (match && match[2].length === 11) ? match[2] : null;
-}
+setInterval(() => { moveSlide(1); }, 5000);
 
-function renderTestimonios(csv) {
-  const datos = parseCSV(csv);
-  const grid = document.getElementById("test-grid");
-  if (!grid) return;
-  grid.innerHTML = "";
-
-  datos.forEach((item, index) => {
-    const videoURL = item.video || item.link || item.url || item.youtube || "";
-    const ytID = extraerIDYoutube(videoURL);
-
-    if (ytID) {
-      const iframeID = `player-yt-${index}`;
-      const card = document.createElement("div");
-      card.className = "test-card";
-      card.innerHTML = `
-        <div class="test-card-video-wrapper">
-          <div id="${iframeID}"></div>
-          <div class="video-click-overlay" onclick="toggleMuteVideo('${iframeID}')">
-            <div class="sound-badge" id="badge-${iframeID}">🔇</div>
-          </div>
-        </div>
-      `;
-      grid.appendChild(card);
-
-      setTimeout(() => {
-        playersYT[iframeID] = new YT.Player(iframeID, {
-          videoId: ytID,
-          playerVars: {
-            'autoplay': 1,
-            'controls': 0,
-            'mute': 1,
-            'loop': 1,
-            'playlist': ytID,
-            'modestbranding': 1,
-            'rel': 0,
-            'showinfo': 0,
-            'playsinline': 1,
-            'disablekb': 1,
-            'fs': 0
-          },
-          events: {
-            'onReady': (e) => {
-              e.target.mute();
-              e.target.playVideo();
-            }
-          }
-        });
-      }, 500);
-    }
-  });
-}
-
-function toggleMuteVideo(iframeID) {
-  const player = playersYT[iframeID];
-  const badge = document.getElementById(`badge-${iframeID}`);
-  if (player && typeof player.isMuted === 'function') {
-    if (player.isMuted()) {
-      player.unMute();
-      if (badge) badge.textContent = "🔊";
-    } else {
-      player.mute();
-      if (badge) badge.textContent = "🔇";
-    }
-  }
-}
-
-// INICIALIZACIÓN Y DESCARGA DE SPREADSHEETS
+/* Cargar Datos desde Google Sheets */
 async function cargarDatos() {
   try {
     const resP = await fetch(SHEET_PERFUMES);
-    if (resP.ok) {
-      const csvP = await resP.text();
-      CATALOGO = parseCSV(csvP);
-    }
+    if (!resP.ok) throw new Error("Error HTTP " + resP.status);
+    const csvP = await resP.text();
+    const crudos = parseCSV(csvP);
+    CATALOGO = crudos.map(normalizarProducto);
+
+    renderCategorias();
+    renderMarcas();
+    renderRecomendados();
+    renderCatalogo();
   } catch(e) {
-    console.log("Error al cargar productos:", e);
+    console.error("Error cargando catálogo:", e);
+    const grid = document.getElementById("catalogo-grid");
+    if (grid) grid.innerHTML = `<div class="empty" style="color:#ff6b6b;">Error al cargar el catálogo desde Google Sheets. Verifica que la hoja sea pública.</div>`;
   }
 
   try {
     const resT = await fetch(SHEET_TESTIMONIOS);
     if (resT.ok) {
       const csvT = await resT.text();
-      renderTestimonios(csvT);
+      TESTIMONIOS = parseCSV(csvT);
+      renderTestimonios();
     }
   } catch(e) {
-    console.log("Error al cargar testimonios:", e);
+    console.warn("No se cargaron testimonios:", e);
   }
-
-  renderCategorias();
-  renderMarcas();
-  renderRecomendados();
-  renderCatalogo();
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  cargarDatos();
-});
+function renderTestimonios() {
+  const cont = document.getElementById("test-grid");
+  if (!cont || TESTIMONIOS.length === 0) return;
+
+  cont.innerHTML = TESTIMONIOS.map(t => {
+    const cliente = t.cliente || t.nombre || "Cliente satisfecha";
+    const comentario = t.comentario || t.texto || "";
+    return `
+      <div class="test-card">
+        <div style="font-weight:600;font-size:.9rem;color:var(--parchment);margin-bottom:.3rem;">${cliente}</div>
+        <div style="font-size:.82rem;color:var(--stone);">${comentario}</div>
+      </div>
+    `;
+  }).join("");
+}
+
+window.addEventListener("DOMContentLoaded", cargarDatos);
 </script>
 </body>
 </html>
