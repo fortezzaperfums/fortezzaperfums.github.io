@@ -108,24 +108,65 @@
   .cat-tile:hover{background:#26221680;}
   .cat-tile.active{background:var(--bronze);color:var(--onyx);}
 
-  /* --- CARRUSEL DE LOGOS DE MARCAS --- */
-  .brand-carousel-wrapper{position:relative;width:100%;margin-bottom:2rem;display:flex;align-items:center;}
-  .brand-carousel{
-    display:flex;gap:1.5rem;overflow-x:auto;scroll-behavior:smooth;padding:.5rem 0;width:100%;
-    scrollbar-width:none;
+  /* --- ESTILOS MEJORADOS PARA EL CARRUSEL DE MARCAS --- */
+  .brand-carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    width: 100%;
   }
-  .brand-carousel::-webkit-scrollbar{display:none;}
-  .brand-logo-card{
-    flex:0 0 140px;min-width:140px;height:80px;background:var(--onyx-2);border:1px solid #35301F;
-    border-radius:8px;display:flex;align-items:center;justify-content:center;padding:.8rem;cursor:pointer;
-    transition:transform .2s ease, border-color .2s ease;
+
+  .brand-carousel {
+    display: flex;
+    gap: 1.2rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 0.6rem 0;
+    width: 100%;
+    scrollbar-width: none;
   }
-  .brand-logo-card:hover{border-color:var(--bronze);transform:translateY(-3px);}
-  .brand-logo-card img{max-height:100%;max-width:100%;object-fit:contain;filter:brightness(0.9);}
-  .brand-logo-card span{font-size:.8rem;font-weight:600;text-transform:uppercase;text-align:center;}
+
+  .brand-carousel::-webkit-scrollbar { display: none; }
+
+  .brand-logo-card {
+    flex: 0 0 150px;
+    min-width: 150px;
+    height: 75px;
+    background: var(--onyx-2);
+    border: 1px solid #35301F;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .brand-logo-card:hover {
+    border-color: var(--bronze);
+    transform: translateY(-3px);
+  }
+
+  .brand-logo-card img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  .brand-fallback-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--parchment);
+    text-align: center;
+  }
 
   /* Botones de texto en la sección de marcas */
-  .brand-row{display:flex;flex-wrap:wrap;gap:.6rem;}
+  .brand-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem;}
   .brand-chip{border:1px solid var(--bronze-dim);padding:.6rem 1.2rem;font-size:.85rem;
     cursor:pointer;background:var(--onyx-2);color:var(--parchment);font-family:'DM Sans', sans-serif;letter-spacing:.05em;border-radius:6px;transition:all .2s;}
   .brand-chip.active,.brand-chip:hover{background:var(--bronze);color:var(--onyx);border-color:var(--bronze);}
@@ -148,7 +189,7 @@
 
   .empty{color:var(--stone);font-size:.9rem;padding:2rem 0;font-family:'DM Sans', sans-serif;}
 
-  /* Carrusel Horizontal Lanzamientos */
+  /* Carrusel Horizontal Lanzamientos y Marcas */
   .horizontal-scroll-wrapper{position:relative;width:100%;display:flex;align-items:center;}
   .scroll-container{display:flex;gap:1.2rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;width:100%;scrollbar-width:thin;scrollbar-color:var(--bronze-dim) transparent;}
   .scroll-container::-webkit-scrollbar{height:6px;}
@@ -191,7 +232,6 @@
     position: absolute;top: -12%;left: -12%;width: 124%;height: 124%;
     border: 0;pointer-events: none;
   }
-  /* Overlay invisible para bloquear clics hacia youtube y controlar sonido */
   .video-click-overlay {
     position: absolute;top: 0;left: 0;width: 100%;height: 100%;
     z-index: 20;cursor: pointer;background: transparent;
@@ -342,11 +382,13 @@
     </div>
   </section>
 
-  <!-- 2. CARRUSEL DE MARCAS EN INICIO (UBICADO ENTRE LANZAMIENTOS Y TESTIMONIOS) -->
+  <!-- 2. CARRUSEL DE MARCAS EN INICIO -->
   <section class="section" id="marcas-inicio">
     <div class="section-head"><h2>Nuestras Marcas</h2></div>
-    <div class="brand-carousel-wrapper">
+    <div class="horizontal-scroll-wrapper">
+      <button class="scroll-arrow left" onclick="scrollCarruselMarcas(-300)">&#10094;</button>
       <div class="brand-carousel" id="brand-carousel-inicio"></div>
+      <button class="scroll-arrow right" onclick="scrollCarruselMarcas(300)">&#10095;</button>
     </div>
   </section>
 
@@ -363,11 +405,13 @@
     <div class="section-head"><h2>Compra por marca</h2></div>
     
     <!-- Carrusel de logos Arriba -->
-    <div class="brand-carousel-wrapper">
+    <div class="horizontal-scroll-wrapper">
+      <button class="scroll-arrow left" onclick="scrollCarruselMarcas(-300)">&#10094;</button>
       <div class="brand-carousel" id="brand-carousel-seccion"></div>
+      <button class="scroll-arrow right" onclick="scrollCarruselMarcas(300)">&#10095;</button>
     </div>
 
-    <!-- Botones interactivos de Texto Abajo (Conservados) -->
+    <!-- Botones interactivos de Texto Abajo -->
     <div class="brand-row" id="brand-row"></div>
   </section>
 
@@ -597,6 +641,11 @@ function scrollRecomendados(amount) {
   if (container) container.scrollBy({ left: amount, behavior: 'smooth' });
 }
 
+function scrollCarruselMarcas(amount) {
+  const carruseles = document.querySelectorAll(".brand-carousel");
+  carruseles.forEach(c => c.scrollBy({ left: amount, behavior: "smooth" }));
+}
+
 function cambiarGenero(valor) {
   filtroGenero = valor;
   renderCatalogo();
@@ -605,6 +654,7 @@ function cambiarGenero(valor) {
 function renderCategorias() {
   const categorias = ["Todas", ...new Set(CATALOGO.map(p => p.categoria).filter(Boolean))];
   const cont = document.getElementById("cat-grid");
+  if (!cont) return;
   cont.innerHTML = "";
   categorias.forEach(cat => {
     const div = document.createElement("div");
@@ -613,39 +663,43 @@ function renderCategorias() {
     div.onclick = () => cat === "Todas" ? verInicio() : verColeccion("categoria", cat);
     cont.appendChild(div);
   });
-  document.getElementById("cat-count").textContent = `${CATALOGO.length} fragancias`;
+  const catCount = document.getElementById("cat-count");
+  if (catCount) catCount.textContent = `${CATALOGO.length} fragancias`;
 }
 
-/* MARCAS: CARROUSEL CON LOGOS + BOTONES CONSERVAR */
+/* MARCAS: CARRUSEL CON LOGOS Y FALLBACK ELEGANTE */
 function renderMarcas() {
   const marcas = [...new Set(CATALOGO.map(p => p.marca).filter(Boolean))];
   
-  // HTML para carrusel de logos
   const htmlLogos = marcas.map(m => {
     const nombreArchivo = m.toLowerCase().replace(/[^a-z0-9]/g, "");
     const rutaImagen = `imagenes/marcas/${nombreArchivo}.png`;
+    const marcaEscapada = m.replace(/'/g, "\\'");
     return `
-      <div class="brand-logo-card" onclick="verColeccion('marca', '${m}')" title="${m}">
+      <div class="brand-logo-card" onclick="verColeccion('marca', '${marcaEscapada}')" title="${m}">
         <img src="${rutaImagen}" alt="${m}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-        <span style="display:none;">${m}</span>
+        <span class="brand-fallback-text" style="display:none;">${m}</span>
       </div>
     `;
   }).join("");
 
-  // Insertar carrusel en Inicio y en la Sección Marcas
-  document.getElementById("brand-carousel-inicio").innerHTML = htmlLogos;
-  document.getElementById("brand-carousel-seccion").innerHTML = htmlLogos;
+  const contInicio = document.getElementById("brand-carousel-inicio");
+  const contSeccion = document.getElementById("brand-carousel-seccion");
 
-  // Renderizar los botones interactivos de texto debajo
+  if (contInicio) contInicio.innerHTML = htmlLogos;
+  if (contSeccion) contSeccion.innerHTML = htmlLogos;
+
   const contBotones = document.getElementById("brand-row");
-  contBotones.innerHTML = "";
-  marcas.forEach(m => {
-    const b = document.createElement("button");
-    b.className = "brand-chip" + (m === filtroMarca ? " active" : "");
-    b.textContent = m;
-    b.onclick = () => verColeccion("marca", m);
-    contBotones.appendChild(b);
-  });
+  if (contBotones) {
+    contBotones.innerHTML = "";
+    marcas.forEach(m => {
+      const b = document.createElement("button");
+      b.className = "brand-chip" + (m === filtroMarca ? " active" : "");
+      b.textContent = m;
+      b.onclick = () => verColeccion("marca", m);
+      contBotones.appendChild(b);
+    });
+  }
 }
 
 function obtenerFotos(p) {
@@ -655,7 +709,7 @@ function obtenerFotos(p) {
   return { principal, secundaria };
 }
 
-/* TARJETAS CON NOMBRE, MARCA Y PRECIO (LANZAMIENTOS Y CATÁLOGO) */
+/* TARJETAS DE PRODUCTO */
 function crearTarjetaHTML(p) {
   const { principal, secundaria } = obtenerFotos(p);
   const nombreLimpio = (p.nombre || "Sin nombre").replace(/'/g, "\\'");
@@ -665,13 +719,13 @@ function crearTarjetaHTML(p) {
     <div class="card" onclick="verDetalleProducto('${nombreLimpio}')">
       <div class="card-img-wrap">
         <img src="${principal}" alt="${p.nombre || ''}" 
-             onmouseover="if('${secundaria}' !== '${principal}') this.src='${secundaria}'" 
-             onmouseout="this.src='${principal}'"
+             onmouseover="if('${secundaria}' !== '${principal}') this.src='${secundaria}';" 
+             onmouseout="this.src='${principal}';"
              onerror="this.src='${FOTO_RESPALDO}'">
       </div>
       <div class="card-info">
         <div class="card-brand">${p.marca || ''}</div>
-        <div class="card-title">${p.nombre || ''}</div>
+        <div class="card-title">${p.nombre || 'Sin nombre'}</div>
         <div class="card-price">${precioFormateado}</div>
       </div>
     </div>
@@ -681,66 +735,64 @@ function crearTarjetaHTML(p) {
 function renderRecomendados() {
   const cont = document.getElementById("recomendados-grid");
   if (!cont) return;
-  const recomendados = CATALOGO.filter(p => (p.etiqueta || "").toLowerCase().includes("nuevo") || (p.etiqueta || "").toLowerCase().includes("destacado")).slice(0, 10);
-  const lista = recomendados.length > 0 ? recomendados : CATALOGO.slice(0, 8);
-
-  if (lista.length === 0) {
-    cont.innerHTML = `<div class="empty">No hay productos destacados.</div>`;
-    return;
+  const recomendados = CATALOGO.filter(p => (p.etiqueta || "").toLowerCase().includes("nuevo") || (p.etiqueta || "").toLowerCase().includes("destacado")).slice(0, 8);
+  
+  if (recomendados.length === 0) {
+    cont.innerHTML = CATALOGO.slice(0, 8).map(crearTarjetaHTML).join("");
+  } else {
+    cont.innerHTML = recomendados.map(crearTarjetaHTML).join("");
   }
-  cont.innerHTML = lista.map(crearTarjetaHTML).join("");
 }
 
 function renderCatalogo() {
-  const busqueda = (document.getElementById("buscador")?.value || "").toLowerCase();
-  let lista = CATALOGO;
+  const cont = document.getElementById("catalogo-grid");
+  if (!cont) return;
+  const busqueda = (document.getElementById("buscador")?.value || "").toLowerCase().trim();
+  
+  let filtrados = CATALOGO.filter(p => {
+    const matchCat = filtroCategoria === "Todas" || p.categoria === filtroCategoria;
+    const matchMarca = filtroMarca === "Todas" || p.marca === filtroMarca;
+    const matchEti = filtroEtiqueta === "Todas" || (p.etiqueta || "").toLowerCase().includes(filtroEtiqueta.toLowerCase());
+    const matchGen = filtroGenero === "Todas" || (p.genero || "").toLowerCase() === filtroGenero.toLowerCase();
+    const matchBusqueda = !busqueda || (p.nombre || "").toLowerCase().includes(busqueda) || (p.marca || "").toLowerCase().includes(busqueda);
+    return matchCat && matchMarca && matchEti && matchGen && matchBusqueda;
+  });
 
-  if (filtroCategoria !== "Todas") lista = lista.filter(p => p.categoria === filtroCategoria);
-  if (filtroMarca !== "Todas") lista = lista.filter(p => p.marca === filtroMarca);
-  if (filtroEtiqueta !== "Todas") lista = lista.filter(p => (p.etiqueta || "").toLowerCase() === filtroEtiqueta.toLowerCase());
-  if (filtroGenero !== "Todas") lista = lista.filter(p => (p.genero || "").toLowerCase() === filtroGenero.toLowerCase());
-  if (busqueda) {
-    lista = lista.filter(p => 
-      (p.nombre || "").toLowerCase().includes(busqueda) || 
-      (p.marca || "").toLowerCase().includes(busqueda) || 
-      (p.descripcion || "").toLowerCase().includes(busqueda)
-    );
+  if (filtrados.length === 0) {
+    cont.innerHTML = '<div class="empty">No se encontraron productos que coincidan.</div>';
+  } else {
+    cont.innerHTML = filtrados.map(crearTarjetaHTML).join("");
   }
-
-  const grid = document.getElementById("catalogo-grid");
-  if (lista.length === 0) {
-    grid.innerHTML = `<div class="empty">No se encontraron productos en esta selección.</div>`;
-    return;
-  }
-  grid.innerHTML = lista.map(crearTarjetaHTML).join("");
 }
 
-function buscarGlobal(query) {
-  const q = query.trim().toLowerCase();
-  if (q.length > 0) {
-    document.getElementById("buscador").value = q;
-    verColeccion('busqueda', q);
-  } else {
-    verInicio();
+function buscarGlobal(val) {
+  if (!val.trim()) return;
+  verCatalogoCompleto();
+  const inputBuscador = document.getElementById("buscador");
+  if (inputBuscador) {
+    inputBuscador.value = val;
+    renderCatalogo();
   }
 }
 
 function verDetalleProducto(nombre) {
-  const p = CATALOGO.find(prod => (prod.nombre || "").trim() === nombre.trim());
+  const p = CATALOGO.find(item => item.nombre === nombre);
   if (!p) return;
 
   const { principal } = obtenerFotos(p);
-
+  
   document.getElementById("detail-img").src = principal;
-  document.getElementById("detail-brand").textContent = `${p.marca || ''} ${p.categoria ? '· ' + p.categoria : ''}`;
-  document.getElementById("detail-title").textContent = p.nombre || "Sin nombre";
+  document.getElementById("detail-brand").textContent = p.marca || "Fortezza";
+  document.getElementById("detail-title").textContent = p.nombre;
   document.getElementById("detail-price").textContent = p.precio ? `$${p.precio}` : "Consultar precio";
-  document.getElementById("detail-desc").textContent = p.descripcion || "Sin descripción disponible.";
-  document.getElementById("detail-wa-btn").href = linkWhatsapp(p.nombre, p.precio);
-
+  document.getElementById("detail-desc").textContent = p.descripcion || "Perfume 100% original con envío garantizado.";
+  
+  const btnWa = document.getElementById("detail-wa-btn");
+  btnWa.href = linkWhatsapp(p.nombre, p.precio);
+  
   document.getElementById("detail-breadcrumbs").innerHTML = `
     <a href="#" onclick="verInicio();return false;">Inicio</a> / 
-    <a href="#" onclick="verColeccion('marca','${p.marca}');return false;">${p.marca || 'Marca'}</a> / 
+    <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a> / 
     <span>${p.nombre}</span>
   `;
 
@@ -748,129 +800,97 @@ function verDetalleProducto(nombre) {
 }
 
 function volverOrigenDetalle() {
-  if (seccionAnterior === "catalogo") {
-    mostrarSoloSeccion("catalogo");
-  } else {
-    verInicio();
+  if (seccionAnterior === "catalogo") mostrarSoloSeccion("catalogo");
+  else verInicio();
+}
+
+/* CARROUSEL HERO BANNER */
+let currentSlideIndex = 0;
+function showSlide(index) {
+  const slides = document.querySelectorAll(".slide");
+  const dots = document.querySelectorAll(".dot");
+  if (slides.length === 0) return;
+  
+  if (index >= slides.length) currentSlideIndex = 0;
+  else if (index < 0) currentSlideIndex = slides.length - 1;
+  else currentSlideIndex = index;
+
+  slides.forEach((s, i) => s.classList.toggle("active", i === currentSlideIndex));
+  dots.forEach((d, i) => d.classList.toggle("active", i === currentSlideIndex));
+}
+
+function moveSlide(step) { showSlide(currentSlideIndex + step); }
+function currentSlide(index) { showSlide(index); }
+
+setInterval(() => { moveSlide(1); }, 5000);
+
+/* CARGA DE DATOS DE SPREADSHEET */
+async function cargarDatos() {
+  try {
+    const resP = await fetch(SHEET_PERFUMES);
+    const csvP = await resP.text();
+    CATALOGO = parseCSV(csvP);
+    
+    renderRecomendados();
+    renderMarcas();
+    renderCategorias();
+    renderCatalogo();
+  } catch (err) {
+    console.error("Error al cargar productos:", err);
+  }
+
+  try {
+    const resT = await fetch(SHEET_TESTIMONIOS);
+    const csvT = await resT.text();
+    const testimonios = parseCSV(csvT);
+    renderTestimonios(testimonios);
+  } catch (err) {
+    console.error("Error al cargar testimonios:", err);
   }
 }
 
-/* TESTIMONIOS: VIDEOS EN SEGUNDO PLANO SIN INTERFAZ DE YOUTUBE NI REDIRECCIONES */
-function cargarTestimonios() {
-  fetch(SHEET_TESTIMONIOS)
-    .then(r => r.text())
-    .then(data => {
-      const testimonios = parseCSV(data);
-      const grid = document.getElementById("test-grid");
-      if (testimonios.length === 0) {
-        grid.innerHTML = `<div class="empty">No hay testimonios disponibles.</div>`;
-        return;
-      }
-
-      grid.innerHTML = testimonios.map((t, idx) => {
-        let videoUrl = t.video || t.url || "";
-        let videoId = "";
-
-        const match = videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/))([\w-]{11})/);
-        if (match && match[1]) {
-          videoId = match[1];
-        }
-
-        if (!videoId) return '';
-
-        // URL con parámetros para eliminar controles, marcas, vídeos relacionados y activar autoplay + loop
-        const embedUrl = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3`;
-
-        return `
-          <div class="test-card">
-            <div class="test-card-video-wrapper">
-              <iframe id="yt-player-${idx}" src="${embedUrl}" allow="autoplay; encrypted-media"></iframe>
-              <div class="video-click-overlay" onclick="toggleAudioVideo(${idx})"></div>
-            </div>
-          </div>
-        `;
-      }).join("");
-
-      // Inicializar reproductores API de YouTube
-      setTimeout(() => {
-        testimonios.forEach((t, idx) => {
-          if (document.getElementById(`yt-player-${idx}`)) {
-            playersYT[idx] = new YT.Player(`yt-player-${idx}`, {
-              events: {
-                'onReady': (event) => {
-                  event.target.playVideo();
-                  event.target.mute();
-                }
-              }
-            });
-          }
-        });
-      }, 1000);
-    });
+function renderTestimonios(lista) {
+  const cont = document.getElementById("test-grid");
+  if (!cont) return;
+  if (!lista || lista.length === 0) {
+    cont.innerHTML = '<div class="empty">No hay testimonios disponibles.</div>';
+    return;
+  }
+  
+  cont.innerHTML = lista.map((t, idx) => {
+    const videoId = t.youtube_id || t.videoid || "";
+    if (!videoId) return "";
+    return `
+      <div class="test-card">
+        <div class="test-card-video-wrapper">
+          <div id="yt-player-${idx}"></div>
+          <div class="video-click-overlay" onclick="togglePlayVideo('${idx}', '${videoId}')"></div>
+        </div>
+      </div>
+    `;
+  }).join("");
 }
 
-function toggleAudioVideo(idx) {
-  const player = playersYT[idx];
-  if (player && typeof player.isMuted === 'function') {
-    if (player.isMuted()) {
-      // Mutear todos los demás primero
-      Object.keys(playersYT).forEach(k => { if(playersYT[k].mute) playersYT[k].mute(); });
-      player.unMute();
+function togglePlayVideo(idx, videoId) {
+  if (!playersYT[idx]) {
+    playersYT[idx] = new YT.Player(`yt-player-${idx}`, {
+      videoId: videoId,
+      playerVars: { 'autoplay': 1, 'controls': 0, 'modestbranding': 1, 'rel': 0 },
+      events: {
+        'onReady': (event) => event.target.playVideo()
+      }
+    });
+  } else {
+    const state = playersYT[idx].getPlayerState();
+    if (state === YT.PlayerState.PLAYING) {
+      playersYT[idx].pauseVideo();
     } else {
-      player.mute();
+      playersYT[idx].playVideo();
     }
   }
 }
 
-function cargarDatos() {
-  fetch(SHEET_PERFUMES)
-    .then(r => r.text())
-    .then(data => {
-      CATALOGO = parseCSV(data);
-      renderCategorias();
-      renderMarcas();
-      renderRecomendados();
-      renderCatalogo();
-    });
-  cargarTestimonios();
-}
-
-// Carrusel Hero Banner
-let currentSlideIndex = 0;
-
-function showSlide(index) {
-  const slides = document.querySelectorAll('.slide');
-  const dots = document.querySelectorAll('.dot');
-  
-  if (index >= slides.length) currentSlideIndex = 0;
-  if (index < 0) currentSlideIndex = slides.length - 1;
-  
-  slides.forEach((slide, i) => {
-    slide.classList.toggle('active', i === currentSlideIndex);
-  });
-  
-  dots.forEach((dot, i) => {
-    dot.classList.toggle('active', i === currentSlideIndex);
-  });
-}
-
-function moveSlide(direction) {
-  currentSlideIndex += direction;
-  showSlide(currentSlideIndex);
-}
-
-function currentSlide(index) {
-  currentSlideIndex = index;
-  showSlide(currentSlideIndex);
-}
-
-setInterval(() => {
-  moveSlide(1);
-}, 5000);
-
-window.onload = () => {
-  cargarDatos();
-};
+window.onload = cargarDatos;
 </script>
 </body>
 </html>
