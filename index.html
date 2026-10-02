@@ -185,16 +185,28 @@
     cursor:pointer;background:transparent;color:var(--parchment);font-family:'DM Sans', sans-serif;letter-spacing:.05em;}
   .brand-chip.active,.brand-chip:hover{background:var(--bronze);color:var(--onyx);border-color:var(--bronze);}
 
-  /* Catálogo y Tarjetas */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.8rem;}
-  .card{border-top:1px solid var(--bronze);padding-top:.9rem;cursor:pointer;position:relative;}
-  .card img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#1a1a1a;transition:opacity 0.3s ease;}
-  .card .house{font-size:.7rem;color:var(--stone);letter-spacing:.1em;margin-top:.7rem;text-transform:uppercase;font-family:'DM Sans', sans-serif;}
-  .card .name{font-family:'Oswald', sans-serif;font-size:1.25rem;margin-top:.2rem;letter-spacing:.03em;text-transform:uppercase;}
-  .card .desc{font-size:.88rem;color:var(--stone);margin-top:.4rem;min-height:2.4rem;font-family:'DM Sans', sans-serif;}
-  .card .foot{display:flex;justify-content:space-between;align-items:center;margin-top:.8rem;}
-  .card .price{font-family:'Oswald', sans-serif;font-size:1.25rem;color:var(--bronze);font-weight:600;}
-  .card .wa{font-size:.76rem;text-decoration:none;border-bottom:1px solid var(--bronze);letter-spacing:.04em;font-family:'DM Sans', sans-serif;}
+  /* Catálogo y Tarjetas solo imagen */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.8rem;}
+  .card{
+    border-top:none;
+    padding-top:0;
+    cursor:pointer;
+    position:relative;
+    background:transparent;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+  .card img{
+    width:100%;
+    aspect-ratio:3/4;
+    object-fit:contain;
+    background:transparent !important;
+    transition:transform 0.3s ease, opacity 0.3s ease;
+  }
+  .card:hover img{
+    transform:scale(1.05);
+  }
   .empty{color:var(--stone);font-size:.9rem;padding:2rem 0;font-family:'DM Sans', sans-serif;}
 
   /* --- Carrusel Horizontal Recomendados --- */
@@ -217,8 +229,8 @@
   .scroll-container::-webkit-scrollbar{height:6px;}
   .scroll-container::-webkit-scrollbar-thumb{background:var(--bronze-dim);border-radius:3px;}
   .scroll-container .card{
-    flex:0 0 260px;
-    min-width:260px;
+    flex:0 0 200px;
+    min-width:200px;
   }
   .scroll-arrow{
     position:absolute;
@@ -265,8 +277,8 @@
   .detail-gallery img{
     width:100%;
     max-height:550px;
-    object-fit:cover;
-    background:#1a1a1a;
+    object-fit:contain;
+    background:transparent;
     border:1px solid var(--bronze-dim);
   }
   .detail-info{
@@ -604,7 +616,7 @@
         </select>
         <div style="position:relative;display:flex;align-items:center;">
           <span style="position:absolute;left:8px;font-size:.85rem;color:var(--stone);">🔍</span>
-          <input id="buscador" placeholder="Buscar perfume..." style="background:transparent;border:1px solid #35301F;color:var(--parchment);padding:.5rem .8rem .5rem 2rem;font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;">
+          <input id="buscador" placeholder="Buscar perfume..." oninput="renderCatalogo()" style="background:transparent;border:1px solid #35301F;color:var(--parchment);padding:.5rem .8rem .5rem 2rem;font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;">
         </div>
       </div>
     </div>
@@ -863,112 +875,95 @@ function obtenerFotos(p) {
   return { principal, secundaria };
 }
 
+/* FUNCIÓN PARA TARJETAS SOLO IMAGEN Y FONDO TRANSPARENTE */
 function crearTarjetaHTML(p) {
   const { principal, secundaria } = obtenerFotos(p);
   const nombreLimpio = (p.nombre || "Sin nombre").replace(/'/g, "\\'");
+  
   return `
-    <div class="card" onclick="verDetalleProducto('${nombreLimpio}')">
-      <img src="${principal}" alt="${p.nombre || ""}" 
+    <div class="card" onclick="verDetalleProducto('${nombreLimpio}')" title="${p.nombre || ''}">
+      <img src="${principal}" alt="${p.nombre || ''}" 
            onmouseover="if('${secundaria}' !== '${principal}') this.src='${secundaria}'" 
            onmouseout="this.src='${principal}'"
            onerror="this.src='${FOTO_RESPALDO}'">
-      <div class="house">${(p.marca || "").toUpperCase()}${p.categoria ? " · " + p.categoria : ""}${p.etiqueta ? " · " + p.etiqueta.toUpperCase() : ""}</div>
-      <div class="name">${p.nombre || "Sin nombre"}</div>
-      <div class="desc">${p.descripcion || ""}</div>
-      <div class="foot">
-        <span class="price">${p.precio ? "$" + p.precio : "Consultar"}</span>
-        <a class="wa" href="${linkWhatsapp(p.nombre || "", p.precio || "")}" onclick="event.stopPropagation();" target="_blank">Pedir por WhatsApp →</a>
-      </div>
     </div>
   `;
 }
 
+function renderRecomendados() {
+  const cont = document.getElementById("recomendados-grid");
+  if (!cont) return;
+  const recomendados = CATALOGO.filter(p => (p.etiqueta || "").toLowerCase().includes("nuevo") || (p.etiqueta || "").toLowerCase().includes("destacado")).slice(0, 10);
+  const lista = recomendados.length > 0 ? recomendados : CATALOGO.slice(0, 8);
+
+  if (lista.length === 0) {
+    cont.innerHTML = `<div class="empty">No hay productos destacados.</div>`;
+    return;
+  }
+  cont.innerHTML = lista.map(crearTarjetaHTML).join("");
+}
+
 function renderCatalogo() {
-  const busqueda = document.getElementById("buscador").value.toLowerCase();
+  const busqueda = (document.getElementById("buscador")?.value || "").toLowerCase();
   let lista = CATALOGO;
 
   if (filtroCategoria !== "Todas") lista = lista.filter(p => p.categoria === filtroCategoria);
   if (filtroMarca !== "Todas") lista = lista.filter(p => p.marca === filtroMarca);
   if (filtroEtiqueta !== "Todas") lista = lista.filter(p => (p.etiqueta || "").toLowerCase() === filtroEtiqueta.toLowerCase());
-  
-  if (filtroGenero !== "Todas") {
-    lista = lista.filter(p => {
-      const gen = (p.genero || p.categoria || p.descripcion || "").toLowerCase();
-      return gen.includes(filtroGenero.toLowerCase());
-    });
+  if (filtroGenero !== "Todas") lista = lista.filter(p => (p.genero || "").toLowerCase() === filtroGenero.toLowerCase());
+  if (busqueda) {
+    lista = lista.filter(p => 
+      (p.nombre || "").toLowerCase().includes(busqueda) || 
+      (p.marca || "").toLowerCase().includes(busqueda) || 
+      (p.descripcion || "").toLowerCase().includes(busqueda)
+    );
   }
 
-  if (busqueda) lista = lista.filter(p => (p.nombre || "").toLowerCase().includes(busqueda));
-
-  let titulo = "Catálogo completo";
-  if (filtroEtiqueta !== "Todas") titulo = filtroEtiqueta === "Nuevo" ? "Nuevas referencias" : "Ofertas";
-  else if (filtroMarca !== "Todas") titulo = filtroMarca;
-  else if (filtroCategoria !== "Todas") titulo = `Categoría: ${filtroCategoria}`;
-  
-  if (filtroGenero !== "Todas") titulo += ` (${filtroGenero})`;
-  document.getElementById("catalogo-titulo").textContent = titulo;
-
-  const cont = document.getElementById("catalogo-grid");
-  if (!lista.length) { cont.innerHTML = '<div class="empty">No hay perfumes con estos filtros.</div>'; return; }
-
-  cont.innerHTML = lista.map(p => crearTarjetaHTML(p)).join("");
+  const grid = document.getElementById("catalogo-grid");
+  if (lista.length === 0) {
+    grid.innerHTML = `<div class="empty">No se encontraron productos en esta selección.</div>`;
+    return;
+  }
+  grid.innerHTML = lista.map(crearTarjetaHTML).join("");
 }
 
-document.getElementById("buscador").addEventListener("input", renderCatalogo);
-
-function buscarGlobal(valor) {
-  document.getElementById("buscador").value = valor;
-  verCatalogoCompleto();
+function buscarGlobal(query) {
+  const q = query.trim().toLowerCase();
+  if (q.length > 0) {
+    document.getElementById("buscador").value = q;
+    verColeccion('busqueda', q);
+  } else {
+    verInicio();
+  }
 }
 
-function verDetalleProducto(nombreProducto) {
-  const producto = CATALOGO.find(p => p.nombre === nombreProducto);
-  if (!producto) return;
+function verDetalleProducto(nombre) {
+  const p = CATALOGO.find(prod => (prod.nombre || "").trim() === nombre.trim());
+  if (!p) return;
 
-  document.getElementById("detail-img").src = obtenerFotos(producto).principal;
-  document.getElementById("detail-brand").textContent = (producto.marca || "").toUpperCase();
-  document.getElementById("detail-title").textContent = producto.nombre || "";
-  document.getElementById("detail-price").textContent = producto.precio ? "$" + producto.precio : "Consultar";
-  document.getElementById("detail-desc").textContent = producto.descripcion || "Perfume original de excelente fijación y proyección.";
-  document.getElementById("detail-wa-btn").href = linkWhatsapp(producto.nombre, producto.precio);
-  
+  const { principal } = obtenerFotos(p);
+
+  document.getElementById("detail-img").src = principal;
+  document.getElementById("detail-brand").textContent = `${p.marca || ''} ${p.categoria ? '· ' + p.categoria : ''}`;
+  document.getElementById("detail-title").textContent = p.nombre || "Sin nombre";
+  document.getElementById("detail-price").textContent = p.precio ? `$${p.precio}` : "Consultar precio";
+  document.getElementById("detail-desc").textContent = p.descripcion || "Sin descripción disponible.";
+  document.getElementById("detail-wa-btn").href = linkWhatsapp(p.nombre, p.precio);
+
   document.getElementById("detail-breadcrumbs").innerHTML = `
     <a href="#" onclick="verInicio();return false;">Inicio</a> / 
-    <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a> / 
-    <span>${producto.nombre}</span>
+    <a href="#" onclick="verColeccion('marca','${p.marca}');return false;">${p.marca || 'Marca'}</a> / 
+    <span>${p.nombre}</span>
   `;
 
   mostrarSoloSeccion("detalle-producto");
 }
 
 function volverOrigenDetalle() {
-  if (seccionAnterior === "catalogo") mostrarSoloSeccion("catalogo");
-  else verInicio();
-}
-
-function renderRecomendados() {
-  const cont = document.getElementById("recomendados-grid");
-  if (!cont) return;
-  const recomendados = CATALOGO.filter(p => (p.etiqueta || "").toLowerCase() === "nuevo" || (p.etiqueta || "").toLowerCase() === "destacado").slice(0, 10);
-  const lista = recomendados.length ? recomendados : CATALOGO.slice(0, 10);
-  cont.innerHTML = lista.map(p => crearTarjetaHTML(p)).join("");
-}
-
-// Extrae el ID de YouTube
-function obtenerIDYoutube(url) {
-  if (!url) return null;
-  let match = url.match(/(?:shorts\/|v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
-  return match ? match[1] : null;
-}
-
-// Alternar audio
-function toggleAudioVideo(idx) {
-  if (playersYT[idx]) {
-    if (playersYT[idx].isMuted()) {
-      playersYT[idx].unMute();
-    } else {
-      playersYT[idx].mute();
-    }
+  if (seccionAnterior === "catalogo") {
+    mostrarSoloSeccion("catalogo");
+  } else {
+    verInicio();
   }
 }
 
@@ -978,47 +973,42 @@ function cargarTestimonios() {
     .then(data => {
       const testimonios = parseCSV(data);
       const grid = document.getElementById("test-grid");
-      grid.innerHTML = "";
-      playersYT = [];
+      if (testimonios.length === 0) {
+        grid.innerHTML = `<div class="empty">No hay testimonios disponibles.</div>`;
+        return;
+      }
 
-      testimonios.forEach((t, i) => {
-        const videoId = obtenerIDYoutube(t.video_url || t.video || t.url);
-        if (videoId) {
-          const card = document.createElement("div");
-          card.className = "test-card";
-          card.innerHTML = `
-            <div class="test-card-video-wrapper">
-              <div id="yt-player-${i}"></div>
-              <div class="video-overlay" onclick="toggleAudioVideo(${i})"></div>
-            </div>
-          `;
-          grid.appendChild(card);
+      grid.innerHTML = testimonios.map((t, index) => {
+        let videoUrl = t.video || t.url || "";
+        let embedUrl = "";
+        let videoId = "";
 
-          // Inicializar reproductor
-          setTimeout(() => {
-            if (window.YT && window.YT.Player) {
-              playersYT[i] = new YT.Player(`yt-player-${i}`, {
-                videoId: videoId,
-                playerVars: {
-                  'autoplay': 1,
-                  'controls': 0,
-                  'loop': 1,
-                  'playlist': videoId,
-                  'mute': 1,
-                  'modestbranding': 1,
-                  'rel': 0,
-                  'showinfo': 0,
-                  'disablekb': 1
-                },
-                events: {
-                  'onReady': function(e) { e.target.playVideo(); }
-                }
-              });
-            }
-          }, 500);
+        if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
+          const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+          const match = videoUrl.match(regExp);
+          if (match && match[2].length === 11) {
+            videoId = match[2];
+            embedUrl = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&rel=0&modestbranding=1`;
+          }
         }
-      });
+
+        return `
+          <div class="test-card">
+            <div class="test-card-video-wrapper">
+              ${embedUrl ? `<iframe id="yt-player-${index}" src="${embedUrl}" allow="autoplay; encrypted-media" allowfullscreen></iframe>` : ''}
+              <div class="video-overlay" onclick="playVideo(${index})"></div>
+            </div>
+          </div>
+        `;
+      }).join("");
     });
+}
+
+function playVideo(index) {
+  const iframe = document.getElementById(`yt-player-${index}`);
+  if (iframe) {
+    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+  }
 }
 
 function cargarDatos() {
@@ -1036,21 +1026,42 @@ function cargarDatos() {
 
 // Lógica de Carrusel Banner
 let currentSlideIndex = 0;
+
 function showSlide(index) {
   const slides = document.querySelectorAll('.slide');
   const dots = document.querySelectorAll('.dot');
+  
   if (index >= slides.length) currentSlideIndex = 0;
   if (index < 0) currentSlideIndex = slides.length - 1;
-  slides.forEach(s => s.classList.remove('active'));
-  dots.forEach(d => d.classList.remove('active'));
-  if (slides[currentSlideIndex]) slides[currentSlideIndex].classList.add('active');
-  if (dots[currentSlideIndex]) dots[currentSlideIndex].classList.add('active');
+  
+  slides.forEach((slide, i) => {
+    slide.classList.toggle('active', i === currentSlideIndex);
+  });
+  
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === currentSlideIndex);
+  });
 }
-function moveSlide(step) { currentSlideIndex += step; showSlide(currentSlideIndex); }
-function currentSlide(index) { currentSlideIndex = index; showSlide(currentSlideIndex); }
-setInterval(() => { moveSlide(1); }, 5000);
 
-window.onload = cargarDatos;
+function moveSlide(direction) {
+  currentSlideIndex += direction;
+  showSlide(currentSlideIndex);
+}
+
+function currentSlide(index) {
+  currentSlideIndex = index;
+  showSlide(currentSlideIndex);
+}
+
+// Rotación automática del banner cada 5 segundos
+setInterval(() => {
+  moveSlide(1);
+}, 5000);
+
+// Inicializar carga de datos al cargar la página
+window.onload = () => {
+  cargarDatos();
+};
 </script>
 </body>
 </html>
