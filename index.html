@@ -108,62 +108,17 @@
   .cat-tile:hover{background:#26221680;}
   .cat-tile.active{background:var(--bronze);color:var(--onyx);}
 
-  /* --- ESTILOS MEJORADOS PARA EL CARRUSEL DE MARCAS --- */
-  .brand-carousel-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    width: 100%;
-  }
-
-  .brand-carousel {
-    display: flex;
-    gap: 1.2rem;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    padding: 0.6rem 0;
-    width: 100%;
-    scrollbar-width: none;
-  }
-
+  /* CARRUSEL DE MARCAS */
+  .brand-carousel-wrapper { position: relative; display: flex; align-items: center; margin-bottom: 1.5rem; width: 100%; }
+  .brand-carousel { display: flex; gap: 1.2rem; overflow-x: auto; scroll-behavior: smooth; padding: 0.6rem 0; width: 100%; scrollbar-width: none; }
   .brand-carousel::-webkit-scrollbar { display: none; }
-
   .brand-logo-card {
-    flex: 0 0 150px;
-    min-width: 150px;
-    height: 75px;
-    background: var(--onyx-2);
-    border: 1px solid #35301F;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.6rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    flex: 0 0 150px; min-width: 150px; height: 75px; background: var(--onyx-2); border: 1px solid #35301F;
+    border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 0.6rem; cursor: pointer; transition: all 0.2s ease;
   }
-
-  .brand-logo-card:hover {
-    border-color: var(--bronze);
-    transform: translateY(-3px);
-  }
-
-  .brand-logo-card img {
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: contain;
-  }
-
-  .brand-fallback-text {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--parchment);
-    text-align: center;
-  }
+  .brand-logo-card:hover { border-color: var(--bronze); transform: translateY(-3px); }
+  .brand-logo-card img { max-height: 100%; max-width: 100%; object-fit: contain; }
+  .brand-fallback-text { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--parchment); text-align: center; }
 
   /* Botones de texto en la sección de marcas */
   .brand-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem;}
@@ -189,7 +144,7 @@
 
   .empty{color:var(--stone);font-size:.9rem;padding:2rem 0;font-family:'DM Sans', sans-serif;}
 
-  /* Carrusel Horizontal Lanzamientos y Marcas */
+  /* Carrusel Horizontal Lanzamientos */
   .horizontal-scroll-wrapper{position:relative;width:100%;display:flex;align-items:center;}
   .scroll-container{display:flex;gap:1.2rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;width:100%;scrollbar-width:thin;scrollbar-color:var(--bronze-dim) transparent;}
   .scroll-container::-webkit-scrollbar{height:6px;}
@@ -213,7 +168,7 @@
   .detail-desc{font-size:1.05rem;color:var(--stone);line-height:1.6;margin-bottom:1.8rem;border-top:1px solid #35301F;border-bottom:1px solid #35301F;padding:1.2rem 0;font-family:'DM Sans', sans-serif;}
   .detail-actions{display:flex;flex-direction:column;gap:1rem;}
 
-  /* --- TESTIMONIOS Y VIDEOS LIMPIOS --- */
+  /* --- TESTIMONIOS Y VIDEOS SIN CORTES NI ENLACES --- */
   .test-grid {
     display: flex;gap: 1.2rem;overflow-x: auto;overflow-y: hidden;scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;scroll-snap-type: x mandatory;padding: 0.5rem 0.5rem 1.2rem 0.5rem;
@@ -221,7 +176,7 @@
   .test-grid::-webkit-scrollbar { height: 6px; }
   .test-grid::-webkit-scrollbar-thumb { background: var(--bronze-dim); border-radius: 10px; }
   .test-card {
-    flex: 0 0 230px;min-width: 230px;scroll-snap-align: start;border: 1px solid #35301F;
+    flex: 0 0 240px;min-width: 240px;scroll-snap-align: start;border: 1px solid #35301F;
     background: var(--onyx-2);padding: 0.5rem;border-radius: 10px;display: flex;flex-direction: column;
   }
   .test-card-video-wrapper {
@@ -229,12 +184,17 @@
     border-radius: 8px;overflow: hidden;
   }
   .test-card-video-wrapper iframe {
-    position: absolute;top: -12%;left: -12%;width: 124%;height: 124%;
-    border: 0;pointer-events: none;
+    position: absolute;top: 0;left: 0;width: 100%;height: 100%;
+    border: 0;object-fit: cover;
   }
   .video-click-overlay {
     position: absolute;top: 0;left: 0;width: 100%;height: 100%;
     z-index: 20;cursor: pointer;background: transparent;
+    display: flex; align-items: flex-end; justify-content: flex-end; padding: 10px;
+  }
+  .sound-badge {
+    background: rgba(0,0,0,0.6); color: #fff; border-radius: 50%; width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.2);
   }
 
   footer{border-top:1px solid #35301F;padding:2.6rem 0;font-size:.85rem;color:var(--stone);font-family:'DM Sans', sans-serif;}
@@ -254,7 +214,7 @@
   @media (max-width:768px){
     .product-detail-layout{grid-template-columns:1fr;gap:1.5rem;}
     .scroll-arrow{display:none;}
-    .test-card { flex: 0 0 200px; min-width: 200px; }
+    .test-card { flex: 0 0 210px; min-width: 210px; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width:680px){
@@ -404,14 +364,12 @@
   <section class="section oculto" id="marcas">
     <div class="section-head"><h2>Compra por marca</h2></div>
     
-    <!-- Carrusel de logos Arriba -->
     <div class="horizontal-scroll-wrapper">
       <button class="scroll-arrow left" onclick="scrollCarruselMarcas(-300)">&#10094;</button>
       <div class="brand-carousel" id="brand-carousel-seccion"></div>
       <button class="scroll-arrow right" onclick="scrollCarruselMarcas(300)">&#10095;</button>
     </div>
 
-    <!-- Botones interactivos de Texto Abajo -->
     <div class="brand-row" id="brand-row"></div>
   </section>
 
@@ -510,7 +468,6 @@
 
 <a class="wa-float" id="wa-float" href="#" target="_blank">💬</a>
 
-<!-- CARGA DE API DE YOUTUBE -->
 <script src="https://www.youtube.com/iframe_api"></script>
 
 <script>
@@ -667,7 +624,6 @@ function renderCategorias() {
   if (catCount) catCount.textContent = `${CATALOGO.length} fragancias`;
 }
 
-/* MARCAS: CARRUSEL CON LOGOS Y FALLBACK ELEGANTE */
 function renderMarcas() {
   const marcas = [...new Set(CATALOGO.map(p => p.marca).filter(Boolean))];
   
@@ -702,100 +658,63 @@ function renderMarcas() {
   }
 }
 
-function obtenerFotos(p) {
-  const fotos = (p.foto || "").split(",").map(f => f.trim()).filter(Boolean);
-  const principal = fotos[0] || FOTO_RESPALDO;
-  const secundaria = fotos[1] || principal;
-  return { principal, secundaria };
-}
-
-/* TARJETAS DE PRODUCTO */
-function crearTarjetaHTML(p) {
-  const { principal, secundaria } = obtenerFotos(p);
-  const nombreLimpio = (p.nombre || "Sin nombre").replace(/'/g, "\\'");
-  const precioFormateado = p.precio ? `$${p.precio}` : 'Consultar';
-
-  return `
-    <div class="card" onclick="verDetalleProducto('${nombreLimpio}')">
-      <div class="card-img-wrap">
-        <img src="${principal}" alt="${p.nombre || ''}" 
-             onmouseover="if('${secundaria}' !== '${principal}') this.src='${secundaria}';" 
-             onmouseout="this.src='${principal}';"
-             onerror="this.src='${FOTO_RESPALDO}'">
-      </div>
-      <div class="card-info">
-        <div class="card-brand">${p.marca || ''}</div>
-        <div class="card-title">${p.nombre || 'Sin nombre'}</div>
-        <div class="card-price">${precioFormateado}</div>
-      </div>
-    </div>
-  `;
-}
-
 function renderRecomendados() {
   const cont = document.getElementById("recomendados-grid");
   if (!cont) return;
-  const recomendados = CATALOGO.filter(p => (p.etiqueta || "").toLowerCase().includes("nuevo") || (p.etiqueta || "").toLowerCase().includes("destacado")).slice(0, 8);
-  
-  if (recomendados.length === 0) {
-    cont.innerHTML = CATALOGO.slice(0, 8).map(crearTarjetaHTML).join("");
-  } else {
-    cont.innerHTML = recomendados.map(crearTarjetaHTML).join("");
-  }
+  const nuevos = CATALOGO.filter(p => p.etiqueta && p.etiqueta.toLowerCase().includes("nuevo"));
+  const lista = nuevos.length > 0 ? nuevos : CATALOGO.slice(0, 8);
+  if (lista.length === 0) { cont.innerHTML = '<div class="empty">No hay nuevos lanzamientos.</div>'; return; }
+  cont.innerHTML = lista.map(p => crearTarjetaHTML(p)).join("");
 }
 
 function renderCatalogo() {
   const cont = document.getElementById("catalogo-grid");
   if (!cont) return;
-  const busqueda = (document.getElementById("buscador")?.value || "").toLowerCase().trim();
+  const txt = (document.getElementById("buscador")?.value || "").toLowerCase();
   
-  let filtrados = CATALOGO.filter(p => {
-    const matchCat = filtroCategoria === "Todas" || p.categoria === filtroCategoria;
-    const matchMarca = filtroMarca === "Todas" || p.marca === filtroMarca;
-    const matchEti = filtroEtiqueta === "Todas" || (p.etiqueta || "").toLowerCase().includes(filtroEtiqueta.toLowerCase());
-    const matchGen = filtroGenero === "Todas" || (p.genero || "").toLowerCase() === filtroGenero.toLowerCase();
-    const matchBusqueda = !busqueda || (p.nombre || "").toLowerCase().includes(busqueda) || (p.marca || "").toLowerCase().includes(busqueda);
-    return matchCat && matchMarca && matchEti && matchGen && matchBusqueda;
+  const filtrados = CATALOGO.filter(p => {
+    const mCat = filtroCategoria === "Todas" || p.categoria === filtroCategoria;
+    const mMarc = filtroMarca === "Todas" || p.marca === filtroMarca;
+    const mEtiq = filtroEtiqueta === "Todas" || (p.etiqueta && p.etiqueta.toLowerCase().includes(filtroEtiqueta.toLowerCase()));
+    const mGen = filtroGenero === "Todas" || (p.genero && p.genero.toLowerCase() === filtroGenero.toLowerCase());
+    const mTxt = !txt || (p.nombre && p.nombre.toLowerCase().includes(txt)) || (p.marca && p.marca.toLowerCase().includes(txt));
+    return mCat && mMarc && mEtiq && mGen && mTxt;
   });
 
-  if (filtrados.length === 0) {
-    cont.innerHTML = '<div class="empty">No se encontraron productos que coincidan.</div>';
-  } else {
-    cont.innerHTML = filtrados.map(crearTarjetaHTML).join("");
-  }
+  if (filtrados.length === 0) { cont.innerHTML = '<div class="empty">No encontramos perfumes con esos criterios.</div>'; return; }
+  cont.innerHTML = filtrados.map(p => crearTarjetaHTML(p)).join("");
 }
 
-function buscarGlobal(val) {
-  if (!val.trim()) return;
-  verCatalogoCompleto();
-  const inputBuscador = document.getElementById("buscador");
-  if (inputBuscador) {
-    inputBuscador.value = val;
-    renderCatalogo();
-  }
+function crearTarjetaHTML(p) {
+  const pEsc = JSON.stringify(p).replace(/"/g, '&quot;');
+  return `
+    <div class="card" onclick="verDetalle(${pEsc})">
+      <div class="card-img-wrap">
+        <img src="${p.foto || FOTO_RESPALDO}" alt="${p.nombre}" onerror="this.src='${FOTO_RESPALDO}'">
+      </div>
+      <div class="card-info">
+        <div class="card-brand">${p.marca || ''}</div>
+        <div class="card-title">${p.nombre}</div>
+        <div class="card-price">$${p.precio}</div>
+      </div>
+    </div>
+  `;
 }
 
-function verDetalleProducto(nombre) {
-  const p = CATALOGO.find(item => item.nombre === nombre);
-  if (!p) return;
-
-  const { principal } = obtenerFotos(p);
-  
-  document.getElementById("detail-img").src = principal;
-  document.getElementById("detail-brand").textContent = p.marca || "Fortezza";
+function verDetalle(p) {
+  document.getElementById("detail-img").src = p.foto || FOTO_RESPALDO;
+  document.getElementById("detail-brand").textContent = p.marca || "FORTEZZA PERFUMS";
   document.getElementById("detail-title").textContent = p.nombre;
-  document.getElementById("detail-price").textContent = p.precio ? `$${p.precio}` : "Consultar precio";
+  document.getElementById("detail-price").textContent = `$${p.precio}`;
   document.getElementById("detail-desc").textContent = p.descripcion || "Perfume 100% original con envío garantizado.";
-  
-  const btnWa = document.getElementById("detail-wa-btn");
-  btnWa.href = linkWhatsapp(p.nombre, p.precio);
+  document.getElementById("detail-wa-btn").href = linkWhatsapp(p.nombre, p.precio);
   
   document.getElementById("detail-breadcrumbs").innerHTML = `
     <a href="#" onclick="verInicio();return false;">Inicio</a> / 
     <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a> / 
     <span>${p.nombre}</span>
   `;
-
+  
   mostrarSoloSeccion("detalle-producto");
 }
 
@@ -804,93 +723,148 @@ function volverOrigenDetalle() {
   else verInicio();
 }
 
-/* CARROUSEL HERO BANNER */
-let currentSlideIndex = 0;
-function showSlide(index) {
-  const slides = document.querySelectorAll(".slide");
-  const dots = document.querySelectorAll(".dot");
-  if (slides.length === 0) return;
-  
-  if (index >= slides.length) currentSlideIndex = 0;
-  else if (index < 0) currentSlideIndex = slides.length - 1;
-  else currentSlideIndex = index;
-
-  slides.forEach((s, i) => s.classList.toggle("active", i === currentSlideIndex));
-  dots.forEach((d, i) => d.classList.toggle("active", i === currentSlideIndex));
-}
-
-function moveSlide(step) { showSlide(currentSlideIndex + step); }
-function currentSlide(index) { showSlide(index); }
-
-setInterval(() => { moveSlide(1); }, 5000);
-
-/* CARGA DE DATOS DE SPREADSHEET */
-async function cargarDatos() {
-  try {
-    const resP = await fetch(SHEET_PERFUMES);
-    const csvP = await resP.text();
-    CATALOGO = parseCSV(csvP);
-    
-    renderRecomendados();
-    renderMarcas();
-    renderCategorias();
-    renderCatalogo();
-  } catch (err) {
-    console.error("Error al cargar productos:", err);
-  }
-
-  try {
-    const resT = await fetch(SHEET_TESTIMONIOS);
-    const csvT = await resT.text();
-    const testimonios = parseCSV(csvT);
-    renderTestimonios(testimonios);
-  } catch (err) {
-    console.error("Error al cargar testimonios:", err);
+function buscarGlobal(val) {
+  if (val.trim() !== "") {
+    verCatalogoCompleto();
+    const inputCat = document.getElementById("buscador");
+    if (inputCat) { inputCat.value = val; renderCatalogo(); }
   }
 }
 
-function renderTestimonios(lista) {
-  const cont = document.getElementById("test-grid");
-  if (!cont) return;
-  if (!lista || lista.length === 0) {
-    cont.innerHTML = '<div class="empty">No hay testimonios disponibles.</div>';
-    return;
-  }
-  
-  cont.innerHTML = lista.map((t, idx) => {
-    const videoId = t.youtube_id || t.videoid || "";
-    if (!videoId) return "";
-    return `
-      <div class="test-card">
-        <div class="test-card-video-wrapper">
-          <div id="yt-player-${idx}"></div>
-          <div class="video-click-overlay" onclick="togglePlayVideo('${idx}', '${videoId}')"></div>
-        </div>
-      </div>
-    `;
-  }).join("");
+/* CARGA Y EXTRACCIÓN DE YOUTUBE PARA TESTIMONIOS */
+function extraerIDYoutube(url) {
+  if (!url) return null;
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/))([\w-]{11})/);
+  return match ? match[1] : null;
 }
 
-function togglePlayVideo(idx, videoId) {
-  if (!playersYT[idx]) {
-    playersYT[idx] = new YT.Player(`yt-player-${idx}`, {
-      videoId: videoId,
-      playerVars: { 'autoplay': 1, 'controls': 0, 'modestbranding': 1, 'rel': 0 },
-      events: {
-        'onReady': (event) => event.target.playVideo()
-      }
-    });
-  } else {
-    const state = playersYT[idx].getPlayerState();
-    if (state === YT.PlayerState.PLAYING) {
-      playersYT[idx].pauseVideo();
+function toggleMuteVideo(id, overlayEl) {
+  const player = playersYT[id];
+  const badge = overlayEl.querySelector(".sound-badge");
+  if (player && typeof player.isMuted === 'function') {
+    if (player.isMuted()) {
+      player.unMute();
+      if (badge) badge.textContent = "🔊";
     } else {
-      playersYT[idx].playVideo();
+      player.mute();
+      if (badge) badge.textContent = "🔇";
     }
   }
 }
 
-window.onload = cargarDatos;
+function cargarTestimonios() {
+  fetch(SHEET_TESTIMONIOS)
+    .then(res => res.text())
+    .then(csv => {
+      const datos = parseCSV(csv);
+      const grid = document.getElementById("test-grid");
+      if (!grid) return;
+      grid.innerHTML = "";
+
+      datos.forEach((item, index) => {
+        const videoURL = item.video || item.link || item.url || "";
+        const ytID = extraerIDYoutube(videoURL);
+        
+        if (ytID) {
+          const iframeID = `player-yt-${index}`;
+          const card = document.createElement("div");
+          card.className = "test-card";
+          card.innerHTML = `
+            <div class="test-card-video-wrapper">
+              <div id="${iframeID}"></div>
+              <div class="video-click-overlay" onclick="toggleMuteVideo('${iframeID}', this)">
+                <div class="sound-badge">🔇</div>
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+
+          window.onYouTubeIframeAPIReady = window.onYouTubeIframeAPIReady || function() {};
+          
+          const initPlayer = () => {
+            playersYT[iframeID] = new YT.Player(iframeID, {
+              videoId: ytID,
+              playerVars: {
+                autoplay: 1,
+                controls: 0,
+                loop: 1,
+                playlist: ytID,
+                mute: 1,
+                modestbranding: 1,
+                rel: 0,
+                showinfo: 0,
+                disablekb: 1,
+                fs: 0,
+                playsinline: 1
+              }
+            });
+          };
+
+          if (window.YT && window.YT.Player) {
+            initPlayer();
+          } else {
+            setTimeout(initPlayer, 1000);
+          }
+        }
+      });
+    })
+    .catch(() => {
+      const grid = document.getElementById("test-grid");
+      if (grid) grid.innerHTML = '<div class="empty">Error cargando experiencias.</div>';
+    });
+}
+
+function cargarDatos() {
+  fetch(SHEET_PERFUMES)
+    .then(res => res.text())
+    .then(csv => {
+      CATALOGO = parseCSV(csv);
+      renderCategorias();
+      renderMarcas();
+      renderRecomendados();
+    });
+  cargarTestimonios();
+}
+
+/* CARRUSEL HERO BANNER */
+let currentSlideIndex = 0;
+let slideInterval;
+
+function showSlide(index) {
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  if (slides.length === 0) return;
+  if (index >= slides.length) currentSlideIndex = 0;
+  if (index < 0) currentSlideIndex = slides.length - 1;
+
+  slides.forEach(s => s.classList.remove('active'));
+  dots.forEach(d => d.classList.remove('active'));
+
+  slides[currentSlideIndex].classList.add('active');
+  if (dots[currentSlideIndex]) dots[currentSlideIndex].classList.add('active');
+}
+
+function moveSlide(step) {
+  currentSlideIndex += step;
+  showSlide(currentSlideIndex);
+  resetTimer();
+}
+
+function currentSlide(index) {
+  currentSlideIndex = index;
+  showSlide(currentSlideIndex);
+  resetTimer();
+}
+
+function startTimer() { slideInterval = setInterval(() => { moveSlide(1); }, 5000); }
+function resetTimer() { clearInterval(slideInterval); startTimer(); }
+
+document.addEventListener("DOMContentLoaded", () => {
+  cargarDatos();
+  showSlide(currentSlideIndex);
+  startTimer();
+});
 </script>
+
 </body>
 </html>
