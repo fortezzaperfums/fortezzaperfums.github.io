@@ -1,1297 +1,897 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Fortezza Perfums — Perfumes de lujo</title>
-
 <link rel="icon" type="image/png" href="imagenes/sitio/logo.png">
-
 <meta name="description" content="Catálogo de perfumes árabes y de nicho originales. Domicilios gratis en Pereira y Dosquebradas, envíos a toda Colombia.">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
-
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
-
   :root{
-
     --onyx:#121212;
-
     --onyx-2:#1B1B1B;
-
     --bronze:#E7E7E4;
-
     --bronze-dim:#4A4A47;
-
     --parchment:#F2F2F0;
-
     --stone:#9A9A96;
-
     --oxblood:#3A3A38;
-
   }
-
   *{box-sizing:border-box;}
-
   html{scroll-behavior:smooth;}
-
   body{
-
     margin:0;
-
     background:var(--onyx);
-
     color:var(--parchment);
-
     font-family:'DM Sans', sans-serif;
-
     font-weight:300;
-
     line-height:1.6;
-
     letter-spacing:0.02em;
-
   }
-
   h1,h2,h3,.display{
-
     font-family:'DM Sans', sans-serif;
-
     font-weight:600;
-
     color:var(--parchment);
-
     margin:0;
-
     letter-spacing:0.03em;
-
   }
-
   a{color:inherit;}
-
   img{max-width:100%;display:block;}
-
   .wrap{max-width:1180px;margin:0 auto;padding:0 1.5rem;}
 
-
-
   /* Promo bar */
-
   .promo{background:var(--bronze);color:var(--onyx);text-align:center;
-
     font-family:'DM Sans', sans-serif;font-size:.78rem;letter-spacing:.08em;padding:.55rem 1rem;font-weight:500;text-transform:uppercase;}
 
-
-
   /* Nav */
-
   nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-top:1.1rem;padding-bottom:1.1rem;
-
     position:relative;background:var(--onyx);z-index:80;border-bottom:1px solid transparent;
-
     transition:border-color .2s, box-shadow .2s;gap:1rem;}
-
   .brandmark{display:flex;align-items:center;gap:.6rem;}
-
   .brandmark img{height:38px;width:38px;object-fit:contain;border-radius:2px;}
-
   .brandmark span{font-family:'DM Sans', sans-serif;font-size:1.15rem;letter-spacing:.08em;font-weight:700;text-transform:uppercase;}
 
-  
-
   .nav-right-container{display:flex;align-items:center;gap:1.5rem;}
-
   .navlinks{display:flex;gap:1.6rem;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;font-family:'DM Sans', sans-serif;}
-
   .navlinks a{text-decoration:none;border-bottom:1px solid transparent;transition:all 0.2s;}
-
   .navlinks a:hover{border-color:var(--bronze);color:var(--bronze);}
 
-
-
   /* Buscador Superior */
-
   .nav-search-box{position:relative;display:flex;align-items:center;}
-
   .nav-search-input{
-
     background:var(--onyx-2);border:1px solid #35301F;border-radius:20px;
-
     color:var(--parchment);padding:.35rem .8rem .35rem 2rem;font-family:'DM Sans', sans-serif;
-
     font-size:.8rem;outline:none;width:160px;transition:all 0.3s ease;
-
   }
-
   .nav-search-input:focus{width:210px;border-color:var(--bronze);}
-
   .nav-search-icon{position:absolute;left:8px;font-size:.85rem;color:var(--stone);pointer-events:none;}
 
-
-
   /* Hero */
-
   .hero{position:relative;background:var(--onyx);border-bottom:1px solid var(--bronze-dim);display:flex;flex-direction:column;width:100%;}
-
   .hero-img{width:100%;height:auto;object-fit:cover;display:block;}
-
   .hero-inner{padding:1.6rem 1.5rem;max-width:1180px;margin:0 auto;width:100%;}
-
   .cta-row{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
-
   .btn{display:inline-block;padding:.7rem 1.4rem;font-size:.82rem;text-decoration:none;
-
     border:1px solid var(--bronze);letter-spacing:.08em;cursor:pointer;text-transform:uppercase;font-weight:500;font-family:'DM Sans', sans-serif;}
-
   .btn-solid{background:var(--bronze);color:var(--onyx);}
-
   .btn-outline{color:var(--parchment);}
 
-
-
   /* Sections */
-
   .section{padding:3.2rem 0;}
-
   .section-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #35301F;padding-bottom:.8rem;margin-bottom:1.8rem;flex-wrap:wrap;gap:.8rem;}
-
   .section-head h2{font-size:1.7rem;font-family:'DM Sans', sans-serif;}
-
   .section-head .sub{color:var(--stone);font-size:.85rem;font-family:'DM Sans', sans-serif;}
 
-
-
-  /* --- BLOQUE DE ESTADÍSTICAS --- */
-
+  /* BLOQUE DE ESTADÍSTICAS */
   .stats-section { padding: 2.5rem 0 1rem 0; }
-
   .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; }
-
   .stat-card {
-
     background: var(--onyx-2);border: 1px solid #35301F;border-radius: 12px;
-
     padding: 1.8rem 1.2rem;text-align: center;transition: transform 0.3s ease, border-color 0.3s ease;
-
   }
-
   .stat-card:hover { border-color: var(--bronze); transform: translateY(-3px); }
-
   .stat-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
-
   .stat-number { font-family: 'Oswald', sans-serif; font-size: 2.2rem; font-weight: 700; color: var(--parchment); line-height: 1.1; }
-
   .stat-label { font-size: 0.78rem; color: var(--stone); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.4rem; font-weight: 500; }
-
   .stats-caption { text-align: center; font-size: 0.85rem; color: var(--stone); margin-top: 1.2rem; letter-spacing: 0.04em; }
 
-
-
   /* Filtros Catálogo */
-
   .catalog-controls{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;}
-
   .select-genero{background:var(--onyx-2);border:1px solid #35301F;color:var(--parchment);padding:.5rem .8rem;font-family:'DM Sans', sans-serif;font-size:.85rem;outline:none;cursor:pointer;}
-
   .select-genero option{background:var(--onyx-2);color:var(--parchment);}
 
-
-
   /* Categorías */
-
   .cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:#35301F;border:1px solid #35301F;}
-
   .cat-tile{background:var(--onyx-2);padding:2.2rem 1rem;text-align:center;cursor:pointer;font-family:'DM Sans', sans-serif;font-size:1.1rem;letter-spacing:.05em;transition:background .2s;}
-
   .cat-tile:hover{background:#26221680;}
-
   .cat-tile.active{background:var(--bronze);color:var(--onyx);}
 
-
-
   /* CARRUSEL DE MARCAS */
-
   .brand-carousel-wrapper { position: relative; display: flex; align-items: center; margin-bottom: 1.5rem; width: 100%; }
-
   .brand-carousel { display: flex; gap: 1.2rem; overflow-x: auto; scroll-behavior: smooth; padding: 0.6rem 0; width: 100%; scrollbar-width: none; }
-
   .brand-carousel::-webkit-scrollbar { display: none; }
-
   .brand-logo-card {
-
     flex: 0 0 150px; min-width: 150px; height: 75px; background: var(--onyx-2); border: 1px solid #35301F;
-
     border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 0.6rem; cursor: pointer; transition: all 0.2s ease;
-
   }
-
   .brand-logo-card:hover { border-color: var(--bronze); transform: translateY(-3px); }
-
   .brand-logo-card img { max-height: 100%; max-width: 100%; object-fit: contain; }
-
   .brand-fallback-text { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--parchment); text-align: center; }
 
-
-
   /* Botones de texto en la sección de marcas */
-
   .brand-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem;}
-
   .brand-chip{border:1px solid var(--bronze-dim);padding:.6rem 1.2rem;font-size:.85rem;
-
     cursor:pointer;background:var(--onyx-2);color:var(--parchment);font-family:'DM Sans', sans-serif;letter-spacing:.05em;border-radius:6px;transition:all .2s;}
-
   .brand-chip.active,.brand-chip:hover{background:var(--bronze);color:var(--onyx);border-color:var(--bronze);}
 
-
-
   /* Catálogo y Tarjetas de Productos */
-
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.8rem;}
-
   .card{
-
     border:1px solid #35301F;background:var(--onyx-2);border-radius:8px;padding:.8rem;
-
     cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;
-
     transition:transform 0.3s ease, border-color 0.3s ease;
-
   }
-
   .card:hover{transform:translateY(-4px);border-color:var(--bronze);}
-
   .card-img-wrap{width:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:.6rem;}
-
   .card img{max-height:100%;max-width:100%;object-fit:contain;transition:transform 0.3s ease;}
-
   .card:hover img{transform:scale(1.05);}
-
   .card-info{text-align:center;width:100%;}
-
   .card-brand{font-size:.7rem;color:var(--stone);text-transform:uppercase;letter-spacing:.08em;}
-
   .card-title{font-size:.9rem;font-weight:600;color:var(--parchment);margin:.2rem 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-
   .card-price{font-size:1rem;font-family:'Oswald', sans-serif;color:var(--bronze);font-weight:600;}
-
-
 
   .empty{color:var(--stone);font-size:.9rem;padding:2rem 0;font-family:'DM Sans', sans-serif;}
 
-
-
   /* Carrusel Horizontal Lanzamientos */
-
   .horizontal-scroll-wrapper{position:relative;width:100%;display:flex;align-items:center;}
-
   .scroll-container{display:flex;gap:1.2rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;width:100%;scrollbar-width:thin;scrollbar-color:var(--bronze-dim) transparent;}
-
   .scroll-container::-webkit-scrollbar{height:6px;}
-
   .scroll-container::-webkit-scrollbar-thumb{background:var(--bronze-dim);border-radius:3px;}
-
   .scroll-container .card{flex:0 0 210px;min-width:210px;}
-
   .scroll-arrow{position:absolute;top:45%;transform:translateY(-50%);background:rgba(18, 18, 18, 0.9);color:var(--parchment);border:1px solid var(--bronze-dim);width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:15;transition:all 0.2s ease;}
-
   .scroll-arrow:hover{background:var(--bronze);color:var(--onyx);}
-
   .scroll-arrow.left{left:-15px;}
-
   .scroll-arrow.right{right:-15px;}
 
-
-
   /* Vista Detalle */
-
   .breadcrumbs{font-size:.8rem;color:var(--stone);margin-bottom:1.5rem;letter-spacing:.04em;font-family:'DM Sans', sans-serif;}
-
   .breadcrumbs a{color:var(--parchment);text-decoration:none;margin:0 .3rem;}
-
   .breadcrumbs a:hover{border-bottom:1px solid var(--bronze);}
-
   .product-detail-layout{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-top:1rem;}
-
   .detail-gallery img{width:100%;max-height:550px;object-fit:contain;background:transparent;border:1px solid var(--bronze-dim);}
-
   .detail-info{display:flex;flex-direction:column;justify-content:center;}
-
   .detail-brand{font-size:.8rem;color:var(--stone);letter-spacing:.12em;text-transform:uppercase;font-family:'DM Sans', sans-serif;}
-
   .detail-title{font-size:clamp(1.8rem,4vw,2.5rem);margin:.3rem 0 .8rem 0;font-family:'Oswald', sans-serif;text-transform:uppercase;}
-
   .detail-price{font-family:'Oswald', sans-serif;font-size:1.8rem;color:var(--bronze);margin-bottom:1.2rem;font-weight:600;}
-
   .detail-desc{font-size:1.05rem;color:var(--stone);line-height:1.6;margin-bottom:1.8rem;border-top:1px solid #35301F;border-bottom:1px solid #35301F;padding:1.2rem 0;font-family:'DM Sans', sans-serif;}
-
   .detail-actions{display:flex;flex-direction:column;gap:1rem;}
 
-
-
   /* --- TESTIMONIOS Y VIDEOS SIN CORTES NI ENLACES --- */
-
   .test-grid {
-
     display: flex;gap: 1.2rem;overflow-x: auto;overflow-y: hidden;scroll-behavior: smooth;
-
     -webkit-overflow-scrolling: touch;scroll-snap-type: x mandatory;padding: 0.5rem 0.5rem 1.2rem 0.5rem;
-
   }
-
   .test-grid::-webkit-scrollbar { height: 6px; }
-
   .test-grid::-webkit-scrollbar-thumb { background: var(--bronze-dim); border-radius: 10px; }
-
   .test-card {
-
     flex: 0 0 240px;min-width: 240px;scroll-snap-align: start;border: 1px solid #35301F;
-
     background: var(--onyx-2);padding: 0.5rem;border-radius: 10px;display: flex;flex-direction: column;
-
   }
-
   .test-card-video-wrapper {
-
     position: relative;width: 100%;aspect-ratio: 9 / 16;background: #000;
-
     border-radius: 8px;overflow: hidden;
-
   }
-
+  /* Estilo ajustado para no recortar video ni mostrar barras */
   .test-card-video-wrapper iframe {
-
     position: absolute;top: 0;left: 0;width: 100%;height: 100%;
-
-    border: 0;object-fit: cover;
-
+    border: 0;object-fit: contain;pointer-events: none;
   }
-
   .video-click-overlay {
-
     position: absolute;top: 0;left: 0;width: 100%;height: 100%;
-
     z-index: 20;cursor: pointer;background: transparent;
-
     display: flex; align-items: flex-end; justify-content: flex-end; padding: 10px;
-
   }
-
   .sound-badge {
-
     background: rgba(0,0,0,0.6); color: #fff; border-radius: 50%; width: 32px; height: 32px;
-
     display: flex; align-items: center; justify-content: center; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.2);
-
   }
-
-
 
   footer{border-top:1px solid #35301F;padding:2.6rem 0;font-size:.85rem;color:var(--stone);font-family:'DM Sans', sans-serif;}
-
   .foot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.6rem;}
-
   footer strong{color:var(--parchment);font-weight:500;font-family:'DM Sans', sans-serif;letter-spacing:.04em;}
-
   footer a{text-decoration:none;border-bottom:1px solid var(--bronze-dim);}
-
   .foot-bottom{text-align:center;margin-top:2rem;color:#605A4C;font-size:.75rem;letter-spacing:.05em;}
 
-
-
   .wa-float{position:fixed;bottom:1.3rem;right:1.3rem;background:#25D366;color:#fff;
-
     width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-
     text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4);font-size:1.5rem;z-index:99;}
 
-
-
   @media (max-width:850px){
-
     .nav-search-input{width:120px;}
-
     .nav-search-input:focus{width:150px;}
-
   }
-
   @media (max-width:768px){
-
     .product-detail-layout{grid-template-columns:1fr;gap:1.5rem;}
-
     .scroll-arrow{display:none;}
-
     .test-card { flex: 0 0 210px; min-width: 210px; }
-
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
-
   }
-
   @media (max-width:680px){
-
     .navlinks{display:none;}
-
     .menu-toggle{display:block !important;}
-
   }
-
-
 
   .menu-toggle{display:none;background:transparent;border:1px solid var(--bronze-dim);color:var(--parchment);font-size:1.3rem;padding:.3rem .8rem;cursor:pointer;}
-
   .mobile-menu{display:none;flex-direction:column;background:var(--onyx-2);border-top:1px solid var(--bronze-dim);border-bottom:1px solid var(--bronze-dim);font-family:'DM Sans', sans-serif;}
-
   .mobile-menu.abierto{display:flex;}
-
   .mobile-menu a{padding:1rem 1.5rem;font-size:.9rem;text-decoration:none;border-bottom:1px solid #2a251a;text-transform:uppercase;letter-spacing:.05em;}
 
-
-
   .oculto{display:none !important;}
-
   .volver{display:inline-block;margin-bottom:1rem;font-size:.85rem;color:var(--bronze);text-decoration:none;border-bottom:1px solid var(--bronze);cursor:pointer;letter-spacing:.04em;font-family:'DM Sans', sans-serif;}
 
-
-
   /* Carrusel Hero Banner */
-
   .carousel-container { position: relative; width: 100%; overflow: hidden; }
-
   .slide { display: none; width: 100%; }
-
   .slide.active { display: block; animation: fade 0.8s ease-in-out; }
-
   @keyframes fade { from { opacity: 0.4; } to { opacity: 1; } }
-
   .mobile-slide { display: none !important; }
-
   .pc-slide { display: block; width: 100%; height: auto; }
-
   .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5); color: #fff; border: none; font-size: 1.2rem; padding: 10px 15px; cursor: pointer; z-index: 10; border-radius: 4px; }
-
   .carousel-btn.prev { left: 10px; }
-
   .carousel-btn.next { right: 10px; }
-
   .carousel-dots { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
-
   .dot { width: 10px; height: 10px; background: rgba(255, 255, 255, 0.5); border-radius: 50%; cursor: pointer; }
-
   .dot.active { background: var(--bronze, #c5a059); width: 25px; border-radius: 10px; }
 
-
-
   @media (max-width: 768px) {
-
     .pc-slide { display: none !important; }
-
     .mobile-slide { display: block !important; width: 100%; height: auto !important; object-fit: contain; }
-
   }
-
 </style>
-
 </head>
-
 <body>
-
-
 
 <div class="promo">DOMICILIOS GRATIS EN PEREIRA Y DOSQUEBRADAS · ENVÍOS A TODA COLOMBIA</div>
 
-
-
 <nav class="wrap" id="nav-principal">
-
   <div class="brandmark" onclick="verInicio()" style="cursor:pointer;">
-
     <img id="logo-img" src="imagenes/sitio/logo.png" alt="Fortezza Perfums" onerror="this.style.display='none'">
-
     <span>Fortezza Perfums</span>
-
   </div>
-
-
 
   <div class="nav-right-container">
-
     <div class="navlinks">
-
       <a href="#" onclick="verInicio();return false;">Inicio</a>
-
       <a href="#" onclick="verColeccion('etiqueta','Nuevo');return false;">Nuevos</a>
-
       <a href="#" onclick="verColeccion('etiqueta','Oferta');return false;">Ofertas</a>
-
       <a href="#" onclick="verSoloMarcas();return false;">Marcas</a>
-
       <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a>
-
       <a href="#" onclick="verSoloTestimonios();return false;">Testimonios</a>
-
     </div>
-
-
 
     <div class="nav-search-box">
-
       <span class="nav-search-icon">🔍</span>
-
       <input id="buscador-global" class="nav-search-input" type="text" placeholder="Buscar..." oninput="buscarGlobal(this.value)">
-
     </div>
-
-
 
     <button class="menu-toggle" id="menu-toggle" onclick="toggleMenuMovil()">☰</button>
-
   </div>
-
 </nav>
 
-
-
 <div class="mobile-menu" id="mobile-menu">
-
   <a href="#" onclick="verInicio();toggleMenuMovil();return false;">Inicio</a>
-
   <a href="#" onclick="verColeccion('etiqueta','Nuevo');toggleMenuMovil();return false;">Nuevos</a>
-
   <a href="#" onclick="verColeccion('etiqueta','Oferta');toggleMenuMovil();return false;">Ofertas</a>
-
   <a href="#" onclick="verSoloMarcas();toggleMenuMovil();return false;">Marcas</a>
-
   <a href="#" onclick="verCatalogoCompleto();toggleMenuMovil();return false;">Catálogo</a>
-
   <a href="#" onclick="verSoloTestimonios();toggleMenuMovil();return false;">Testimonios</a>
-
 </div>
 
-
-
 <section class="hero">
-
   <div class="carousel-container">
-
     <div class="slide active">
-
       <img class="hero-img pc-slide" src="imagenes/banners/banner.jpg" alt="Banner PC 1">
-
       <img class="hero-img mobile-slide" src="imagenes/banners/banner_mobile.png" alt="Banner Móvil 1">
-
     </div>
-
     <div class="slide">
-
       <img class="hero-img pc-slide" src="imagenes/banners/banner2.jpg" alt="Banner PC 2">
-
       <img class="hero-img mobile-slide" src="imagenes/banners/banner2_mobile.png" alt="Banner Móvil 2">
-
     </div>
-
     <div class="slide">
-
       <img class="hero-img pc-slide" src="imagenes/banners/banner3.jpg.png" alt="Banner PC 3">
-
       <img class="hero-img mobile-slide" src="imagenes/banners/banner3_mobile.png" alt="Banner Móvil 3">
-
     </div>
-
     <div class="slide">
-
       <img class="hero-img pc-slide" src="imagenes/banners/banner4.jpg" alt="Banner PC 4">
-
       <img class="hero-img mobile-slide" src="imagenes/banners/banner4_mobile.png" alt="Banner Móvil 4">
-
     </div>
-
     
-
     <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
-
     <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
-
     
-
     <div class="carousel-dots">
-
       <span class="dot active" onclick="currentSlide(0)"></span>
-
       <span class="dot" onclick="currentSlide(1)"></span>
-
       <span class="dot" onclick="currentSlide(2)"></span>
-
       <span class="dot" onclick="currentSlide(3)"></span>
-
     </div>
-
   </div>
-
-
 
   <div class="hero-inner">
-
     <div class="cta-row">
-
       <a class="btn btn-solid" href="#" onclick="verCatalogoCompleto();return false;">Ver catálogo</a>
-
       <a class="btn btn-outline" id="wa-hero" href="#" target="_blank">Escribir por WhatsApp</a>
-
     </div>
-
   </div>
-
 </section>
-
-
 
 <div class="wrap">
 
-
-
   <div class="volver oculto" id="volver-inicio-bar" onclick="verInicio()" style="margin-top:1.5rem;">← Volver al inicio</div>
 
-
-
   <!-- 1. LANZAMIENTOS -->
-
   <section class="section" id="recomendados">
-
     <div class="section-head"><h2>Nuevos lanzamientos</h2></div>
-
     <div class="horizontal-scroll-wrapper">
-
       <button class="scroll-arrow left" onclick="scrollRecomendados(-300)">&#10094;</button>
-
       <div class="scroll-container" id="recomendados-grid">
-
         <div class="empty">Cargando...</div>
-
       </div>
-
       <button class="scroll-arrow right" onclick="scrollRecomendados(300)">&#10095;</button>
-
     </div>
-
   </section>
-
-
 
   <!-- 2. CARRUSEL DE MARCAS EN INICIO -->
-
   <section class="section" id="marcas-inicio">
-
     <div class="section-head"><h2>Nuestras Marcas</h2></div>
-
     <div class="horizontal-scroll-wrapper">
-
       <button class="scroll-arrow left" onclick="scrollCarruselMarcas(-300)">&#10094;</button>
-
       <div class="brand-carousel" id="brand-carousel-inicio"></div>
-
       <button class="scroll-arrow right" onclick="scrollCarruselMarcas(300)">&#10095;</button>
-
     </div>
-
   </section>
-
-
 
   <section class="section oculto" id="categorias">
-
     <div class="section-head">
-
       <h2>Explora por categoría</h2>
-
       <span class="sub" id="cat-count"></span>
-
     </div>
-
     <div class="cat-grid" id="cat-grid"></div>
-
   </section>
-
-
 
   <!-- SECCIÓN DEDICADA DE MARCAS -->
-
   <section class="section oculto" id="marcas">
-
     <div class="section-head"><h2>Compra por marca</h2></div>
-
     
-
     <div class="horizontal-scroll-wrapper">
-
       <button class="scroll-arrow left" onclick="scrollCarruselMarcas(-300)">&#10094;</button>
-
       <div class="brand-carousel" id="brand-carousel-seccion"></div>
-
       <button class="scroll-arrow right" onclick="scrollCarruselMarcas(300)">&#10095;</button>
-
     </div>
-
-
 
     <div class="brand-row" id="brand-row"></div>
-
   </section>
-
-
 
   <section class="section oculto" id="catalogo">
-
     <div class="section-head">
-
       <h2 id="catalogo-titulo">Catálogo completo</h2>
-
       <div class="catalog-controls">
-
         <select id="filtro-genero" class="select-genero" onchange="cambiarGenero(this.value)">
-
           <option value="Todas">Todos los géneros</option>
-
           <option value="Hombre">Hombre</option>
-
           <option value="Mujer">Mujer</option>
-
           <option value="Unisex">Unisex</option>
-
         </select>
-
         <div style="position:relative;display:flex;align-items:center;">
-
           <span style="position:absolute;left:8px;font-size:.85rem;color:var(--stone);">🔍</span>
-
           <input id="buscador" placeholder="Buscar perfume..." oninput="renderCatalogo()" style="background:transparent;border:1px solid #35301F;color:var(--parchment);padding:.5rem .8rem .5rem 2rem;font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;">
-
         </div>
-
       </div>
-
     </div>
-
     <div class="grid" id="catalogo-grid"><div class="empty">Cargando catálogo...</div></div>
-
   </section>
-
-
 
   <section class="section oculto" id="detalle-producto">
-
     <div class="breadcrumbs" id="detail-breadcrumbs"></div>
-
     <div class="product-detail-layout">
-
       <div class="detail-gallery">
-
         <img id="detail-img" src="" alt="" onerror="this.src=FOTO_RESPALDO">
-
       </div>
-
       <div class="detail-info">
-
         <div class="detail-brand" id="detail-brand"></div>
-
         <h1 class="detail-title" id="detail-title"></h1>
-
         <div class="detail-price" id="detail-price"></div>
-
         <div class="detail-desc" id="detail-desc"></div>
-
         <div class="detail-actions">
-
           <a class="btn btn-solid" id="detail-wa-btn" href="#" target="_blank" style="text-align:center;">Añadir al Carrito / Pedir por WhatsApp</a>
-
           <button class="btn btn-outline" id="btn-volver-anterior" onclick="volverOrigenDetalle()">← Volver atrás</button>
-
         </div>
-
       </div>
-
     </div>
-
   </section>
-
-
 
   <!-- 3. TESTIMONIOS -->
-
   <section class="section" id="testimonios">
-
     <div class="section-head"><h2>Experiencias en Fortezza Perfums</h2></div>
-
     
-
     <div class="test-grid" id="test-grid"><div class="empty">Cargando testimonios...</div></div>
 
-
-
     <div class="stats-section" id="stats-bloque" style="margin-top:2rem;">
-
       <div class="stats-grid">
-
         <div class="stat-card">
-
           <div class="stat-icon">👥</div>
-
           <div class="stat-number">+500</div>
-
           <div class="stat-label">Clientes Felices</div>
-
         </div>
-
         <div class="stat-card">
-
           <div class="stat-icon">📦</div>
-
           <div class="stat-number">+600</div>
-
           <div class="stat-label">Pedidos Entregados</div>
-
         </div>
-
         <div class="stat-card">
-
           <div class="stat-icon">⭐</div>
-
           <div class="stat-number">100%</div>
-
           <div class="stat-label">Satisfacción Clientes</div>
-
         </div>
-
         <div class="stat-card">
-
           <div class="stat-icon">🚚</div>
-
           <div class="stat-number">24H</div>
-
           <div class="stat-label">Despachos Rápidos</div>
-
         </div>
-
       </div>
-
       <div class="stats-caption">Cientos de clientes confían en nosotros cada día</div>
-
     </div>
-
   </section>
-
-
 
 </div>
 
-
-
 <footer>
-
   <div class="wrap foot-grid">
-
     <div>
-
       <strong>Fortezza Perfums</strong><br>
-
       Perfumes 100% originales y garantizados.
-
     </div>
-
     <div>
-
       <strong>Contacto</strong><br>
-
       <a id="wa-footer" href="#" target="_blank">WhatsApp</a> ·
-
       <a id="ig-footer" href="#" target="_blank">Instagram</a>
-
     </div>
-
     <div>
-
       <strong>Ubicación</strong><br>
-
       Pereira, Risaralda<br>
-
       Domicilios gratis Pereira / Dosquebradas
-
     </div>
-
   </div>
-
   <div class="foot-bottom">Fortezza Perfums © 2026</div>
-
 </footer>
-
-
 
 <a class="wa-float" id="wa-float" href="#" target="_blank">💬</a>
 
-
-
 <script src="https://www.youtube.com/iframe_api"></script>
 
-
-
 <script>
-
 const WHATSAPP_NUMBER = "573215207592"; 
-
 const INSTAGRAM_USER = "_fortezzaperfums";
 
-
-
 const SHEET_PERFUMES = "https://docs.google.com/spreadsheets/d/e/2PACX-1vThi2UEsqwB_uX_EXkCO9HnaMPiLoJsf1eQtcOCAZm6kbT9soLLGxlC5ovIn2MI_eA2G17ZM_Me0JZG/pub?output=csv";
-
 const SHEET_TESTIMONIOS = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSV6Zw5vY7-GYhQDio_ATBA-HEU5KEo8MKAzvSDFbD8q9vfZf6ClL3IxUYqf66emduMgWGTMlfl3g8i/pub?output=csv";
-
-
 
 const FOTO_RESPALDO = "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400";
 
-
-
 let playersYT = {};
-
-
-
-function parseCSV(texto) {
-
-  if (texto.charCodeAt(0) === 0xFEFF) texto = texto.slice(1);
-
-  const filas = [];
-
-  let fila = [], campo = "", enComillas = false;
-
-  for (let i = 0; i < texto.length; i++) {
-
-    const c = texto[i];
-
-    if (enComillas) {
-
-      if (c === '"' && texto[i+1] === '"') { campo += '"'; i++; }
-
-      else if (c === '"') { enComillas = false; }
-
-      else { campo += c; }
-
-    } else {
-
-      if (c === '"') enComillas = true;
-
-      else if (c === ',') { fila.push(campo); campo = ""; }
-
-      else if (c === '\n' || c === '\r') {
-
-        if (c === '\r' && texto[i+1] === '\n') i++;
-
-        fila.push(campo); campo = "";
-
-        if (fila.length > 1 || fila[0] !== "") filas.push(fila);
-
-        fila = [];
-
-      } else { campo += c; }
-
-    }
-
-  }
-
-  if (campo !== "" || fila.length) { fila.push(campo); filas.push(fila); }
-
-
-
-  const sinTildes = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-  const encabezados = filas.shift().map(h => sinTildes(h.trim().toLowerCase()));
-
-
-
-  return filas.map(f => {
-
-    const obj = {};
-
-    encabezados.forEach((h, idx) => { obj[h] = (f[idx] || "").trim(); });
-
-    return obj;
-
-  });
-
-}
-
-
-
-function linkWhatsapp(nombre, precio) {
-
-  const precioTxt = precio ? ` ($${precio})` : "";
-
-  const msg = `Hola! Me interesa el perfume ${nombre}${precioTxt}`;
-
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-
-}
-
-
-
-document.getElementById("wa-float").href = `https://wa.me/${WHATSAPP_NUMBER}`;
-
-document.getElementById("wa-footer").href = `https://wa.me/${WHATSAPP_NUMBER}`;
-
-document.getElementById("wa-hero").href = `https://wa.me/${WHATSAPP_NUMBER}`;
-
-document.getElementById("ig-footer").href = `https://instagram.com/${INSTAGRAM_USER}`;
-
-document.getElementById("ig-footer").textContent = `@${INSTAGRAM_USER}`;
-
-
-
-function toggleMenuMovil() {
-
-  document.getElementById("mobile-menu").classList.toggle("abierto");
-
-}
-
-
-
 let CATALOGO = [];
-
 let filtroCategoria = "Todas";
-
 let filtroMarca = "Todas";
-
 let filtroEtiqueta = "Todas";
-
 let filtroGenero = "Todas";
-
 let seccionAnterior = "inicio";
-
-
+let slideIndex = 0;
 
 const SECCIONES = ["hero", "recomendados", "marcas-inicio", "categorias", "marcas", "catalogo", "detalle-producto", "testimonios"];
 
+function parseCSV(texto) {
+  if (texto.charCodeAt(0) === 0xFEFF) texto = texto.slice(1);
+  const filas = [];
+  let fila = [], campo = "", enComillas = false;
+  for (let i = 0; i < texto.length; i++) {
+    const c = texto[i];
+    if (enComillas) {
+      if (c === '"' && texto[i+1] === '"') { campo += '"'; i++; }
+      else if (c === '"') { enComillas = false; }
+      else { campo += c; }
+    } else {
+      if (c === '"') enComillas = true;
+      else if (c === ',') { fila.push(campo); campo = ""; }
+      else if (c === '\n' || c === '\r') {
+        if (c === '\r' && texto[i+1] === '\n') i++;
+        fila.push(campo); campo = "";
+        if (fila.length > 1 || fila[0] !== "") filas.push(fila);
+        fila = [];
+      } else { campo += c; }
+    }
+  }
+  if (campo !== "" || fila.length) { fila.push(campo); filas.push(fila); }
 
+  const sinTildes = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const encabezados = filas.shift().map(h => sinTildes(h.trim().toLowerCase()));
+
+  return filas.map(f => {
+    const obj = {};
+    encabezados.forEach((h, idx) => { obj[h] = (f[idx] || "").trim(); });
+    return obj;
+  });
+}
+
+function linkWhatsapp(nombre, precio) {
+  const precioTxt = precio ? ` ($${precio})` : "";
+  const msg = `Hola! Me interesa el perfume ${nombre}${precioTxt}`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+}
+
+document.getElementById("wa-float").href = `https://wa.me/${WHATSAPP_NUMBER}`;
+document.getElementById("wa-footer").href = `https://wa.me/${WHATSAPP_NUMBER}`;
+document.getElementById("wa-hero").href = `https://wa.me/${WHATSAPP_NUMBER}`;
+document.getElementById("ig-footer").href = `https://instagram.com/${INSTAGRAM_USER}`;
+document.getElementById("ig-footer").textContent = `@${INSTAGRAM_USER}`;
+
+function toggleMenuMovil() {
+  document.getElementById("mobile-menu").classList.toggle("abierto");
+}
 
 function mostrarSoloSeccion(idMostrar) {
-
   SECCIONES.forEach(id => {
-
     const el = id === "hero" ? document.querySelector(".hero") : document.getElementById(id);
-
     if (el) el.classList.toggle("oculto", id !== idMostrar);
-
   });
-
   document.getElementById("volver-inicio-bar").classList.remove("oculto");
-
   window.scrollTo({top:0, behavior:"instant"});
-
 }
-
-
 
 function verColeccion(tipo, valor) {
-
   seccionAnterior = "catalogo";
-
+  filtroCategoria = "Todas";
+  filtroMarca = "Todas";
+  filtroEtiqueta = "Todas";
+  
   if (tipo === "categoria") filtroCategoria = valor;
-
   if (tipo === "marca") filtroMarca = valor;
-
   if (tipo === "etiqueta") filtroEtiqueta = valor;
-
+  
   renderCategorias();
-
   renderMarcas();
-
   renderCatalogo();
-
   mostrarSoloSeccion("catalogo");
-
 }
-
-
 
 function verCatalogoCompleto() {
-
   seccionAnterior = "catalogo";
-
   filtroCategoria = "Todas"; filtroMarca = "Todas"; filtroEtiqueta = "Todas"; filtroGenero = "Todas";
-
-  document.getElementById("filtro-genero").value = "Todas";
-
+  if (document.getElementById("filtro-genero")) document.getElementById("filtro-genero").value = "Todas";
+  if (document.getElementById("buscador")) document.getElementById("buscador").value = "";
   renderCategorias(); renderMarcas(); renderCatalogo();
-
   mostrarSoloSeccion("catalogo");
-
 }
-
-
 
 function verSoloMarcas() { seccionAnterior = "marcas"; mostrarSoloSeccion("marcas"); }
-
 function verSoloTestimonios() { seccionAnterior = "testimonios"; mostrarSoloSeccion("testimonios"); }
 
-
-
 function verInicio() {
-
   seccionAnterior = "inicio";
-
   filtroCategoria = "Todas";
-
   filtroMarca = "Todas";
-
   filtroEtiqueta = "Todas";
-
   filtroGenero = "Todas";
-
   if(document.getElementById("filtro-genero")) document.getElementById("filtro-genero").value = "Todas";
-
   
-
   SECCIONES.forEach(id => {
-
     const el = id === "hero" ? document.querySelector(".hero") : document.getElementById(id);
-
     if (el) {
-
       if (id === "hero" || id === "recomendados" || id === "marcas-inicio" || id === "testimonios") {
-
         el.classList.remove("oculto");
-
       } else {
-
         el.classList.add("oculto");
-
       }
-
     }
-
   });
-
   document.getElementById("volver-inicio-bar").classList.add("oculto");
-
   renderRecomendados();
-
   window.scrollTo({top:0, behavior:"smooth"});
-
 }
-
-
 
 function scrollRecomendados(amount) {
-
   const container = document.getElementById("recomendados-grid");
-
   if (container) container.scrollBy({ left: amount, behavior: 'smooth' });
-
 }
-
-
 
 function scrollCarruselMarcas(amount) {
-
   const carruseles = document.querySelectorAll(".brand-carousel");
-
   carruseles.forEach(c => c.scrollBy({ left: amount, behavior: "smooth" }));
-
 }
-
-
 
 function cambiarGenero(valor) {
-
   filtroGenero = valor;
-
   renderCatalogo();
-
 }
 
-
+function buscarGlobal(query) {
+  if (!query || query.trim() === "") return;
+  verCatalogoCompleto();
+  const inputBuscador = document.getElementById("buscador");
+  if (inputBuscador) {
+    inputBuscador.value = query;
+    renderCatalogo();
+  }
+}
 
 function renderCategorias() {
-
   const categorias = ["Todas", ...new Set(CATALOGO.map(p => p.categoria).filter(Boolean))];
-
   const cont = document.getElementById("cat-grid");
-
   if (!cont) return;
-
   cont.innerHTML = "";
-
   categorias.forEach(cat => {
-
     const div = document.createElement("div");
-
     div.className = "cat-tile" + (cat === filtroCategoria ? " active" : "");
-
     div.textContent = cat;
-
     div.onclick = () => cat === "Todas" ? verInicio() : verColeccion("categoria", cat);
-
     cont.appendChild(div);
-
   });
-
   const catCount = document.getElementById("cat-count");
-
   if (catCount) catCount.textContent = `${CATALOGO.length} fragancias`;
-
 }
 
-
-
 function renderMarcas() {
-
   const marcas = [...new Set(CATALOGO.map(p => p.marca).filter(Boolean))];
-
   
-
   const htmlLogos = marcas.map(m => {
-
     const nombreArchivo = m.toLowerCase().replace(/[^a-z0-9]/g, "");
-
     const rutaImagen = `imagenes/marcas/${nombreArchivo}.png`;
-
     const marcaEscapada = m.replace(/'/g, "\\'");
-
     return `
-
       <div class="brand-logo-card" onclick="verColeccion('marca', '${marcaEscapada}')" title="${m}">
-
         <img src="${rutaImagen}" alt="${m}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-
         <span class="brand-fallback-text" style="display:none;">${m}</span>
-
       </div>
-
     `;
-
   }).join("");
 
-
-
-  const contInicio = document.getElementById("brand-carousel-inicio");
-
-  const contSeccion = document.getElementById("brand-carousel-seccion");
-
-
-
-  if (contInicio) contInicio.innerHTML = htmlLogos;
-
-  if (contSeccion) contSeccion.innerHTML = htmlLogos;
-
-
+  const carruselInicio = document.getElementById("brand-carousel-inicio");
+  const carruselSeccion = document.getElementById("brand-carousel-seccion");
+  if (carruselInicio) carruselInicio.innerHTML = htmlLogos;
+  if (carruselSeccion) carruselSeccion.innerHTML = htmlLogos;
 
   const contBotones = document.getElementById("brand-row");
+  if (contBotones) {
+    contBotones.innerHTML = "";
+    marcas.forEach(m => {
+      const b = document.createElement("button");
+      b.className = "brand-chip" + (m === filtroMarca ? " active" : "");
+      b.textContent = m;
+      b.onclick = () => verColeccion("marca", m);
+      contBotones.appendChild(b);
+    });
+  }
+}
 
-  if (contBotones) { 
+function obtenerFotos(p) {
+  const fotosRaw = p.foto || p.imagen || p.imagenes || p.fotos || "";
+  const fotos = fotosRaw.split(",").map(f => f.trim()).filter(Boolean);
+  const principal = fotos[0] || FOTO_RESPALDO;
+  const secundaria = fotos[1] || principal;
+  return { principal, secundaria };
+}
+
+function crearTarjetaHTML(p) {
+  const { principal } = obtenerFotos(p);
+  const nombreLimpio = (p.nombre || "Sin nombre").replace(/'/g, "\\'");
+  const precioFormateado = p.precio ? `$${p.precio}` : 'Consultar';
+
+  return `
+    <div class="card" onclick="verDetalleProducto('${nombreLimpio}')">
+      <div class="card-img-wrap">
+        <img src="${principal}" alt="${p.nombre || ''}" onerror="this.src='${FOTO_RESPALDO}'">
+      </div>
+      <div class="card-info">
+        <div class="card-brand">${p.marca || 'Fortezza'}</div>
+        <div class="card-title">${p.nombre || 'Perfume'}</div>
+        <div class="card-price">${precioFormateado}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderRecomendados() {
+  const cont = document.getElementById("recomendados-grid");
+  if (!cont) return;
+  const lista = CATALOGO.filter(p => (p.etiqueta || "").toLowerCase().includes("nuevo") || (p.etiqueta || "").toLowerCase().includes("destacado")).slice(0, 10);
+  const items = lista.length ? lista : CATALOGO.slice(0, 8);
+  if (!items.length) { cont.innerHTML = '<div class="empty">Próximamente productos.</div>'; return; }
+  cont.innerHTML = items.map(p => crearTarjetaHTML(p)).join("");
+}
+
+function renderCatalogo() {
+  const grid = document.getElementById("catalogo-grid");
+  if (!grid) return;
+  
+  const q = (document.getElementById("buscador") ? document.getElementById("buscador").value : "").toLowerCase().trim();
+
+  const filtrados = CATALOGO.filter(p => {
+    const matchCat = filtroCategoria === "Todas" || (p.categoria || "").toLowerCase() === filtroCategoria.toLowerCase();
+    const matchMarca = filtroMarca === "Todas" || (p.marca || "").toLowerCase() === filtroMarca.toLowerCase();
+    const matchEtiq = filtroEtiqueta === "Todas" || (p.etiqueta || "").toLowerCase().includes(filtroEtiqueta.toLowerCase());
+    
+    // FILTRO DE GÉNERO MEJORADO
+    const generoProd = (p.genero || p.sexo || "").toLowerCase();
+    let matchGen = true;
+    if (filtroGenero !== "Todas") {
+      matchGen = generoProd.includes(filtroGenero.toLowerCase());
+    }
+
+    const matchQ = !q || (p.nombre || "").toLowerCase().includes(q) || (p.marca || "").toLowerCase().includes(q) || (p.categoria || "").toLowerCase().includes(q);
+
+    return matchCat && matchMarca && matchEtiq && matchGen && matchQ;
+  });
+
+  if (!filtrados.length) {
+    grid.innerHTML = '<div class="empty">No se encontraron perfumes con estos criterios.</div>';
+    return;
+  }
+  grid.innerHTML = filtrados.map(p => crearTarjetaHTML(p)).join("");
+}
+
+function verDetalleProducto(nombre) {
+  const p = CATALOGO.find(item => item.nombre === nombre);
+  if (!p) return;
+  
+  const { principal } = obtenerFotos(p);
+  
+  document.getElementById("detail-img").src = principal;
+  document.getElementById("detail-brand").textContent = p.marca || "Fortezza";
+  document.getElementById("detail-title").textContent = p.nombre || "";
+  document.getElementById("detail-price").textContent = p.precio ? `$${p.precio}` : "Consultar Precio";
+  document.getElementById("detail-desc").textContent = p.descripcion || p.detalle || "Fragancia de lujo garantizada 100% original.";
+  
+  const btnWA = document.getElementById("detail-wa-btn");
+  btnWA.href = linkWhatsapp(p.nombre, p.precio);
+  
+  document.getElementById("detail-breadcrumbs").innerHTML = `
+    <a href="#" onclick="verInicio();return false;">Inicio</a> / 
+    <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a> / 
+    <span>${p.nombre}</span>
+  `;
+  
+  mostrarSoloSeccion("detalle-producto");
+}
+
+function volverOrigenDetalle() {
+  if (seccionAnterior === "catalogo") {
+    mostrarSoloSeccion("catalogo");
+  } else {
+    verInicio();
+  }
+}
+
+/* CAROUSEL HERO */
+function showSlide(index) {
+  const slides = document.querySelectorAll(".slide");
+  const dots = document.querySelectorAll(".dot");
+  if (!slides.length) return;
+  if (index >= slides.length) slideIndex = 0;
+  if (index < 0) slideIndex = slides.length - 1;
+  slides.forEach((s, i) => s.classList.toggle("active", i === slideIndex));
+  dots.forEach((d, i) => d.classList.toggle("active", i === slideIndex));
+}
+function moveSlide(n) { showSlide(slideIndex += n); }
+function currentSlide(n) { showSlide(slideIndex = n); }
+setInterval(() => moveSlide(1), 5000);
+
+/* TESTIMONIOS Y YOUTUBE CON overlay PERFECTO Y SIN RECORTES */
+function extraerIDYoutube(url) {
+  if (!url) return null;
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : null;
+}
+
+function renderTestimonios(csv) {
+  const datos = parseCSV(csv);
+  const grid = document.getElementById("test-grid");
+  if (!grid) return;
+  grid.innerHTML = "";
+
+  datos.forEach((item, index) => {
+    const videoURL = item.video || item.link || item.url || item.youtube || "";
+    const ytID = extraerIDYoutube(videoURL);
+
+    if (ytID) {
+      const iframeID = `player-yt-${index}`;
+      const card = document.createElement("div");
+      card.className = "test-card";
+      card.innerHTML = `
+        <div class="test-card-video-wrapper">
+          <div id="${iframeID}"></div>
+          <div class="video-click-overlay" onclick="toggleMuteVideo('${iframeID}')">
+            <div class="sound-badge" id="badge-${iframeID}">🔇</div>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+
+      // Crear reproductor con parámetros para evitar redirects
+      setTimeout(() => {
+        playersYT[iframeID] = new YT.Player(iframeID, {
+          videoId: ytID,
+          playerVars: {
+            'autoplay': 1,
+            'controls': 0,
+            'mute': 1,
+            'loop': 1,
+            'playlist': ytID,
+            'modestbranding': 1,
+            'rel': 0,
+            'showinfo': 0,
+            'playsinline': 1,
+            'disablekb': 1,
+            'fs': 0
+          },
+          events: {
+            'onReady': (e) => {
+              e.target.mute();
+              e.target.playVideo();
+            }
+          }
+        });
+      }, 500);
+    }
+  });
+}
+
+function toggleMuteVideo(iframeID) {
+  const player = playersYT[iframeID];
+  const badge = document.getElementById(`badge-${iframeID}`);
+  if (player && typeof player.isMuted === 'function') {
+    if (player.isMuted()) {
+      player.unMute();
+      if (badge) badge.textContent = "🔊";
+    } else {
+      player.mute();
+      if (badge) badge.textContent = "🔇";
+    }
+  }
+}
+
+// INICIALIZACIÓN Y DESCARGA DE SPREADSHEETS
+async function cargarDatos() {
+  try {
+    const resP = await fetch(SHEET_PERFUMES);
+    if (resP.ok) {
+      const csvP = await resP.text();
+      CATALOGO = parseCSV(csvP);
+    }
+  } catch(e) {
+    console.log("Carga de productos omitida o local:", e);
+  }
+
+  try {
+    const resT = await fetch(SHEET_TESTIMONIOS);
+    if (resT.ok) {
+      const csvT = await resT.text();
+      renderTestimonios(csvT);
+    }
+  } catch(e) {
+    console.log("Carga de testimonios omitida:", e);
+  }
+
+  renderCategorias();
+  renderMarcas();
+  renderRecomendados();
+  renderCatalogo();
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  cargarDatos();
+});
+</script>
+</body>
+</html>
