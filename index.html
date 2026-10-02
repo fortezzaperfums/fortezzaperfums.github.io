@@ -531,6 +531,7 @@ function toggleMenuMovil() {
 }
 
 let CATALOGO = [];
+let TESTIMONIOS = [];
 let filtroCategoria = "Todas";
 let filtroMarca = "Todas";
 let filtroEtiqueta = "Todas";
@@ -562,7 +563,8 @@ function verColeccion(tipo, valor) {
 function verCatalogoCompleto() {
   seccionAnterior = "catalogo";
   filtroCategoria = "Todas"; filtroMarca = "Todas"; filtroEtiqueta = "Todas"; filtroGenero = "Todas";
-  document.getElementById("filtro-genero").value = "Todas";
+  if(document.getElementById("filtro-genero")) document.getElementById("filtro-genero").value = "Todas";
+  if(document.getElementById("buscador")) document.getElementById("buscador").value = "";
   renderCategorias(); renderMarcas(); renderCatalogo();
   mostrarSoloSeccion("catalogo");
 }
@@ -603,9 +605,33 @@ function scrollCarruselMarcas(amount) {
   carruseles.forEach(c => c.scrollBy({ left: amount, behavior: "smooth" }));
 }
 
+/* --- AUTOMATIZACIÓN CARRUSEL DE MARCAS --- */
+let isMouseOverBrandCarousel = false;
+function autoScrollBrandCarousel() {
+  setInterval(() => {
+    if (isMouseOverBrandCarousel) return;
+    const carruseles = document.querySelectorAll(".brand-carousel");
+    carruseles.forEach(c => {
+      if (c.offsetParent !== null) { // solo si la sección está visible
+        if (c.scrollLeft + c.clientWidth >= c.scrollWidth - 5) {
+          c.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          c.scrollBy({ left: 180, behavior: 'smooth' });
+        }
+      }
+    });
+  }, 2500);
+}
+
 function cambiarGenero(valor) {
   filtroGenero = valor;
   renderCatalogo();
+}
+
+/* Función robusta para obtener la propiedad del género */
+function obtenerGeneroProducto(p) {
+  const val = p.genero || p["género"] || p.sexo || p.para || "";
+  return val.trim();
 }
 
 function renderCategorias() {
@@ -642,229 +668,310 @@ function renderMarcas() {
   const contInicio = document.getElementById("brand-carousel-inicio");
   const contSeccion = document.getElementById("brand-carousel-seccion");
 
-  if (contInicio) contInicio.innerHTML = htmlLogos;
-  if (contSeccion) contSeccion.innerHTML = htmlLogos;
+  if (contInicio) {
+    contInicio.innerHTML = htmlLogos;
+    contInicio.onmouseenter = () => isMouseOverBrandCarousel = true;
+    contInicio.onmouseleave = () => isMouseOverBrandCarousel = false;
+  }
+  if (contSeccion) {
+    contSeccion.innerHTML = htmlLogos;
+    contSeccion.onmouseenter = () => isMouseOverBrandCarousel = true;
+    contSeccion.onmouseleave = () => isMouseOverBrandCarousel = false;
+  }
 
   const contBotones = document.getElementById("brand-row");
   if (contBotones) {
-    contBotones.innerHTML = "";
-    marcas.forEach(m => {
-      const b = document.createElement("button");
-      b.className = "brand-chip" + (m === filtroMarca ? " active" : "");
-      b.textContent = m;
-      b.onclick = () => verColeccion("marca", m);
-      contBotones.appendChild(b);
-    });
+    contBotones.innerHTML = marcas.map(m => {
+      const activeClass = m === filtroMarca ? " active" : "";
+      const marcaEscapada = m.replace(/'/g, "\\'");
+      return `<button class="brand-chip${activeClass}" onclick="verColeccion('marca', '${marcaEscapada}')">${m}</button>`;
+    }).join("");
   }
 }
 
 function renderRecomendados() {
   const cont = document.getElementById("recomendados-grid");
   if (!cont) return;
-  const nuevos = CATALOGO.filter(p => p.etiqueta && p.etiqueta.toLowerCase().includes("nuevo"));
-  const lista = nuevos.length > 0 ? nuevos : CATALOGO.slice(0, 8);
-  if (lista.length === 0) { cont.innerHTML = '<div class="empty">No hay nuevos lanzamientos.</div>'; return; }
-  cont.innerHTML = lista.map(p => crearTarjetaHTML(p)).join("");
+  
+  const lanzamientos = CATALOGO.filter(p => {
+    const et = (p.etiqueta || p.etiquetas || "").toLowerCase();
+    return et.includes("nuevo") || et.includes("lanzamiento") || et.includes("destacado");
+  });
+
+  const lista = lanzamientos.length > 0 ? lanzamientos : CATALOGO.slice(0, 8);
+
+  if (lista.length === 0) {
+    cont.innerHTML = `<div class="empty">Próximamente nuevos lanzamientos.</div>`;
+    return;
+  }
+
+  cont.innerHTML = lista.map(p => `
+    <div class="card" onclick="verDetalle('${p.id}')">
+      <div class="card-img-wrap">
+        <img src="${p.imagen || FOTO_RESPALDO}" alt="${p.nombre}" onerror="this.src='${FOTO_RESPALDO}'">
+      </div>
+      <div class="card-info">
+        <div class="card-brand">${p.marca || ''}</div>
+        <div class="card-title">${p.nombre}</div>
+        <div class="card-price">$${p.precio || 'Consultar'}</div>
+      </div>
+    </div>
+  `).join("");
 }
 
 function renderCatalogo() {
   const cont = document.getElementById("catalogo-grid");
   if (!cont) return;
-  const txt = (document.getElementById("buscador")?.value || "").toLowerCase();
-  
+
+  const queryBuscador = (document.getElementById("buscador") ? document.getElementById("buscador").value : "").toLowerCase().trim();
+  const sinTildes = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
   const filtrados = CATALOGO.filter(p => {
-    const mCat = filtroCategoria === "Todas" || p.categoria === filtroCategoria;
-    const mMarc = filtroMarca === "Todas" || p.marca === filtroMarca;
-    const mEtiq = filtroEtiqueta === "Todas" || (p.etiqueta && p.etiqueta.toLowerCase().includes(filtroEtiqueta.toLowerCase()));
-    const mGen = filtroGenero === "Todas" || (p.genero && p.genero.toLowerCase() === filtroGenero.toLowerCase());
-    const mTxt = !txt || (p.nombre && p.nombre.toLowerCase().includes(txt)) || (p.marca && p.marca.toLowerCase().includes(txt));
-    return mCat && mMarc && mEtiq && mGen && mTxt;
+    if (filtroCategoria !== "Todas" && p.categoria !== filtroCategoria) return false;
+    if (filtroMarca !== "Todas" && p.marca !== filtroMarca) return false;
+    
+    if (filtroEtiqueta !== "Todas") {
+      const et = (p.etiqueta || p.etiquetas || "").toLowerCase();
+      if (!et.includes(filtroEtiqueta.toLowerCase())) return false;
+    }
+
+    /* Filtrado flexible de Género */
+    if (filtroGenero !== "Todas") {
+      const genP = sinTildes(obtenerGeneroProducto(p).toLowerCase());
+      const genF = sinTildes(filtroGenero.toLowerCase());
+      if (!genP.includes(genF)) return false;
+    }
+
+    if (queryBuscador) {
+      const texto = sinTildes(`${p.nombre} ${p.marca} ${p.categoria} ${p.descripcion || ''}`).toLowerCase();
+      if (!texto.includes(sinTildes(queryBuscador))) return false;
+    }
+
+    return true;
   });
 
-  if (filtrados.length === 0) { cont.innerHTML = '<div class="empty">No encontramos perfumes con esos criterios.</div>'; return; }
-  cont.innerHTML = filtrados.map(p => crearTarjetaHTML(p)).join("");
-}
+  const titulo = document.getElementById("catalogo-titulo");
+  if (titulo) {
+    if (filtroMarca !== "Todas") titulo.textContent = `Marca: ${filtroMarca}`;
+    else if (filtroEtiqueta !== "Todas") titulo.textContent = `Colección: ${filtroEtiqueta}s`;
+    else if (filtroCategoria !== "Todas") titulo.textContent = `Categoría: ${filtroCategoria}`;
+    else titulo.textContent = "Catálogo completo";
+  }
 
-function crearTarjetaHTML(p) {
-  const pEsc = JSON.stringify(p).replace(/"/g, '&quot;');
-  return `
-    <div class="card" onclick="verDetalle(${pEsc})">
+  if (filtrados.length === 0) {
+    cont.innerHTML = `<div class="empty">No encontramos perfumes con esos criterios.</div>`;
+    return;
+  }
+
+  cont.innerHTML = filtrados.map(p => `
+    <div class="card" onclick="verDetalle('${p.id}')">
       <div class="card-img-wrap">
-        <img src="${p.foto || FOTO_RESPALDO}" alt="${p.nombre}" onerror="this.src='${FOTO_RESPALDO}'">
+        <img src="${p.imagen || FOTO_RESPALDO}" alt="${p.nombre}" onerror="this.src='${FOTO_RESPALDO}'">
       </div>
       <div class="card-info">
         <div class="card-brand">${p.marca || ''}</div>
         <div class="card-title">${p.nombre}</div>
-        <div class="card-price">$${p.precio}</div>
+        <div class="card-price">$${p.precio || 'Consultar'}</div>
       </div>
     </div>
-  `;
+  `).join("");
 }
 
-function verDetalle(p) {
-  document.getElementById("detail-img").src = p.foto || FOTO_RESPALDO;
-  document.getElementById("detail-brand").textContent = p.marca || "FORTEZZA PERFUMS";
+function buscarGlobal(val) {
+  if (!val.trim()) return;
+  seccionAnterior = "catalogo";
+  filtroCategoria = "Todas"; filtroMarca = "Todas"; filtroEtiqueta = "Todas"; filtroGenero = "Todas";
+  if(document.getElementById("filtro-genero")) document.getElementById("filtro-genero").value = "Todas";
+  mostrarSoloSeccion("catalogo");
+  const b = document.getElementById("buscador");
+  if (b) { b.value = val; renderCatalogo(); }
+}
+
+function verDetalle(id) {
+  const p = CATALOGO.find(item => String(item.id) === String(id));
+  if (!p) return;
+
+  document.getElementById("detail-img").src = p.imagen || FOTO_RESPALDO;
+  document.getElementById("detail-brand").textContent = p.marca || "FORTETZA";
   document.getElementById("detail-title").textContent = p.nombre;
-  document.getElementById("detail-price").textContent = `$${p.precio}`;
+  document.getElementById("detail-price").textContent = `$${p.precio || 'Consultar'}`;
   document.getElementById("detail-desc").textContent = p.descripcion || "Perfume 100% original con envío garantizado.";
-  document.getElementById("detail-wa-btn").href = linkWhatsapp(p.nombre, p.precio);
   
-  document.getElementById("detail-breadcrumbs").innerHTML = `
-    <a href="#" onclick="verInicio();return false;">Inicio</a> / 
-    <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a> / 
-    <span>${p.nombre}</span>
-  `;
-  
+  const waBtn = document.getElementById("detail-wa-btn");
+  waBtn.href = linkWhatsapp(p.nombre, p.precio);
+
+  const bc = document.getElementById("detail-breadcrumbs");
+  if (bc) {
+    bc.innerHTML = `<a href="#" onclick="verInicio();return false;">Inicio</a> / <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a> / <span>${p.nombre}</span>`;
+  }
+
   mostrarSoloSeccion("detalle-producto");
 }
 
 function volverOrigenDetalle() {
-  if (seccionAnterior === "catalogo") mostrarSoloSeccion("catalogo");
+  if (seccionAnterior === "marcas") verSoloMarcas();
+  else if (seccionAnterior === "testimonios") verSoloTestimonios();
+  else if (seccionAnterior === "catalogo") mostrarSoloSeccion("catalogo");
   else verInicio();
 }
 
-function buscarGlobal(val) {
-  if (val.trim() !== "") {
-    verCatalogoCompleto();
-    const inputCat = document.getElementById("buscador");
-    if (inputCat) { inputCat.value = val; renderCatalogo(); }
-  }
-}
-
-/* CARGA Y EXTRACCIÓN DE YOUTUBE PARA TESTIMONIOS */
-function extraerIDYoutube(url) {
+/* --- REPRODUCTOR Y TESTIMONIOS --- */
+function obtenerYouTubeID(url) {
   if (!url) return null;
-  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|shorts\/))([\w-]{11})/);
-  return match ? match[1] : null;
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : null;
 }
 
-function toggleMuteVideo(id, overlayEl) {
-  const player = playersYT[id];
-  const badge = overlayEl.querySelector(".sound-badge");
-  if (player && typeof player.isMuted === 'function') {
-    if (player.isMuted()) {
-      player.unMute();
-      if (badge) badge.textContent = "🔊";
+function renderTestimonios() {
+  const cont = document.getElementById("test-grid");
+  if (!cont) return;
+
+  if (!TESTIMONIOS || TESTIMONIOS.length === 0) {
+    cont.innerHTML = `<div class="empty">Próximamente más testimonios.</div>`;
+    return;
+  }
+
+  cont.innerHTML = TESTIMONIOS.map((t, idx) => {
+    const ytID = obtenerYouTubeID(t.video || t.url || t.youtube);
+    const containerID = `yt-player-${idx}`;
+
+    if (ytID) {
+      return `
+        <div class="test-card">
+          <div class="test-card-video-wrapper">
+            <div id="${containerID}"></div>
+            <div class="video-click-overlay" onclick="togglePlayVideo('${containerID}', '${ytID}')">
+              <div class="sound-badge" id="badge-${containerID}">🔊</div>
+            </div>
+          </div>
+        </div>
+      `;
     } else {
-      player.mute();
-      if (badge) badge.textContent = "🔇";
+      return `
+        <div class="test-card">
+          <p style="font-size:0.85rem; color:var(--parchment);">${t.texto || t.comentario || 'Excelente servicio'}</p>
+          <strong style="font-size:0.75rem; color:var(--stone);">- ${t.cliente || t.nombre || 'Cliente Satisfecho'}</strong>
+        </div>
+      `;
+    }
+  }).join("");
+
+  // Inicializar iFrames tras renderizar HTML
+  setTimeout(() => {
+    TESTIMONIOS.forEach((t, idx) => {
+      const ytID = obtenerYouTubeID(t.video || t.url || t.youtube);
+      const containerID = `yt-player-${idx}`;
+      if (ytID && window.YT && window.YT.Player) {
+        playersYT[containerID] = new YT.Player(containerID, {
+          videoId: ytID,
+          playerVars: { 'autoplay': 0, 'controls': 0, 'rel': 0, 'modestbranding': 1, 'loop': 1, 'playlist': ytID },
+          events: { 'onReady': onPlayerReady }
+        });
+      }
+    });
+  }, 500);
+}
+
+function onPlayerReady(event) {
+  // Listo para reproducción dinámica
+}
+
+function togglePlayVideo(containerID, ytID) {
+  const player = playersYT[containerID];
+  const badge = document.getElementById(`badge-${containerID}`);
+  
+  if (player && typeof player.getPlayerState === "function") {
+    const state = player.getPlayerState();
+    if (state === YT.PlayerState.PLAYING) {
+      player.pauseVideo();
+      if(badge) badge.textContent = "▶";
+    } else {
+      // Pausar otros videos activos
+      Object.keys(playersYT).forEach(k => {
+        if(k !== containerID && playersYT[k] && typeof playersYT[k].pauseVideo === "function") {
+          playersYT[k].pauseVideo();
+          const b = document.getElementById(`badge-${k}`);
+          if(b) b.textContent = "🔊";
+        }
+      });
+      player.playVideo();
+      if(badge) badge.textContent = "⏸";
     }
   }
 }
 
-function cargarTestimonios() {
-  fetch(SHEET_TESTIMONIOS)
-    .then(res => res.text())
-    .then(csv => {
-      const datos = parseCSV(csv);
-      const grid = document.getElementById("test-grid");
-      if (!grid) return;
-      grid.innerHTML = "";
-
-      datos.forEach((item, index) => {
-        const videoURL = item.video || item.link || item.url || "";
-        const ytID = extraerIDYoutube(videoURL);
-        
-        if (ytID) {
-          const iframeID = `player-yt-${index}`;
-          const card = document.createElement("div");
-          card.className = "test-card";
-          card.innerHTML = `
-            <div class="test-card-video-wrapper">
-              <div id="${iframeID}"></div>
-              <div class="video-click-overlay" onclick="toggleMuteVideo('${iframeID}', this)">
-                <div class="sound-badge">🔇</div>
-              </div>
-            </div>
-          `;
-          grid.appendChild(card);
-
-          window.onYouTubeIframeAPIReady = window.onYouTubeIframeAPIReady || function() {};
-          
-          const initPlayer = () => {
-            playersYT[iframeID] = new YT.Player(iframeID, {
-              videoId: ytID,
-              playerVars: {
-                autoplay: 1,
-                controls: 0,
-                loop: 1,
-                playlist: ytID,
-                mute: 1,
-                modestbranding: 1,
-                rel: 0,
-                showinfo: 0,
-                disablekb: 1,
-                fs: 0,
-                playsinline: 1
-              }
-            });
-          };
-
-          if (window.YT && window.YT.Player) {
-            initPlayer();
-          } else {
-            setTimeout(initPlayer, 1000);
-          }
-        }
-      });
-    })
-    .catch(() => {
-      const grid = document.getElementById("test-grid");
-      if (grid) grid.innerHTML = '<div class="empty">Error cargando experiencias.</div>';
-    });
-}
-
-function cargarDatos() {
-  fetch(SHEET_PERFUMES)
-    .then(res => res.text())
-    .then(csv => {
-      CATALOGO = parseCSV(csv);
-      renderCategorias();
-      renderMarcas();
-      renderRecomendados();
-    });
-  cargarTestimonios();
-}
-
-/* CARRUSEL HERO BANNER */
+/* --- BANNER BANNER HERO CARROUSEL --- */
 let currentSlideIndex = 0;
 let slideInterval;
 
 function showSlide(index) {
-  const slides = document.querySelectorAll('.slide');
-  const dots = document.querySelectorAll('.dot');
-  if (slides.length === 0) return;
+  const slides = document.querySelectorAll(".slide");
+  const dots = document.querySelectorAll(".dot");
+  if (!slides.length) return;
+
   if (index >= slides.length) currentSlideIndex = 0;
-  if (index < 0) currentSlideIndex = slides.length - 1;
+  else if (index < 0) currentSlideIndex = slides.length - 1;
+  else currentSlideIndex = index;
 
-  slides.forEach(s => s.classList.remove('active'));
-  dots.forEach(d => d.classList.remove('active'));
-
-  slides[currentSlideIndex].classList.add('active');
-  if (dots[currentSlideIndex]) dots[currentSlideIndex].classList.add('active');
+  slides.forEach((s, i) => s.classList.toggle("active", i === currentSlideIndex));
+  dots.forEach((d, i) => d.classList.toggle("active", i === currentSlideIndex));
 }
 
 function moveSlide(step) {
-  currentSlideIndex += step;
-  showSlide(currentSlideIndex);
-  resetTimer();
+  showSlide(currentSlideIndex + step);
+  resetSlideTimer();
 }
 
 function currentSlide(index) {
-  currentSlideIndex = index;
-  showSlide(currentSlideIndex);
-  resetTimer();
+  showSlide(index);
+  resetSlideTimer();
 }
 
-function startTimer() { slideInterval = setInterval(() => { moveSlide(1); }, 5000); }
-function resetTimer() { clearInterval(slideInterval); startTimer(); }
+function startSlideTimer() {
+  slideInterval = setInterval(() => {
+    showSlide(currentSlideIndex + 1);
+  }, 4000);
+}
 
-document.addEventListener("DOMContentLoaded", () => {
+function resetSlideTimer() {
+  clearInterval(slideInterval);
+  startSlideTimer();
+}
+
+/* --- CARGA INICIAL DE DATOS --- */
+async function cargarDatos() {
+  try {
+    const resPerfumes = await fetch(SHEET_PERFUMES);
+    const textPerfumes = await resPerfumes.text();
+    CATALOGO = parseCSV(textPerfumes);
+    
+    // Normalizar ID de productos
+    CATALOGO.forEach((p, index) => { if (!p.id) p.id = index + 1; });
+
+    renderCategorias();
+    renderMarcas();
+    renderRecomendados();
+    renderCatalogo();
+  } catch (err) {
+    console.error("Error cargando productos:", err);
+  }
+
+  try {
+    const resTest = await fetch(SHEET_TESTIMONIOS);
+    const textTest = await resTest.text();
+    TESTIMONIOS = parseCSV(textTest);
+    renderTestimonios();
+  } catch (err) {
+    console.error("Error cargando testimonios:", err);
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
   cargarDatos();
-  showSlide(currentSlideIndex);
-  startTimer();
+  startSlideTimer();
+  autoScrollBrandCarousel();
 });
 </script>
-
 </body>
 </html>
