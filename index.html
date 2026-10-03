@@ -688,6 +688,207 @@ function renderMarcas() {
     });
   }
 }
+
+function crearTarjetaProducto(p) {
+  const div = document.createElement("div");
+  div.className = "card";
+  div.onclick = () => verDetalleProducto(p);
+  
+  const imgWrap = document.createElement("div");
+  imgWrap.className = "card-img-wrap";
+  const img = document.createElement("img");
+  img.src = p.imagen || FOTO_RESPALDO;
+  img.alt = p.nombre;
+  img.onerror = function() { this.src = FOTO_RESPALDO; };
+  imgWrap.appendChild(img);
+
+  const info = document.createElement("div");
+  info.className = "card-info";
+  info.innerHTML = `
+    <div class="card-brand">${p.marca || 'Fortezza'}</div>
+    <div class="card-title">${p.nombre}</div>
+    <div class="card-price">${p.precio ? '$' + p.precio : ''}</div>
+  `;
+
+  div.appendChild(imgWrap);
+  div.appendChild(info);
+  return div;
+}
+
+function renderRecomendados() {
+  const container = document.getElementById("recomendados-grid");
+  if (!container) return;
+  container.innerHTML = "";
+  const recomendados = CATALOGO.filter(p => p.etiqueta && p.etiqueta.toLowerCase().includes("nuevo"));
+  const lista = recomendados.length > 0 ? recomendados : CATALOGO.slice(0, 10);
+
+  if (lista.length === 0) {
+    container.innerHTML = `<div class="empty">No hay productos disponibles.</div>`;
+    return;
+  }
+
+  lista.forEach(p => {
+    container.appendChild(crearTarjetaProducto(p));
+  });
+}
+
+function renderCatalogo() {
+  const grid = document.getElementById("catalogo-grid");
+  if (!grid) return;
+  grid.innerHTML = "";
+
+  const busqueda = (document.getElementById("buscador")?.value || "").toLowerCase().trim();
+
+  const filtrados = CATALOGO.filter(p => {
+    const coincideCat = filtroCategoria === "Todas" || (p.categoria && p.categoria.toLowerCase() === filtroCategoria.toLowerCase());
+    const coincideMarca = filtroMarca === "Todas" || (p.marca && p.marca.toLowerCase() === filtroMarca.toLowerCase());
+    const coincideEtiqueta = filtroEtiqueta === "Todas" || (p.etiqueta && p.etiqueta.toLowerCase().includes(filtroEtiqueta.toLowerCase()));
+    const coincideGenero = filtroGenero === "Todas" || (p.genero && p.genero.toLowerCase() === filtroGenero.toLowerCase());
+    
+    const coincideBusqueda = !busqueda || 
+      (p.nombre && p.nombre.toLowerCase().includes(busqueda)) || 
+      (p.marca && p.marca.toLowerCase().includes(busqueda)) || 
+      (p.descripcion && p.descripcion.toLowerCase().includes(busqueda));
+
+    return coincideCat && coincideMarca && coincideEtiqueta && coincideGenero && coincideBusqueda;
+  });
+
+  if (filtrados.length === 0) {
+    grid.innerHTML = `<div class="empty">No se encontraron productos que coincidan con tu búsqueda.</div>`;
+    return;
+  }
+
+  filtrados.forEach(p => {
+    grid.appendChild(crearTarjetaProducto(p));
+  });
+}
+
+function verDetalleProducto(p) {
+  document.getElementById("detail-img").src = p.imagen || FOTO_RESPALDO;
+  document.getElementById("detail-brand").textContent = p.marca || "Fortezza";
+  document.getElementById("detail-title").textContent = p.nombre;
+  document.getElementById("detail-price").textContent = p.precio ? `$${p.precio}` : "";
+  document.getElementById("detail-desc").textContent = p.descripcion || "Perfume original de excelente fijación y proyección.";
+  document.getElementById("detail-wa-btn").href = linkWhatsapp(p.nombre, p.precio);
+
+  document.getElementById("detail-breadcrumbs").innerHTML = `
+    <a href="#" onclick="verInicio();return false;">Inicio</a> / 
+    <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a> / 
+    <span>${p.nombre}</span>
+  `;
+
+  mostrarSoloSeccion("detalle-producto");
+}
+
+function volverOrigenDetalle() {
+  if (seccionAnterior === "catalogo") {
+    mostrarSoloSeccion("catalogo");
+  } else if (seccionAnterior === "marcas") {
+    mostrarSoloSeccion("marcas");
+  } else {
+    verInicio();
+  }
+}
+
+function renderTestimonios() {
+  const grid = document.getElementById("test-grid");
+  if (!grid) return;
+  grid.innerHTML = "";
+
+  if (TESTIMONIOS.length === 0) {
+    grid.innerHTML = `<div class="empty">Próximamente testimonios de nuestros clientes.</div>`;
+    return;
+  }
+
+  TESTIMONIOS.forEach(t => {
+    const nombre = t.nombre || t.cliente || "Cliente";
+    const comentario = t.comentario || t.opinion || "";
+    const videoUrl = t.video || t.url || t.embed || "";
+
+    const card = document.createElement("div");
+    card.className = "test-card";
+
+    let mediaHtml = "";
+    if (videoUrl) {
+      let embedUrl = videoUrl;
+      if (videoUrl.includes("youtube.com/shorts/")) {
+        embedUrl = videoUrl.replace("youtube.com/shorts/", "youtube.com/embed/");
+      }
+      mediaHtml = `
+        <div class="test-card-video-wrapper">
+          <iframe src="${embedUrl}" allowfullscreen></iframe>
+        </div>
+      `;
+    }
+
+    card.innerHTML = `
+      ${mediaHtml}
+      <div class="test-info-box">
+        <div class="test-client-name">${nombre}</div>
+        <div class="test-comment">${comentario}</div>
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+}
+
+/* Control del Slider / Banner Hero */
+function showSlides(n) {
+  const slides = document.querySelectorAll(".slide");
+  const dots = document.querySelectorAll(".dot");
+  if (!slides.length) return;
+
+  if (n >= slides.length) slideIndex = 0;
+  if (n < 0) slideIndex = slides.length - 1;
+
+  slides.forEach(s => s.classList.remove("active"));
+  dots.forEach(d => d.classList.remove("active"));
+
+  slides[slideIndex].classList.add("active");
+  if (dots[slideIndex]) dots[slideIndex].classList.add("active");
+}
+
+function moveSlide(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+// Carga Inicial de Datos desde Google Sheets
+async function cargarDatos() {
+  try {
+    const resP = await fetch(SHEET_PERFUMES);
+    const textP = await resP.text();
+    const rawP = parseCSV(textP);
+    CATALOGO = rawP.map(normalizarProducto);
+
+    renderCategorias();
+    renderMarcas();
+    renderRecomendados();
+    renderCatalogo();
+  } catch (err) {
+    console.error("Error al cargar productos:", err);
+    document.getElementById("recomendados-grid").innerHTML = `<div class="empty">Error cargando productos.</div>`;
+  }
+
+  try {
+    const resT = await fetch(SHEET_TESTIMONIOS);
+    const textT = await resT.text();
+    TESTIMONIOS = parseCSV(textT);
+    renderTestimonios();
+  } catch (err) {
+    console.error("Error al cargar testimonios:", err);
+    document.getElementById("test-grid").innerHTML = `<div class="empty">No se pudieron cargar los testimonios.</div>`;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  cargarDatos();
+  setInterval(() => moveSlide(1), 5000); // Cambio automático de banners cada 5s
+});
 </script>
 </body>
 </html>
