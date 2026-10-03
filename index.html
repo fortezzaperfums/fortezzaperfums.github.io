@@ -128,11 +128,11 @@
   /* Catálogo y Tarjetas de Productos */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.8rem;}
   .card{
-    border:1px solid #35301F;background:var(--onyx-2);border-radius:8px;padding:.8rem;
+    background:transparent;padding:.8rem 0;
     cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;
-    transition:transform 0.3s ease, border-color 0.3s ease;
+    transition:transform 0.3s ease;
   }
-  .card:hover{transform:translateY(-4px);border-color:var(--bronze);}
+  .card:hover{transform:translateY(-4px);}
   .card-img-wrap{width:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:.6rem;}
   .card img{max-height:100%;max-width:100%;object-fit:contain;transition:transform 0.3s ease;}
   .card:hover img{transform:scale(1.05);}
@@ -665,246 +665,29 @@ function renderMarcas() {
     const marcaEscapada = m.replace(/'/g, "\\'");
     return `
       <div class="brand-logo-card" onclick="verColeccion('marca', '${marcaEscapada}')" title="${m}">
-        <img src="${rutaImagen}" alt="${m}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-        <span class="brand-fallback-text" style="display:none;">${m}</span>
+        <img src="${rutaImagen}" alt="${m}" onerror="this.outerHTML='<span class=\\'brand-fallback-text\\'>${m}</span>'">
       </div>
     `;
   }).join("");
 
   const carruselInicio = document.getElementById("brand-carousel-inicio");
-  const carruselSeccion = document.getElementById("brand-carousel-seccion");
   if (carruselInicio) carruselInicio.innerHTML = htmlLogos;
+
+  const carruselSeccion = document.getElementById("brand-carousel-seccion");
   if (carruselSeccion) carruselSeccion.innerHTML = htmlLogos;
 
-  const brandRow = document.getElementById("brand-row");
-  if (brandRow) {
-    brandRow.innerHTML = marcas.map(m => {
-      const mEsc = m.replace(/'/g, "\\'");
-      return `<button class="brand-chip ${m === filtroMarca ? 'active' : ''}" onclick="verColeccion('marca', '${mEsc}')">${m}</button>`;
-    }).join("");
+  const row = document.getElementById("brand-row");
+  if (row) {
+    row.innerHTML = "";
+    marcas.forEach(m => {
+      const chip = document.createElement("div");
+      chip.className = "brand-chip" + (m === filtroMarca ? " active" : "");
+      chip.textContent = m;
+      chip.onclick = () => verColeccion("marca", m);
+      row.appendChild(chip);
+    });
   }
 }
-
-function renderRecomendados() {
-  const cont = document.getElementById("recomendados-grid");
-  if (!cont) return;
-  
-  const lista = CATALOGO.filter(p => p.etiqueta.toLowerCase().includes("nuevo") || p.etiqueta.toLowerCase().includes("lanzamiento") || p.etiqueta.toLowerCase().includes("destacado"));
-  const aMostrar = lista.length > 0 ? lista : CATALOGO.slice(0, 10);
-
-  if (aMostrar.length === 0) {
-    cont.innerHTML = `<div class="empty">Próximamente productos.</div>`;
-    return;
-  }
-
-  cont.innerHTML = aMostrar.map((p, idx) => `
-    <div class="card" onclick="verDetalle(${CATALOGO.indexOf(p)})">
-      <div class="card-img-wrap">
-        <img src="${p.imagen}" alt="${p.nombre}" onerror="this.src=FOTO_RESPALDO">
-      </div>
-      <div class="card-info">
-        <div class="card-brand">${p.marca}</div>
-        <div class="card-title">${p.nombre}</div>
-        <div class="card-price">$${p.precio}</div>
-      </div>
-    </div>
-  `).join("");
-}
-
-function renderCatalogo() {
-  const cont = document.getElementById("catalogo-grid");
-  if (!cont) return;
-
-  const txtBuscar = (document.getElementById("buscador")?.value || "").toLowerCase().trim();
-
-  const filtrados = CATALOGO.filter(p => {
-    const matchCat = filtroCategoria === "Todas" || p.categoria.toLowerCase() === filtroCategoria.toLowerCase();
-    const matchMarca = filtroMarca === "Todas" || p.marca.toLowerCase() === filtroMarca.toLowerCase();
-    const matchEtiq = filtroEtiqueta === "Todas" || p.etiqueta.toLowerCase().includes(filtroEtiqueta.toLowerCase());
-    
-    let matchGen = true;
-    if (filtroGenero !== "Todas") {
-      const g = filtroGenero.toLowerCase();
-      const pGen = (p.genero || p.categoria || "").toLowerCase();
-      const pNom = p.nombre.toLowerCase();
-
-      if (g === "hombre") matchGen = pGen.includes("hombre") || pGen.includes("masculino") || pNom.includes("homme") || pNom.includes("man");
-      else if (g === "mujer") matchGen = pGen.includes("mujer") || pGen.includes("femenino") || pNom.includes("femme") || pNom.includes("woman");
-      else if (g === "unisex") matchGen = pGen.includes("unisex") || pNom.includes("unisex");
-    }
-
-    const matchSearch = !txtBuscar || 
-      p.nombre.toLowerCase().includes(txtBuscar) || 
-      p.marca.toLowerCase().includes(txtBuscar) || 
-      p.descripcion.toLowerCase().includes(txtBuscar);
-
-    return matchCat && matchMarca && matchEtiq && matchGen && matchSearch;
-  });
-
-  if (filtrados.length === 0) {
-    cont.innerHTML = `<div class="empty">No se encontraron perfumes con estos criterios.</div>`;
-    return;
-  }
-
-  cont.innerHTML = filtrados.map(p => `
-    <div class="card" onclick="verDetalle(${CATALOGO.indexOf(p)})">
-      <div class="card-img-wrap">
-        <img src="${p.imagen}" alt="${p.nombre}" onerror="this.src=FOTO_RESPALDO">
-      </div>
-      <div class="card-info">
-        <div class="card-brand">${p.marca}</div>
-        <div class="card-title">${p.nombre}</div>
-        <div class="card-price">$${p.precio}</div>
-      </div>
-    </div>
-  `).join("");
-}
-
-function verDetalle(index) {
-  const p = CATALOGO[index];
-  if (!p) return;
-
-  document.getElementById("detail-img").src = p.imagen;
-  document.getElementById("detail-brand").textContent = p.marca;
-  document.getElementById("detail-title").textContent = p.nombre;
-  document.getElementById("detail-price").textContent = `$${p.precio}`;
-  document.getElementById("detail-desc").textContent = p.descripcion || "Fragancia exclusiva de alta durabilidad y proyección.";
-  document.getElementById("detail-wa-btn").href = linkWhatsapp(p.nombre, p.precio);
-
-  const bc = document.getElementById("detail-breadcrumbs");
-  if (bc) {
-    bc.innerHTML = `<a href="#" onclick="verInicio();return false;">Inicio</a> / <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a> / <span>${p.nombre}</span>`;
-  }
-
-  mostrarSoloSeccion("detalle-producto");
-}
-
-function volverOrigenDetalle() {
-  if (seccionAnterior === "catalogo") mostrarSoloSeccion("catalogo");
-  else verInicio();
-}
-
-/* Carrusel Banner Principal */
-function showSlide(index) {
-  const slides = document.querySelectorAll(".slide");
-  const dots = document.querySelectorAll(".dot");
-  if (slides.length === 0) return;
-  
-  if (index >= slides.length) slideIndex = 0;
-  if (index < 0) slideIndex = slides.length - 1;
-
-  slides.forEach((s, i) => s.classList.toggle("active", i === slideIndex));
-  dots.forEach((d, i) => d.classList.toggle("active", i === slideIndex));
-}
-
-function moveSlide(n) { showSlide(slideIndex += n); }
-function currentSlide(n) { showSlide(slideIndex = n); }
-
-setInterval(() => { moveSlide(1); }, 5000);
-
-/* Extrae el ID de YouTube sin importar el formato del link */
-function obtenerIDYouTube(url) {
-  if (!url) return "";
-  url = url.trim();
-  if (url.length === 11 && !url.includes("/") && !url.includes(".")) return url;
-  
-  const mShorts = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/);
-  if (mShorts) return mShorts[1];
-  
-  const mWatch = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
-  if (mWatch) return mWatch[1];
-
-  const mBe = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
-  if (mBe) return mBe[1];
-
-  const mEmbed = url.match(/youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/);
-  if (mEmbed) return mEmbed[1];
-
-  return "";
-}
-
-/* Renderizado seguro y limpio de Testimonios */
-function renderTestimonios() {
-  const cont = document.getElementById("test-grid");
-  if (!cont) return;
-
-  if (TESTIMONIOS.length === 0) {
-    cont.innerHTML = `<div class="empty">Próximamente testimonios en video.</div>`;
-    return;
-  }
-
-  cont.innerHTML = TESTIMONIOS.map(t => {
-    const getVal = (claves) => {
-      for (let k of claves) {
-        if (t[k] !== undefined && t[k] !== "") return t[k];
-      }
-      return "";
-    };
-
-    const cliente = getVal(["cliente", "nombre", "usuario"]) || "Cliente Satisfecho";
-    const comentario = getVal(["comentario", "texto", "descripcion"]) || "Excelente servicio y calidad original.";
-    const rawVideo = getVal(["video", "url", "youtube", "link", "id"]);
-    const ytId = obtenerIDYouTube(rawVideo);
-
-    if (ytId) {
-      // Formato iframe responsivo 9:16 con reproducción continua
-      const srcUrl = `https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=0&playsinline=1&modestbranding=1&rel=0`;
-      return `
-        <div class="test-card">
-          <div class="test-card-video-wrapper">
-            <iframe src="${srcUrl}" title="Testimonio ${cliente}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <div class="test-info-box">
-            <div class="test-client-name">${cliente}</div>
-            <div class="test-comment">${comentario}</div>
-          </div>
-        </div>
-      `;
-    } else {
-      return `
-        <div class="test-card" style="justify-content:center;">
-          <div class="test-info-box">
-            <div class="test-client-name">⭐ ${cliente}</div>
-            <div class="test-comment" style="font-size:0.9rem;margin-top:0.5rem;color:var(--parchment);">"${comentario}"</div>
-          </div>
-        </div>
-      `;
-    }
-  }).join("");
-}
-
-/* Cargar Datos desde Google Sheets */
-async function cargarDatos() {
-  try {
-    const resP = await fetch(SHEET_PERFUMES);
-    if (!resP.ok) throw new Error("Error HTTP " + resP.status);
-    const csvP = await resP.text();
-    const crudos = parseCSV(csvP);
-    CATALOGO = crudos.map(normalizarProducto);
-
-    renderCategorias();
-    renderMarcas();
-    renderRecomendados();
-    renderCatalogo();
-  } catch(e) {
-    console.error("Error cargando catálogo:", e);
-    const grid = document.getElementById("catalogo-grid");
-    if (grid) grid.innerHTML = `<div class="empty" style="color:#ff6b6b;">Error al cargar el catálogo desde Google Sheets.</div>`;
-  }
-
-  try {
-    const resT = await fetch(SHEET_TESTIMONIOS);
-    if (resT.ok) {
-      const csvT = await resT.text();
-      TESTIMONIOS = parseCSV(csvT);
-      renderTestimonios();
-    }
-  } catch(e) {
-    console.warn("No se cargaron testimonios:", e);
-  }
-}
-
-window.addEventListener("DOMContentLoaded", cargarDatos);
 </script>
 </body>
 </html>
