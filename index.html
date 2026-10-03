@@ -540,12 +540,15 @@ function normalizarProducto(item) {
     return "";
   };
 
+  const catVal = getVal(["categoria", "category"]);
+
   return {
     nombre: getVal(["nombre", "producto", "title", "perfume"]),
     marca: getVal(["marca", "brand"]),
     precio: getVal(["precio", "price", "valor"]),
-    categoria: getVal(["categoria", "category"]),
-    genero: getVal(["genero", "gender", "genero/categoria"]),
+    categoria: catVal,
+    // Usamos el mismo valor de la columna categoria para el genero
+    genero: getVal(["genero", "gender"]) || catVal, 
     etiqueta: getVal(["etiqueta", "tag", "estado"]),
     descripcion: getVal(["descripcion", "description", "desc"]),
     imagen: getVal(["imagen", "foto", "image", "url", "img"]) || FOTO_RESPALDO
@@ -744,8 +747,16 @@ function renderCatalogo() {
     const matchCat = filtroCategoria === "Todas" || p.categoria === filtroCategoria;
     const matchMarca = filtroMarca === "Todas" || p.marca === filtroMarca;
     const matchEtiq = filtroEtiqueta === "Todas" || (p.etiqueta || "").toLowerCase() === filtroEtiqueta.toLowerCase();
-    const matchGen = filtroGenero === "Todas" || (p.genero || "").toLowerCase() === filtroGenero.toLowerCase();
-    const matchBusq = !q || p.nombre.toLowerCase().includes(q) || p.marca.toLowerCase().includes(q) || (p.descripcion && p.descripcion.toLowerCase().includes(q));
+    
+    // Compara el género seleccionado con lo que viene en la columna categoria
+    const matchGen = filtroGenero === "Todas" || 
+                     (p.genero || "").toLowerCase().includes(filtroGenero.toLowerCase());
+                     
+    const matchBusq = !q || 
+                      p.nombre.toLowerCase().includes(q) || 
+                      p.marca.toLowerCase().includes(q) || 
+                      (p.descripcion && p.descripcion.toLowerCase().includes(q));
+
     return matchCat && matchMarca && matchEtiq && matchGen && matchBusq;
   });
 
