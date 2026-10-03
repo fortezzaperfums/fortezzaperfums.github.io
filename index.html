@@ -109,16 +109,17 @@
   .cat-tile.active{background:var(--bronze);color:var(--onyx);}
 
   /* CARRUSEL DE MARCAS */
-  .brand-carousel { display: flex; gap: 1.2rem; overflow-x: auto; scroll-behavior: smooth; padding: 0.6rem 0; width: 100%; scrollbar-width: none; }
+ .brand-carousel { display: flex; gap: 1.2rem; overflow-x: auto; scroll-behavior: smooth; padding: 0.6rem 0; width: 100%; scrollbar-width: none; }
   .brand-carousel::-webkit-scrollbar { display: none; }
   .brand-logo-card {
-    flex: 0 0 150px; min-width: 150px; height: 75px; background: var(--onyx-2); border: 1px solid #35301F;
-    border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 0.6rem; cursor: pointer; transition: all 0.2s ease;
+    flex: 0 0 150px; min-width: 150px; height: 75px;
+    background: transparent; border: none; border-radius: 0;
+    display: flex; align-items: center; justify-content: center; padding: 0.6rem; cursor: pointer; transition: transform 0.2s ease;
   }
-  .brand-logo-card:hover { border-color: var(--bronze); transform: translateY(-3px); }
+  .brand-logo-card:hover { transform: translateY(-3px); }
   .brand-logo-card img { max-height: 100%; max-width: 100%; object-fit: contain; }
   .brand-fallback-text { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--parchment); text-align: center; }
-
+  
   /* Botones de texto en la sección de marcas */
   .brand-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem;}
   .brand-chip{border:1px solid var(--bronze-dim);padding:.6rem 1.2rem;font-size:.85rem;
