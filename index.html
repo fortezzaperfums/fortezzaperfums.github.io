@@ -88,10 +88,10 @@
   .stats-section { padding: 2.5rem 0 1rem 0; }
   .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; }
   .stat-card {
-    background: var(--onyx-2);border: 1px solid #35301F;border-radius: 12px;
-    padding: 1.8rem 1.2rem;text-align: center;transition: transform 0.3s ease, border-color 0.3s ease;
+    background: transparent;border: none;border-radius: 0;
+    padding: 1.8rem 1.2rem;text-align: center;transition: transform 0.3s ease;
   }
-  .stat-card:hover { border-color: var(--bronze); transform: translateY(-3px); }
+  .stat-card:hover { transform: translateY(-3px); }
   .stat-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
   .stat-number { font-family: 'Oswald', sans-serif; font-size: 2.2rem; font-weight: 700; color: var(--parchment); line-height: 1.1; }
   .stat-label { font-size: 0.78rem; color: var(--stone); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.4rem; font-weight: 500; }
@@ -112,10 +112,10 @@
   .brand-carousel { display: flex; gap: 1.2rem; overflow-x: auto; scroll-behavior: smooth; padding: 0.6rem 0; width: 100%; scrollbar-width: none; }
   .brand-carousel::-webkit-scrollbar { display: none; }
   .brand-logo-card {
-    flex: 0 0 150px; min-width: 150px; height: 75px; background: var(--onyx-2); border: 1px solid #35301F;
-    border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 0.6rem; cursor: pointer; transition: all 0.2s ease;
+    flex: 0 0 150px; min-width: 150px; height: 75px; background: transparent; border: none;
+    border-radius: 0; display: flex; align-items: center; justify-content: center; padding: 0.6rem; cursor: pointer; transition: all 0.2s ease;
   }
-  .brand-logo-card:hover { border-color: var(--bronze); transform: translateY(-3px); }
+  .brand-logo-card:hover { transform: translateY(-3px); }
   .brand-logo-card img { max-height: 100%; max-width: 100%; object-fit: contain; }
   .brand-fallback-text { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--parchment); text-align: center; }
 
@@ -154,10 +154,13 @@
   .scroll-arrow.left{left:-15px;}
   .scroll-arrow.right{right:-15px;}
 
+  /* Migas de pan (Breadcrumbs) universales */
+  .breadcrumbs{font-size:.85rem;color:var(--stone);margin-bottom:1.5rem;letter-spacing:.04em;font-family:'DM Sans', sans-serif;}
+  .breadcrumbs a{color:var(--parchment);text-decoration:none;cursor:pointer;transition:color 0.2s;}
+  .breadcrumbs a:hover{color:var(--bronze);text-decoration:underline;}
+  .breadcrumbs span.current{color:var(--bronze);font-weight:500;}
+
   /* Vista Detalle */
-  .breadcrumbs{font-size:.8rem;color:var(--stone);margin-bottom:1.5rem;letter-spacing:.04em;font-family:'DM Sans', sans-serif;}
-  .breadcrumbs a{color:var(--parchment);text-decoration:none;margin:0 .3rem;}
-  .breadcrumbs a:hover{border-bottom:1px solid var(--bronze);}
   .product-detail-layout{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-top:1rem;}
   .detail-gallery img{width:100%;max-height:550px;object-fit:contain;background:transparent;border:1px solid var(--bronze-dim);}
   .detail-info{display:flex;flex-direction:column;justify-content:center;}
@@ -167,28 +170,25 @@
   .detail-desc{font-size:1.05rem;color:var(--stone);line-height:1.6;margin-bottom:1.8rem;border-top:1px solid #35301F;border-bottom:1px solid #35301F;padding:1.2rem 0;font-family:'DM Sans', sans-serif;}
   .detail-actions{display:flex;flex-direction:column;gap:1rem;}
 
-  /* ESTILOS DE REELS / SHORTS DE TESTIMONIOS */
+  /* ESTILOS DE REELS / SHORTS DE TESTIMONIOS (SIN CAJAS NI BORDES) */
   .test-grid {
-    display: flex; gap: 1.2rem; overflow-x: auto; scroll-behavior: smooth;
+    display: flex; gap: 1.5rem; overflow-x: auto; scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch; padding: 0.5rem 0.5rem 1.2rem 0.5rem;
   }
   .test-grid::-webkit-scrollbar { height: 6px; }
   .test-grid::-webkit-scrollbar-thumb { background: var(--bronze-dim); border-radius: 10px; }
   .test-card {
-    flex: 0 0 240px; min-width: 240px; border: 1px solid #35301F;
-    background: var(--onyx-2); padding: 0.6rem; border-radius: 12px; display: flex; flex-direction: column;
+    flex: 0 0 240px; min-width: 240px; border: none;
+    background: transparent; padding: 0; border-radius: 0; display: flex; flex-direction: column;
   }
   .test-card-video-wrapper {
     position: relative; width: 100%; aspect-ratio: 9 / 16; background: #000;
-    border-radius: 8px; overflow: hidden;
+    border-radius: 8px; overflow: hidden; cursor: pointer;
   }
-  .test-card-video-wrapper iframe {
+  .test-card-video-wrapper video {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    border: 0; object-fit: cover;
+    object-fit: cover; border: none; outline: none;
   }
-  .test-info-box { padding: 0.6rem 0.2rem 0 0.2rem; }
-  .test-client-name { font-weight: 600; font-size: 0.9rem; color: var(--parchment); margin-bottom: 0.2rem; }
-  .test-comment { font-size: 0.8rem; color: var(--stone); line-height: 1.4; }
 
   footer{border-top:1px solid #35301F;padding:2.6rem 0;font-size:.85rem;color:var(--stone);font-family:'DM Sans', sans-serif;}
   .foot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.6rem;}
@@ -221,7 +221,6 @@
   .mobile-menu a{padding:1rem 1.5rem;font-size:.9rem;text-decoration:none;border-bottom:1px solid #2a251a;text-transform:uppercase;letter-spacing:.05em;}
 
   .oculto{display:none !important;}
-  .volver{display:inline-block;margin-bottom:1rem;font-size:.85rem;color:var(--bronze);text-decoration:none;border-bottom:1px solid var(--bronze);cursor:pointer;letter-spacing:.04em;font-family:'DM Sans', sans-serif;}
 
   /* Carrusel Hero Banner */
   .carousel-container { position: relative; width: 100%; overflow: hidden; }
@@ -321,7 +320,8 @@
 
 <div class="wrap">
 
-  <div class="volver oculto" id="volver-inicio-bar" onclick="verInicio()" style="margin-top:1.5rem;">← Volver al inicio</div>
+  <!-- Migas de Pan Globales -->
+  <div class="breadcrumbs oculto" id="global-breadcrumbs" style="margin-top:1.5rem;"></div>
 
   <!-- 1. LANZAMIENTOS -->
   <section class="section" id="recomendados">
@@ -386,7 +386,6 @@
   </section>
 
   <section class="section oculto" id="detalle-producto">
-    <div class="breadcrumbs" id="detail-breadcrumbs"></div>
     <div class="product-detail-layout">
       <div class="detail-gallery">
         <img id="detail-img" src="" alt="" onerror="this.src=FOTO_RESPALDO">
@@ -477,6 +476,7 @@ let filtroMarca = "Todas";
 let filtroEtiqueta = "Todas";
 let filtroGenero = "Todas";
 let seccionAnterior = "inicio";
+let productoActual = null;
 let slideIndex = 0;
 
 const SECCIONES = ["hero", "recomendados", "marcas-inicio", "categorias", "marcas", "catalogo", "detalle-producto", "testimonios"];
@@ -529,7 +529,7 @@ function normalizarProducto(item) {
     marca: getVal(["marca", "brand"]),
     precio: getVal(["precio", "price", "valor"]),
     categoria: getVal(["categoria", "category"]),
-    genero: getVal(["genero", "gender", "genero/categoria"]),
+    genero: getVal(["genero", "gender", "genero/categoria", "sexo"]),
     etiqueta: getVal(["etiqueta", "tag", "estado"]),
     descripcion: getVal(["descripcion", "description", "desc"]),
     imagen: getVal(["imagen", "foto", "image", "url", "img"]) || FOTO_RESPALDO
@@ -552,12 +552,54 @@ function toggleMenuMovil() {
   document.getElementById("mobile-menu").classList.toggle("abierto");
 }
 
+/* SISTEMA DINÁMICO DE NAVEGACIÓN Y MIGAS DE PAN (BREADCRUMBS) */
+function actualizarBreadcrumbs(seccionActual) {
+  const container = document.getElementById("global-breadcrumbs");
+  if (!container) return;
+
+  if (seccionActual === "inicio") {
+    container.classList.add("oculto");
+    container.innerHTML = "";
+    return;
+  }
+
+  container.classList.remove("oculto");
+  let html = `<a onclick="verInicio()">Inicio</a>`;
+
+  if (seccionActual === "marcas") {
+    html += ` / <span class="current">Marcas</span>`;
+  } else if (seccionActual === "testimonios") {
+    html += ` / <span class="current">Testimonios</span>`;
+  } else if (seccionActual === "catalogo") {
+    html += ` / <a onclick="verCatalogoCompleto()">Catálogo</a>`;
+    if (filtroMarca !== "Todas") {
+      html += ` / <span class="current">${filtroMarca}</span>`;
+    } else if (filtroCategoria !== "Todas") {
+      html += ` / <span class="current">${filtroCategoria}</span>`;
+    } else if (filtroEtiqueta !== "Todas") {
+      html += ` / <span class="current">${filtroEtiqueta}</span>`;
+    } else if (filtroGenero !== "Todas") {
+      html += ` / <span class="current">${filtroGenero}</span>`;
+    }
+  } else if (seccionActual === "detalle-producto" && productoActual) {
+    if (productoActual.marca) {
+      const marcaEscapada = productoActual.marca.replace(/'/g, "\\'");
+      html += ` / <a onclick="verColeccion('marca', '${marcaEscapada}')">${productoActual.marca}</a>`;
+    } else {
+      html += ` / <a onclick="verCatalogoCompleto()">Catálogo</a>`;
+    }
+    html += ` / <span class="current">${productoActual.nombre}</span>`;
+  }
+
+  container.innerHTML = html;
+}
+
 function mostrarSoloSeccion(idMostrar) {
   SECCIONES.forEach(id => {
     const el = id === "hero" ? document.querySelector(".hero") : document.getElementById(id);
     if (el) el.classList.toggle("oculto", id !== idMostrar);
   });
-  document.getElementById("volver-inicio-bar").classList.remove("oculto");
+  actualizarBreadcrumbs(idMostrar);
   window.scrollTo({top:0, behavior:"instant"});
 }
 
@@ -597,6 +639,7 @@ function verInicio() {
   filtroMarca = "Todas";
   filtroEtiqueta = "Todas";
   filtroGenero = "Todas";
+  productoActual = null;
   const elGen = document.getElementById("filtro-genero");
   if (elGen) elGen.value = "Todas";
   
@@ -610,7 +653,7 @@ function verInicio() {
       }
     }
   });
-  document.getElementById("volver-inicio-bar").classList.add("oculto");
+  actualizarBreadcrumbs("inicio");
   renderRecomendados();
   window.scrollTo({top:0, behavior:"smooth"});
 }
@@ -628,6 +671,7 @@ function scrollCarruselMarcas(amount) {
 function cambiarGenero(valor) {
   filtroGenero = valor;
   renderCatalogo();
+  actualizarBreadcrumbs("catalogo");
 }
 
 function buscarGlobal(query) {
@@ -743,7 +787,11 @@ function renderCatalogo() {
     const coincideCat = filtroCategoria === "Todas" || (p.categoria && p.categoria.toLowerCase() === filtroCategoria.toLowerCase());
     const coincideMarca = filtroMarca === "Todas" || (p.marca && p.marca.toLowerCase() === filtroMarca.toLowerCase());
     const coincideEtiqueta = filtroEtiqueta === "Todas" || (p.etiqueta && p.etiqueta.toLowerCase().includes(filtroEtiqueta.toLowerCase()));
-    const coincideGenero = filtroGenero === "Todas" || (p.genero && p.genero.toLowerCase() === filtroGenero.toLowerCase());
+    
+    // Búsqueda flexible por género (Hombre, Mujer, Unisex)
+    const gP = (p.genero || "").toLowerCase();
+    const gF = filtroGenero.toLowerCase();
+    const coincideGenero = filtroGenero === "Todas" || gP.includes(gF);
     
     const coincideBusqueda = !busqueda || 
       (p.nombre && p.nombre.toLowerCase().includes(busqueda)) || 
@@ -764,18 +812,13 @@ function renderCatalogo() {
 }
 
 function verDetalleProducto(p) {
+  productoActual = p;
   document.getElementById("detail-img").src = p.imagen || FOTO_RESPALDO;
   document.getElementById("detail-brand").textContent = p.marca || "Fortezza";
   document.getElementById("detail-title").textContent = p.nombre;
   document.getElementById("detail-price").textContent = p.precio ? `$${p.precio}` : "";
   document.getElementById("detail-desc").textContent = p.descripcion || "Perfume original de excelente fijación y proyección.";
   document.getElementById("detail-wa-btn").href = linkWhatsapp(p.nombre, p.precio);
-
-  document.getElementById("detail-breadcrumbs").innerHTML = `
-    <a href="#" onclick="verInicio();return false;">Inicio</a> / 
-    <a href="#" onclick="verCatalogoCompleto();return false;">Catálogo</a> / 
-    <span>${p.nombre}</span>
-  `;
 
   mostrarSoloSeccion("detalle-producto");
 }
@@ -801,34 +844,30 @@ function renderTestimonios() {
   }
 
   TESTIMONIOS.forEach(t => {
-    const nombre = t.nombre || t.cliente || "Cliente";
-    const comentario = t.comentario || t.opinion || "";
     const videoUrl = t.video || t.url || t.embed || "";
+
+    if (!videoUrl) return;
 
     const card = document.createElement("div");
     card.className = "test-card";
 
-    let mediaHtml = "";
-    if (videoUrl) {
-      let embedUrl = videoUrl;
-      if (videoUrl.includes("youtube.com/shorts/")) {
-        embedUrl = videoUrl.replace("youtube.com/shorts/", "youtube.com/embed/");
-      }
-      mediaHtml = `
-        <div class="test-card-video-wrapper">
-          <iframe src="${embedUrl}" allowfullscreen></iframe>
-        </div>
-      `;
-    }
+    const videoWrap = document.createElement("div");
+    videoWrap.className = "test-card-video-wrapper";
 
-    card.innerHTML = `
-      ${mediaHtml}
-      <div class="test-info-box">
-        <div class="test-client-name">${nombre}</div>
-        <div class="test-comment">${comentario}</div>
-      </div>
-    `;
+    const video = document.createElement("video");
+    video.src = videoUrl;
+    video.autoplay = true;
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true;
 
+    // Al dar clic se conmuta el sonido
+    videoWrap.onclick = () => {
+      video.muted = !video.muted;
+    };
+
+    videoWrap.appendChild(video);
+    card.appendChild(videoWrap);
     grid.appendChild(card);
   });
 }
