@@ -617,6 +617,7 @@ function normalizarProducto(item) {
     nombre: getVal(["nombre", "producto", "title", "perfume"]),
     marca: getVal(["marca", "brand"]),
     precio: getVal(["precio", "price", "valor"]),
+    precio_oferta: getVal(["precio_oferta", "preciooferta", "oferta"]), // <-- LÍNEA AGREGADA
     categoria: catVal,
     genero: getVal(["genero", "gender"]) || catVal, 
     etiqueta: getVal(["etiqueta", "tag", "estado"]),
@@ -807,7 +808,11 @@ function renderRecomendados() {
       <div class="card-info">
         <div class="card-brand">${p.marca}</div>
         <div class="card-title">${p.nombre}</div>
-        <div class="card-price">${p.precio ? '$' + p.precio : ''}</div>
+        <div class="card-price">
+          ${p.precio_oferta ? `
+            <span style="text-decoration: line-through; color: #ff4d4d; font-size: 0.85em; margin-right: 5px;">$${p.precio}</span>             <span>$${p.precio_oferta}</span>
+          ` : (p.precio ? `$${p.precio}` : '')}
+        </div>
       </div>
     </div>
   `).join('');
@@ -851,7 +856,7 @@ const containerBreadcrumbs = document.getElementById("catalogo-breadcrumbs");
     return;
   }
 
-  cont.innerHTML = filtrados.map(p => `
+cont.innerHTML = filtrados.map(p => `
     <div class="card" onclick="verDetalle('${p.nombre.replace(/'/g, "\\'")}')">
       <div class="card-img-wrap">
         <img src="${p.imagen}" alt="${p.nombre}" onerror="this.src=FOTO_RESPALDO">
@@ -859,22 +864,38 @@ const containerBreadcrumbs = document.getElementById("catalogo-breadcrumbs");
       <div class="card-info">
         <div class="card-brand">${p.marca}</div>
         <div class="card-title">${p.nombre}</div>
-        <div class="card-price">${p.precio ? '$' + p.precio : ''}</div>
+        <div class="card-price">
+          ${p.precio_oferta ? `
+            <span style="text-decoration: line-through; color: #ff4d4d; font-size: 0.85em; margin-right: 5px;">$${p.precio}</span>             <span>$${p.precio_oferta}</span>
+          ` : (p.precio ? `$${p.precio}` : '')}
+        </div>
       </div>
     </div>
   `).join('');
-}
 
 function verDetalle(nombre) {
   const p = CATALOGO.find(item => item.nombre === nombre);
   if (!p) return;
 
+  const precioAEnviar = p.precio_oferta || p.precio;
+
   document.getElementById("detail-img").src = p.imagen;
   document.getElementById("detail-brand").textContent = p.marca;
   document.getElementById("detail-title").textContent = p.nombre;
-  document.getElementById("detail-price").textContent = p.precio ? `$${p.precio}` : "";
+  
+  // Muestra ambos precios en la vista detallada
+  const detailPriceEl = document.getElementById("detail-price");
+  if (p.precio_oferta) {
+    detailPriceEl.innerHTML = `
+      <span style="text-decoration: line-through; color: #ff4d4d; font-size: 0.8em; margin-right: 8px;">$${p.precio}</span>
+      <span>$${p.precio_oferta}</span>
+    `;
+  } else {
+    detailPriceEl.textContent = p.precio ? `$${p.precio}` : "";
+  }
+
   document.getElementById("detail-desc").textContent = p.descripcion || "Perfume original de alta fijación.";
-  document.getElementById("detail-wa-btn").href = linkWhatsapp(p.nombre, p.precio);
+  document.getElementById("detail-wa-btn").href = linkWhatsapp(p.nombre, precioAEnviar);
 
   const generoVal = p.genero || p.categoria || "Unisex";
   const marcaVal = p.marca || "Marca";
