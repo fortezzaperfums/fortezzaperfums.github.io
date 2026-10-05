@@ -316,6 +316,12 @@
     .pc-slide { display: none !important; }
     .mobile-slide { display: block !important; width: 100%; height: auto !important; object-fit: contain; }
   }
+
+  <!-- Conexiones anticipadas para acelerar la carga -->
+<link rel="preconnect" href="https://docs.google.com">
+<link rel="preconnect" href="https://www.youtube.com">
+<link rel="dns-prefetch" href="https://images.unsplash.com">
+  
 </style>
 </head>
 <body>
@@ -780,7 +786,7 @@ function renderRecomendados() {
   cont.innerHTML = lista.map((p) => `
     <div class="card" onclick="verDetalle('${p.nombre.replace(/'/g, "\\'")}')">
       <div class="card-img-wrap">
-        <img src="${p.imagen}" alt="${p.nombre}" onerror="this.src=FOTO_RESPALDO">
+        <img src="${p.imagen}" alt="${p.nombre}" loading="lazy" onerror="this.src=FOTO_RESPALDO">
       </div>
       <div class="card-info">
         <div class="card-brand">${p.marca}</div>
@@ -921,7 +927,7 @@ function renderTestimonios() {
       return `
         <div class="test-card">
           <div class="test-card-video-wrapper" onclick="toggleSonidoTestimonio(this)">
-            <iframe src="${srcUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe src="${srcUrl}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             <div class="test-click-blocker"></div>
             <div class="test-overlay-sound">🔊 Toca para escuchar</div>
           </div>
