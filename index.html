@@ -156,7 +156,7 @@
     cursor:pointer;background:var(--onyx-2);color:var(--parchment);font-family:'DM Sans', sans-serif;letter-spacing:.05em;border-radius:6px;transition:all .2s;}
   .brand-chip.active,.brand-chip:hover{background:var(--bronze);color:var(--onyx);border-color:var(--bronze);}
 
-  /* Catálogo y Tarjetas de Productos */
+/* Catálogo y Tarjetas de Productos (Limpio y Transparente) */
   .grid{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
@@ -165,10 +165,10 @@
   }
 
   .card{
-    border:none;
-    background:transparent;
-    border-radius:0;
-    padding:.8rem;
+    border:none !important;
+    background:transparent !important;
+    border-radius:0 !important;
+    padding:.4rem;
     cursor:pointer;
     position:relative;
     display:flex;
@@ -177,6 +177,7 @@
     transition:transform 0.3s ease;
     width:100%;
     height:100%;
+    box-shadow:none !important;
   }
 
   .card-img-wrap{
@@ -187,6 +188,8 @@
     justify-content:center;
     overflow:hidden;
     margin-bottom:.6rem;
+    background:transparent !important;
+    border-radius:0 !important;
   }
   
   .card img{
@@ -237,29 +240,30 @@
   }
 
   /* REGULARES Y AJUSTES DE CELULAR (2 COLUMNAS PERFECTAS Y SIMÉTRICAS) */
-  @media (max-width: 600px) {
+@media (max-width: 600px) {
     .wrap {
       padding: 0 0.8rem;
     }
     .grid {
       grid-template-columns: repeat(2, 1fr) !important;
-      gap: 0.6rem !important;
+      gap: 1.2rem 0.6rem !important;
       width: 100%;
     }
     .card {
-      padding: 0.4rem;
+      padding: 0.2rem;
       width: 100%;
       box-sizing: border-box;
-      background: var(--onyx-2);
-      border-radius: 8px;
-      border: 1px solid #222;
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
     }
     .card-img-wrap {
       width: 100%;
       aspect-ratio: 1 / 1 !important;
-      background: #111;
-      border-radius: 6px;
-      padding: 0.3rem;
+      background: transparent !important;
+      border-radius: 0 !important;
+      padding: 0;
     }
     .card-title {
       font-size: 0.8rem;
