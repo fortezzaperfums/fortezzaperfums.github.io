@@ -108,9 +108,7 @@
   .cat-tile:hover{background:#26221680;}
   .cat-tile.active{background:var(--bronze);color:var(--onyx);}
 
-  /* CARRUSEL DE MARCAS */
- /* CARRUSEL DE MARCAS (INFINITO Y CONTINUO) */
-/* CARRUSEL DE MARCAS (INFINITO Y CONTINUO) */
+  /* CARRUSEL DE MARCAS (INFINITO Y CONTINUO) */
   .brand-carousel-wrapper {
     overflow: hidden;
     width: 100%;
@@ -146,6 +144,7 @@
   }
   .brand-logo-card:hover { transform: scale(1.08); }
   .brand-logo-card img { max-height: 100%; max-width: 100%; object-fit: contain; }
+  .brand-fallback-text { font-family:'Oswald', sans-serif; font-weight:600; color:var(--parchment); text-transform:uppercase; }
 
   @keyframes scrollMarcas {
     0% { transform: translateX(0); }
@@ -158,7 +157,7 @@
     cursor:pointer;background:var(--onyx-2);color:var(--parchment);font-family:'DM Sans', sans-serif;letter-spacing:.05em;border-radius:6px;transition:all .2s;}
   .brand-chip.active,.brand-chip:hover{background:var(--bronze);color:var(--onyx);border-color:var(--bronze);}
 
-/* Catálogo y Tarjetas de Productos */
+  /* Catálogo y Tarjetas de Productos */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.8rem;}
   .card{
     border:none;background:transparent;border-radius:0;padding:.8rem;
@@ -200,7 +199,7 @@
   .detail-desc{font-size:1.05rem;color:var(--stone);line-height:1.6;margin-bottom:1.8rem;border-top:1px solid #35301F;border-bottom:1px solid #35301F;padding:1.2rem 0;font-family:'DM Sans', sans-serif;}
   .detail-actions{display:flex;flex-direction:column;gap:1rem;}
 
-  /* ESTILOS DE REELS / SHORTS DE TESTIMONIOS (SIN CAJAS NI BORDES) */
+  /* ESTILOS DE REELS DE TESTIMONIOS */
   .test-grid {
     display: flex; gap: 1.2rem; overflow-x: auto; scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch; padding: 0.5rem 0.5rem 1.2rem 0.5rem;
@@ -226,6 +225,7 @@
     border: none !important;
     border-radius: 0 !important;
     overflow: hidden;
+    cursor: pointer;
   }
 
   .test-card-video-wrapper iframe {
@@ -236,6 +236,33 @@
     height: 100%;
     border: 0 !important;
     outline: none !important;
+    pointer-events: none;
+  }
+
+  .test-click-blocker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    background: rgba(0, 0, 0, 0);
+  }
+
+  .test-overlay-sound {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(18, 18, 18, 0.85);
+    color: var(--parchment);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    pointer-events: none;
+    z-index: 10;
+    transition: opacity 0.3s ease;
   }
 
   footer{border-top:1px solid #35301F;padding:2.6rem 0;font-size:.85rem;color:var(--stone);font-family:'DM Sans', sans-serif;}
@@ -264,7 +291,7 @@
   }
 
   .menu-toggle{display:none;background:transparent;border:1px solid var(--bronze-dim);color:var(--parchment);font-size:1.3rem;padding:.3rem .8rem;cursor:pointer;}
-.mobile-menu{display:none;flex-direction:column;background:#000000;border-top:1px solid var(--bronze-dim);border-bottom:1px solid var(--bronze-dim);font-family:'DM Sans', sans-serif;}
+  .mobile-menu{display:none;flex-direction:column;background:#000000;border-top:1px solid var(--bronze-dim);border-bottom:1px solid var(--bronze-dim);font-family:'DM Sans', sans-serif;}
   .mobile-menu.abierto{display:flex;}
   .mobile-menu a{padding:1rem 1.5rem;font-size:.9rem;text-decoration:none;border-bottom:1px solid #2a251a;text-transform:uppercase;letter-spacing:.05em;}
   
@@ -289,89 +316,6 @@
     .pc-slide { display: none !important; }
     .mobile-slide { display: block !important; width: 100%; height: auto !important; object-fit: contain; }
   }
-
-  .test-card-video-wrapper {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 9 / 16;
-    background: transparent !important;
-    border: none !important;
-    border-radius: 0 !important;
-    overflow: hidden;
-    cursor: pointer;
-  }
-
-  .test-card-video-wrapper iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0 !important;
-    outline: none !important;
-  }
-
-  .test-overlay-sound {
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(18, 18, 18, 0.85);
-    color: var(--parchment);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-family: 'DM Sans', sans-serif;
-    pointer-events: none;
-    z-index: 10;
-    transition: opacity 0.3s ease;
-  }
-
-  .test-card-video-wrapper {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 9 / 16;
-    overflow: hidden;
-    cursor: pointer;
-  }
-
-  .test-card-video-wrapper iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    pointer-events: none; /* Evita que el mouse interactúe con los botones internos de YouTube */
-  }
-
-  /* Capa transparente que captura el clic en toda la superficie del video */
-  .test-click-blocker {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
-    background: rgba(0, 0, 0, 0); /* Completamente transparente */
-  }
-
-  .test-overlay-sound {
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(18, 18, 18, 0.85);
-    color: var(--parchment);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-family: 'DM Sans', sans-serif;
-    pointer-events: none;
-    z-index: 10;
-    transition: opacity 0.3s ease;
-  }
-  
 </style>
 </head>
 <body>
@@ -423,7 +367,7 @@
       <img class="hero-img mobile-slide" src="imagenes/banners/banner2_mobile.png" alt="Banner Móvil 2">
     </div>
     <div class="slide">
-      <img class="hero-img pc-slide" src="imagenes/banners/banner3.jpg.png" alt="Banner PC 3">
+      <img class="hero-img pc-slide" src="imagenes/banners/banner3.jpg" alt="Banner PC 3">
       <img class="hero-img mobile-slide" src="imagenes/banners/banner3_mobile.png" alt="Banner Móvil 3">
     </div>
     <div class="slide">
@@ -466,7 +410,7 @@
     </div>
   </section>
 
-<!-- 2. CARRUSEL DE MARCAS EN INICIO -->
+  <!-- 2. CARRUSEL DE MARCAS EN INICIO -->
   <section class="section" id="marcas-inicio">
     <div class="section-head"><h2>Nuestras Marcas</h2></div>
     <div class="brand-carousel-wrapper">
@@ -474,7 +418,7 @@
     </div>
   </section>
   
-<!-- SECCIÓN DEDICADA DE MARCAS -->
+  <!-- SECCIÓN DEDICADA DE MARCAS -->
   <section class="section oculto" id="marcas">
     <div class="section-head"><h2>Compra por marca</h2></div>
     
@@ -651,7 +595,6 @@ function normalizarProducto(item) {
     marca: getVal(["marca", "brand"]),
     precio: getVal(["precio", "price", "valor"]),
     categoria: catVal,
-    // Usamos el mismo valor de la columna categoria para el genero
     genero: getVal(["genero", "gender"]) || catVal, 
     etiqueta: getVal(["etiqueta", "tag", "estado"]),
     descripcion: getVal(["descripcion", "description", "desc"]),
@@ -694,7 +637,6 @@ function verColeccion(tipo, valor) {
   if (tipo === "marca") filtroMarca = valor;
   if (tipo === "etiqueta") filtroEtiqueta = valor;
   
-  renderCategorias();
   renderMarcas();
   renderCatalogo();
   mostrarSoloSeccion("catalogo");
@@ -707,7 +649,7 @@ function verCatalogoCompleto() {
   if (elGen) elGen.value = "Todas";
   const elBusc = document.getElementById("buscador");
   if (elBusc) elBusc.value = "";
-  renderCategorias(); renderMarcas(); renderCatalogo();
+  renderMarcas(); renderCatalogo();
   mostrarSoloSeccion("catalogo");
 }
 
@@ -763,22 +705,6 @@ function buscarGlobal(query) {
   }
 }
 
-function renderCategorias() {
-  const categorias = ["Todas", ...new Set(CATALOGO.map(p => p.categoria).filter(Boolean))];
-  const cont = document.getElementById("cat-grid");
-  if (!cont) return;
-  cont.innerHTML = "";
-  categorias.forEach(cat => {
-    const div = document.createElement("div");
-    div.className = "cat-tile" + (cat === filtroCategoria ? " active" : "");
-    div.textContent = cat;
-    div.onclick = () => cat === "Todas" ? verInicio() : verColeccion("categoria", cat);
-    cont.appendChild(div);
-  });
-  const catCount = document.getElementById("cat-count");
-  if (catCount) catCount.textContent = `${CATALOGO.length} fragancias`;
-}
-
 function renderMarcas() {
   const marcas = [...new Set(CATALOGO.map(p => p.marca).filter(Boolean))];
 
@@ -793,7 +719,6 @@ function renderMarcas() {
     `;
   }).join('');
 
-  // DUPLICAMOS htmlLogos para que la animación fluya en bucle continuo sin saltos
   const carruselInfinitoHTML = htmlLogos + htmlLogos;
 
   const c1 = document.getElementById("brand-carousel-inicio");
@@ -801,21 +726,6 @@ function renderMarcas() {
 
   if (c1) c1.innerHTML = carruselInfinitoHTML;
   if (c2) c2.innerHTML = carruselInfinitoHTML;
-
-  // Botones de marcas (si mantienes la sección de botones en la vista dedicada)
-  const cRow = document.getElementById("brand-row");
-  if (cRow) {
-    cRow.innerHTML = marcas.map(m => {
-      const marcaEscapada = m.replace(/'/g, "\\'");
-      return `<button class="brand-chip" onclick="verColeccion('marca', '${marcaEscapada}')">${m}</button>`;
-    }).join('');
-  }
-}
-
-  const c1 = document.getElementById("brand-carousel-inicio");
-  const c2 = document.getElementById("brand-carousel-seccion");
-  if (c1) c1.innerHTML = htmlLogos;
-  if (c2) c2.innerHTML = htmlLogos;
 
   const contRow = document.getElementById("brand-row");
   if (contRow) {
@@ -871,7 +781,6 @@ function renderCatalogo() {
     const matchMarca = filtroMarca === "Todas" || p.marca === filtroMarca;
     const matchEtiq = filtroEtiqueta === "Todas" || (p.etiqueta || "").toLowerCase() === filtroEtiqueta.toLowerCase();
     
-    // Compara el género seleccionado con lo que viene en la columna categoria
     const matchGen = filtroGenero === "Todas" || 
                      (p.genero || "").toLowerCase().includes(filtroGenero.toLowerCase());
                      
@@ -947,7 +856,6 @@ function obtenerIDYouTube(url) {
   return null;
 }
 
-/* Renderizado de Testimonios sin cajas ni textos */
 function renderTestimonios() {
   const cont = document.getElementById("test-grid");
   if (!cont) return;
@@ -969,14 +877,12 @@ function renderTestimonios() {
     const ytId = obtenerIDYouTube(rawVideo);
 
     if (ytId) {
-      // Oculta controles, informacion, titulos y anotaciones de YouTube
       const srcUrl = `https://www.youtube.com/embed/${ytId}?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1`;
       
       return `
         <div class="test-card">
           <div class="test-card-video-wrapper" onclick="toggleSonidoTestimonio(this)">
             <iframe src="${srcUrl}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <!-- Capa transparente superior que bloquea los clics a YouTube -->
             <div class="test-click-blocker"></div>
             <div class="test-overlay-sound">🔊 Toca para escuchar</div>
           </div>
@@ -987,14 +893,12 @@ function renderTestimonios() {
   }).join('');
 }
 
-// Función para alternar el sonido sin redirigir
 function toggleSonidoTestimonio(wrapper) {
   const iframe = wrapper.querySelector('iframe');
   const overlay = wrapper.querySelector('.test-overlay-sound');
   
   if (!iframe) return;
 
-  // Si está silenciado, activamos el sonido; de lo contrario, lo silenciamos
   if (!wrapper.dataset.muted || wrapper.dataset.muted === "true") {
     iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
     wrapper.dataset.muted = "false";
@@ -1009,7 +913,6 @@ function toggleSonidoTestimonio(wrapper) {
   }
 }
   
-// Carrusel Hero Banner Autoplay y Pausa
 function showSlide(index) {
   const slides = document.querySelectorAll("#hero-carousel .slide");
   const dots = document.querySelectorAll("#hero-carousel .dot");
@@ -1043,7 +946,6 @@ if (heroContainer) {
   heroContainer.addEventListener("touchend", startCarousel);
 }
 
-// Carga de datos
 async function cargarDatos() {
   try {
     const resP = await fetch(SHEET_PERFUMES);
@@ -1051,7 +953,6 @@ async function cargarDatos() {
     const rawCat = parseCSV(csvP);
     CATALOGO = rawCat.map(normalizarProducto).filter(p => p.nombre);
 
-    renderCategorias();
     renderMarcas();
     renderRecomendados();
     renderCatalogo();
@@ -1069,7 +970,6 @@ async function cargarDatos() {
   }
 }
 
-// Inicialización
 window.addEventListener("DOMContentLoaded", () => {
   cargarDatos();
   startCarousel();
