@@ -135,19 +135,19 @@
     animation-play-state: paused;
   }
 
-.brand-logo-card {
-  flex: 0 0 180px;
-  min-width: 180px;
-  height: 90px;
-  background: transparent;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.3rem;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
+  .brand-logo-card {
+    flex: 0 0 180px;
+    min-width: 180px;
+    height: 90px;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
   .brand-logo-card:hover { transform: scale(1.08); }
   .brand-logo-card img { max-height: 100%; max-width: 100%; object-fit: contain; }
   .brand-fallback-text { font-family:'Oswald', sans-serif; font-weight:600; color:var(--parchment); text-transform:uppercase; }
@@ -164,26 +164,26 @@
   .brand-chip.active,.brand-chip:hover{background:var(--bronze);color:var(--onyx);border-color:var(--bronze);}
 
   /* Catálogo y Tarjetas de Productos */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.8rem;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.8rem;}
 
-@media (max-width: 600px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.8rem;
+  @media (max-width: 600px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8rem;
+    }
   }
-}
   
-.card{
-  border:none;background:transparent;border-radius:0;padding:.8rem;
-  cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;
-  transition:transform 0.3s ease;
-}
-
-@media (max-width: 600px) {
-  .card {
-    padding: 0.4rem;
+  .card{
+    border:none;background:transparent;border-radius:0;padding:.8rem;
+    cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;
+    transition:transform 0.3s ease;
   }
-}
+
+  @media (max-width: 600px) {
+    .card {
+      padding: 0.4rem;
+    }
+  }
   
   .card:hover{transform:translateY(-4px);}
   .card-img-wrap{width:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:.6rem;}
@@ -337,7 +337,6 @@
     .pc-slide { display: none !important; }
     .mobile-slide { display: block !important; width: 100%; height: auto !important; object-fit: contain; }
   }
-  
 </style>
 </head>
 <body>
@@ -617,7 +616,7 @@ function normalizarProducto(item) {
     nombre: getVal(["nombre", "producto", "title", "perfume"]),
     marca: getVal(["marca", "brand"]),
     precio: getVal(["precio", "price", "valor"]),
-    precio_oferta: getVal(["precio_oferta", "preciooferta", "oferta"]), // <-- LÍNEA AGREGADA
+    precio_oferta: getVal(["precio_oferta", "preciooferta", "oferta"]),
     categoria: catVal,
     genero: getVal(["genero", "gender"]) || catVal, 
     etiqueta: getVal(["etiqueta", "tag", "estado"]),
@@ -810,7 +809,7 @@ function renderRecomendados() {
         <div class="card-title">${p.nombre}</div>
         <div class="card-price">
           ${p.precio_oferta ? `
-            <span style="text-decoration: line-through; color: #ff4d4d; font-size: 0.85em; margin-right: 5px;">$${p.precio}</span>             <span>$${p.precio_oferta}</span>
+            <span style="text-decoration: line-through; color: #ff4d4d; font-size: 0.85em; margin-right: 5px;">$${p.precio}</span> <span>$${p.precio_oferta}</span>
           ` : (p.precio ? `$${p.precio}` : '')}
         </div>
       </div>
@@ -819,7 +818,7 @@ function renderRecomendados() {
 }
 
 function renderCatalogo() {
-const containerBreadcrumbs = document.getElementById("catalogo-breadcrumbs");
+  const containerBreadcrumbs = document.getElementById("catalogo-breadcrumbs");
   if (containerBreadcrumbs) {
     let ruta = `<a href="#" onclick="verInicio(); return false;">Inicio</a> / <span>Catálogo</span>`;
     if (typeof filtroGenero !== "undefined" && filtroGenero !== "Todas") {
@@ -856,7 +855,7 @@ const containerBreadcrumbs = document.getElementById("catalogo-breadcrumbs");
     return;
   }
 
-cont.innerHTML = filtrados.map(p => `
+  cont.innerHTML = filtrados.map(p => `
     <div class="card" onclick="verDetalle('${p.nombre.replace(/'/g, "\\'")}')">
       <div class="card-img-wrap">
         <img src="${p.imagen}" alt="${p.nombre}" onerror="this.src=FOTO_RESPALDO">
@@ -866,12 +865,13 @@ cont.innerHTML = filtrados.map(p => `
         <div class="card-title">${p.nombre}</div>
         <div class="card-price">
           ${p.precio_oferta ? `
-            <span style="text-decoration: line-through; color: #ff4d4d; font-size: 0.85em; margin-right: 5px;">$${p.precio}</span>             <span>$${p.precio_oferta}</span>
+            <span style="text-decoration: line-through; color: #ff4d4d; font-size: 0.85em; margin-right: 5px;">$${p.precio}</span> <span>$${p.precio_oferta}</span>
           ` : (p.precio ? `$${p.precio}` : '')}
         </div>
       </div>
     </div>
   `).join('');
+}
 
 function verDetalle(nombre) {
   const p = CATALOGO.find(item => item.nombre === nombre);
@@ -883,7 +883,6 @@ function verDetalle(nombre) {
   document.getElementById("detail-brand").textContent = p.marca;
   document.getElementById("detail-title").textContent = p.nombre;
   
-  // Muestra ambos precios en la vista detallada
   const detailPriceEl = document.getElementById("detail-price");
   if (p.precio_oferta) {
     detailPriceEl.innerHTML = `
