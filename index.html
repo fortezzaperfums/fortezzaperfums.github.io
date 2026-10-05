@@ -9,6 +9,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Conexiones anticipadas para acelerar la carga -->
+<link rel="preconnect" href="https://docs.google.com">
+<link rel="preconnect" href="https://www.youtube.com">
+<link rel="dns-prefetch" href="https://images.unsplash.com">
+  
 <style>
 :root {
   --onyx: #000000; 
@@ -158,12 +164,27 @@
   .brand-chip.active,.brand-chip:hover{background:var(--bronze);color:var(--onyx);border-color:var(--bronze);}
 
   /* Catálogo y Tarjetas de Productos */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.8rem;}
-  .card{
-    border:none;background:transparent;border-radius:0;padding:.8rem;
-    cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;
-    transition:transform 0.3s ease;
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.8rem;}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
   }
+}
+  
+.card{
+  border:none;background:transparent;border-radius:0;padding:.8rem;
+  cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;
+  transition:transform 0.3s ease;
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 0.4rem;
+  }
+}
+  
   .card:hover{transform:translateY(-4px);}
   .card-img-wrap{width:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:.6rem;}
   .card img{max-height:100%;max-width:100%;object-fit:contain;transition:transform 0.3s ease;}
@@ -316,11 +337,6 @@
     .pc-slide { display: none !important; }
     .mobile-slide { display: block !important; width: 100%; height: auto !important; object-fit: contain; }
   }
-
-  <!-- Conexiones anticipadas para acelerar la carga -->
-<link rel="preconnect" href="https://docs.google.com">
-<link rel="preconnect" href="https://www.youtube.com">
-<link rel="dns-prefetch" href="https://images.unsplash.com">
   
 </style>
 </head>
