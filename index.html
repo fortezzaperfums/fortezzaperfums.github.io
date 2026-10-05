@@ -430,6 +430,7 @@
   </section>
 
   <section class="section oculto" id="catalogo">
+    <div class="breadcrumbs" id="catalogo-breadcrumbs" style="margin-bottom: 1rem;"></div>
     <div class="section-head">
       <h2 id="catalogo-titulo">Catálogo completo</h2>
       <div class="catalog-controls">
@@ -704,6 +705,16 @@ function irASeccionGenero(genero) {
   mostrarSoloSeccion("catalogo");
 }
 
+function irASeccionMarca(marca) {
+  filtroMarca = marca;
+  filtroGenero = "Todas";
+  const elGen = document.getElementById("filtro-genero");
+  if (elGen) elGen.value = "Todas";
+  seccionAnterior = "catalogo";
+  renderCatalogo();
+  mostrarSoloSeccion("catalogo");
+}
+
 function buscarGlobal(query) {
   if (!query || query.trim() === "") return;
   verCatalogoCompleto();
@@ -781,6 +792,18 @@ function renderRecomendados() {
 }
 
 function renderCatalogo() {
+const containerBreadcrumbs = document.getElementById("catalogo-breadcrumbs");
+  if (containerBreadcrumbs) {
+    let ruta = `<a href="#" onclick="verInicio(); return false;">Inicio</a> / <span>Catálogo</span>`;
+    if (typeof filtroGenero !== "undefined" && filtroGenero !== "Todas") {
+      ruta += ` / <span>${filtroGenero}</span>`;
+    }
+    if (typeof filtroMarca !== "undefined" && filtroMarca !== "Todas") {
+      ruta += ` / <span>${filtroMarca}</span>`;
+    }
+    containerBreadcrumbs.innerHTML = ruta;
+  }
+  
   const cont = document.getElementById("catalogo-grid");
   if (!cont) return;
   const q = (document.getElementById("buscador")?.value || "").toLowerCase().trim();
@@ -831,15 +854,18 @@ function verDetalle(nombre) {
   document.getElementById("detail-desc").textContent = p.descripcion || "Perfume original de alta fijación.";
   document.getElementById("detail-wa-btn").href = linkWhatsapp(p.nombre, p.precio);
 
-  // 1. Detectar el género/categoría del perfume (Hombre, Mujer, Unisex)
   const generoVal = p.genero || p.categoria || "Unisex";
+  const marcaVal = p.marca || "Marca";
 
-  // 2. Construir las migas de pan (Breadcrumbs)
-  document.getElementById("detail-breadcrumbs").innerHTML = `
-    <a href="#" onclick="verInicio(); return false;">Inicio</a> / 
-    <a href="#" onclick="irASeccionGenero('${generoVal.replace(/'/g, "\\'")}'); return false;">${generoVal}</a> / 
-    <span>${p.nombre}</span>
-  `;
+  const breadcrumbsEl = document.getElementById("detail-breadcrumbs");
+  if (breadcrumbsEl) {
+    breadcrumbsEl.innerHTML = `
+      <a href="#" onclick="verInicio(); return false;">Inicio</a> / 
+      <a href="#" onclick="irASeccionGenero('${generoVal.replace(/'/g, "\\'")}'); return false;">${generoVal}</a> / 
+      <a href="#" onclick="irASeccionMarca('${marcaVal.replace(/'/g, "\\'")}'); return false;">${marcaVal}</a> / 
+      <span>${p.nombre}</span>
+    `;
+  }
 
   mostrarSoloSeccion("detalle-producto");
 }
