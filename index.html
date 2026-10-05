@@ -165,10 +165,18 @@
   }
 
   .card{
-    border:none;background:transparent;border-radius:0;padding:.8rem;
-    cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;
+    border:none;
+    background:transparent;
+    border-radius:0;
+    padding:.8rem;
+    cursor:pointer;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
     transition:transform 0.3s ease;
     width:100%;
+    height:100%;
   }
 
   .card-img-wrap{
@@ -190,28 +198,81 @@
     transition:transform 0.3s ease;
   }
 
+  .card:hover img{transform:scale(1.05);}
+  .card-info{
+    text-align:center;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    flex-grow:1;
+  }
+  .card-brand{
+    font-size:.7rem;
+    color:var(--stone);
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .card-title{
+    font-size:.88rem;
+    font-weight:600;
+    color:var(--parchment);
+    margin:.2rem 0;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    height:2.6em;
+    line-height:1.3em;
+  }
+  .card-price{
+    font-size:1rem;
+    font-family:'Oswald', sans-serif;
+    color:var(--bronze);
+    font-weight:600;
+    margin-top:auto;
+  }
+
+  /* REGULARES Y AJUSTES DE CELULAR (2 COLUMNAS PERFECTAS Y SIMÉTRICAS) */
   @media (max-width: 600px) {
+    .wrap {
+      padding: 0 0.8rem;
+    }
     .grid {
       grid-template-columns: repeat(2, 1fr) !important;
-      gap: 0.8rem;
+      gap: 0.6rem !important;
       width: 100%;
     }
     .card {
       padding: 0.4rem;
       width: 100%;
       box-sizing: border-box;
+      background: var(--onyx-2);
+      border-radius: 8px;
+      border: 1px solid #222;
     }
     .card-img-wrap {
       width: 100%;
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 1 / 1 !important;
+      background: #111;
+      border-radius: 6px;
+      padding: 0.3rem;
+    }
+    .card-title {
+      font-size: 0.8rem;
+      height: 2.4em;
+      line-height: 1.2em;
+    }
+    .card-brand {
+      font-size: 0.65rem;
+    }
+    .card-price {
+      font-size: 0.95rem;
     }
   }
-  
-  .card:hover img{transform:scale(1.05);}
-  .card-info{text-align:center;width:100%;}
-  .card-brand{font-size:.7rem;color:var(--stone);text-transform:uppercase;letter-spacing:.08em;}
-  .card-title{font-size:.9rem;font-weight:600;color:var(--parchment);margin:.2rem 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .card-price{font-size:1rem;font-family:'Oswald', sans-serif;color:var(--bronze);font-weight:600;}
 
   .empty{color:var(--stone);font-size:.9rem;padding:2rem 0;font-family:'DM Sans', sans-serif;width:100%;text-align:center;}
 
@@ -373,7 +434,6 @@
 
 <section class="hero">
   <div class="carousel-container" id="hero-carousel">
-    <!-- Banners cargados mediante picture para descargar solo la versión necesaria según pantalla -->
     <div class="slide active">
       <picture>
         <source media="(max-width: 768px)" srcset="imagenes/banners/banner_mobile.png">
@@ -860,10 +920,10 @@ function renderCatalogo() {
       </div>
       <div class="card-info">
         <div class="card-brand">${p.marca}</div>
-        <div class="card-title">${p.nombre}</div>
+        <div class="card-title" title="${p.nombre}">${p.nombre}</div>
         <div class="card-price">
           ${p.precio_oferta ? `
-            <span style="text-decoration: line-through; color: #ff4d4d; font-size: 0.85em; margin-right: 5px;">$${p.precio}</span> <span>$${p.precio_oferta}</span>
+            <span style="text-decoration: line-through; color: #ff4d4d; font-size: 0.8em; margin-right: 3px;">$${p.precio}</span> <span>$${p.precio_oferta}</span>
           ` : (p.precio ? `$${p.precio}` : '')}
         </div>
       </div>
@@ -1025,7 +1085,6 @@ if (heroContainer) {
   heroContainer.addEventListener("touchend", startCarousel, {passive: true});
 }
 
-// Carga simultánea paralela mediante Promise.all
 async function cargarDatos() {
   try {
     const [resP, resT] = await Promise.all([
