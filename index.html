@@ -428,14 +428,8 @@
 
     <div class="brand-row" id="brand-row"></div>
   </section>
-  
+
   <section class="section oculto" id="catalogo">
-    <section class="section oculto" id="catalogo">
-  <!-- Migas de pan para el catálogo -->
-  <div class="breadcrumbs" id="catalogo-breadcrumbs" style="margin-bottom: 1rem;"></div>
-  
-  <div class="section-head">
-    <h2 id="catalogo-titulo">Catálogo completo</h2>
     <div class="section-head">
       <h2 id="catalogo-titulo">Catálogo completo</h2>
       <div class="catalog-controls">
@@ -710,28 +704,6 @@ function irASeccionGenero(genero) {
   mostrarSoloSeccion("catalogo");
 }
 
-// Navega al catálogo filtrando por una categoría/género específica
-function irASeccionGenero(genero) {
-  filtroGenero = genero;
-  filtroMarca = "Todas"; // Reiniciamos marca para enfocar en género
-  const elGen = document.getElementById("filtro-genero");
-  if (elGen) elGen.value = genero;
-  seccionAnterior = "catalogo";
-  renderCatalogo();
-  mostrarSoloSeccion("catalogo");
-}
-
-// Navega al catálogo filtrando por una marca específica
-function irASeccionMarca(marca) {
-  filtroMarca = marca;
-  filtroGenero = "Todas"; // Reiniciamos género para mostrar todos los productos de esa marca
-  const elGen = document.getElementById("filtro-genero");
-  if (elGen) elGen.value = "Todas";
-  seccionAnterior = "catalogo";
-  renderCatalogo();
-  mostrarSoloSeccion("catalogo");
-}
-
 function buscarGlobal(query) {
   if (!query || query.trim() === "") return;
   verCatalogoCompleto();
@@ -809,19 +781,6 @@ function renderRecomendados() {
 }
 
 function renderCatalogo() {
-  const containerBreadcrumbs = document.getElementById("catalogo-breadcrumbs");
-if (containerBreadcrumbs) {
-  let ruta = `<a href="#" onclick="verInicio(); return false;">Inicio</a> / <span>Catálogo</span>`;
-  
-  if (filtroGenero !== "Todas") {
-    ruta += ` / <span>${filtroGenero}</span>`;
-  }
-  if (filtroMarca !== "Todas") {
-    ruta += ` / <span>${filtroMarca}</span>`;
-  }
-  
-  containerBreadcrumbs.innerHTML = ruta;
-}
   const cont = document.getElementById("catalogo-grid");
   if (!cont) return;
   const q = (document.getElementById("buscador")?.value || "").toLowerCase().trim();
@@ -872,15 +831,13 @@ function verDetalle(nombre) {
   document.getElementById("detail-desc").textContent = p.descripcion || "Perfume original de alta fijación.";
   document.getElementById("detail-wa-btn").href = linkWhatsapp(p.nombre, p.precio);
 
-  // Obtener género y marca
+  // 1. Detectar el género/categoría del perfume (Hombre, Mujer, Unisex)
   const generoVal = p.genero || p.categoria || "Unisex";
-  const marcaVal = p.marca || "Marca";
 
-  // Generar migas de pan completas: Inicio / Género / Marca / Nombre
+  // 2. Construir las migas de pan (Breadcrumbs)
   document.getElementById("detail-breadcrumbs").innerHTML = `
     <a href="#" onclick="verInicio(); return false;">Inicio</a> / 
     <a href="#" onclick="irASeccionGenero('${generoVal.replace(/'/g, "\\'")}'); return false;">${generoVal}</a> / 
-    <a href="#" onclick="irASeccionMarca('${marcaVal.replace(/'/g, "\\'")}'); return false;">${marcaVal}</a> / 
     <span>${p.nombre}</span>
   `;
 
