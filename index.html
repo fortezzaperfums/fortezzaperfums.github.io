@@ -6,15 +6,17 @@
 <title>Fortezza Perfums — Perfumes de lujo</title>
 <link rel="icon" type="image/png" href="imagenes/sitio/logo.png">
 <meta name="description" content="Catálogo de perfumes árabes y de nicho originales. Domicilios gratis en Pereira y Dosquebradas, envíos a toda Colombia.">
+
+<!-- Conexiones anticipadas para acelerar la carga -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Conexiones anticipadas para acelerar la carga -->
 <link rel="preconnect" href="https://docs.google.com">
-<link rel="preconnect" href="https://www.youtube.com">
 <link rel="dns-prefetch" href="https://images.unsplash.com">
-  
+
+<!-- Carga diferida no bloqueante de fuentes -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Oswald:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Oswald:wght@400;500;600;700&display=swap"></noscript>
+
 <style>
 :root {
   --onyx: #000000; 
@@ -31,13 +33,13 @@
     margin:0;
     background: #000000;
     color:var(--parchment);
-    font-family:'DM Sans', sans-serif;
+    font-family:'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight:300;
     line-height:1.6;
     letter-spacing:0.02em;
   }
   h1,h2,h3,.display{
-    font-family:'DM Sans', sans-serif;
+    font-family:'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     font-weight:600;
     color:var(--parchment);
     margin:0;
@@ -88,7 +90,6 @@
   .section{padding:3.2rem 0;}
   .section-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #35301F;padding-bottom:.8rem;margin-bottom:1.8rem;flex-wrap:wrap;gap:.8rem;}
   .section-head h2{font-size:1.7rem;font-family:'DM Sans', sans-serif;}
-  .section-head .sub{color:var(--stone);font-size:.85rem;font-family:'DM Sans', sans-serif;}
 
   /* BLOQUE DE ESTADÍSTICAS */
   .stats-section { padding: 2.5rem 0 1rem 0; }
@@ -108,13 +109,7 @@
   .select-genero{background:var(--onyx-2);border:1px solid #35301F;color:var(--parchment);padding:.5rem .8rem;font-family:'DM Sans', sans-serif;font-size:.85rem;outline:none;cursor:pointer;}
   .select-genero option{background:var(--onyx-2);color:var(--parchment);}
 
-  /* Categorías */
-  .cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:#35301F;border:1px solid #35301F;}
-  .cat-tile{background:var(--onyx-2);padding:2.2rem 1rem;text-align:center;cursor:pointer;font-family:'DM Sans', sans-serif;font-size:1.1rem;letter-spacing:.05em;transition:background .2s;}
-  .cat-tile:hover{background:#26221680;}
-  .cat-tile.active{background:var(--bronze);color:var(--onyx);}
-
-  /* CARRUSEL DE MARCAS (INFINITO Y CONTINUO) */
+  /* CARRUSEL DE MARCAS */
   .brand-carousel-wrapper {
     overflow: hidden;
     width: 100%;
@@ -129,11 +124,10 @@
     gap: 1.2rem;
     width: max-content;
     animation: scrollMarcas 25s linear infinite;
+    will-change: transform;
   }
 
-  .brand-carousel:hover {
-    animation-play-state: paused;
-  }
+  .brand-carousel:hover { animation-play-state: paused; }
 
   .brand-logo-card {
     flex: 0 0 180px;
@@ -153,11 +147,10 @@
   .brand-fallback-text { font-family:'Oswald', sans-serif; font-weight:600; color:var(--parchment); text-transform:uppercase; }
 
   @keyframes scrollMarcas {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0% { transform: translate3d(0,0,0); }
+    100% { transform: translate3d(-50%,0,0); }
   }
   
-  /* Botones de texto en la sección de marcas */
   .brand-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem;}
   .brand-chip{border:1px solid var(--bronze-dim);padding:.6rem 1.2rem;font-size:.85rem;
     cursor:pointer;background:var(--onyx-2);color:var(--parchment);font-family:'DM Sans', sans-serif;letter-spacing:.05em;border-radius:6px;transition:all .2s;}
@@ -246,7 +239,7 @@
   .detail-desc{font-size:1.05rem;color:var(--stone);line-height:1.6;margin-bottom:1.8rem;border-top:1px solid #35301F;border-bottom:1px solid #35301F;padding:1.2rem 0;font-family:'DM Sans', sans-serif;}
   .detail-actions{display:flex;flex-direction:column;gap:1rem;}
 
-  /* ESTILOS DE REELS DE TESTIMONIOS */
+  /* TESTIMONIOS */
   .test-grid {
     display: flex; gap: 1.2rem; overflow-x: auto; scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch; padding: 0.5rem 0.5rem 1.2rem 0.5rem;
@@ -261,7 +254,6 @@
     background: transparent !important;
     padding: 0 !important;
     border-radius: 0 !important;
-    box-shadow: none !important;
   }
 
   .test-card-video-wrapper {
@@ -269,8 +261,6 @@
     width: 100%;
     aspect-ratio: 9 / 16;
     background: transparent !important;
-    border: none !important;
-    border-radius: 0 !important;
     overflow: hidden;
     cursor: pointer;
   }
@@ -288,28 +278,14 @@
 
   .test-click-blocker {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
-    background: rgba(0, 0, 0, 0);
+    top: 0; left: 0; width: 100%; height: 100%; z-index: 5;
   }
 
   .test-overlay-sound {
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(18, 18, 18, 0.85);
-    color: var(--parchment);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-family: 'DM Sans', sans-serif;
-    pointer-events: none;
-    z-index: 10;
-    transition: opacity 0.3s ease;
+    position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+    background: rgba(18, 18, 18, 0.85); color: var(--parchment);
+    padding: 6px 12px; border-radius: 20px; font-size: 0.75rem;
+    font-family: 'DM Sans', sans-serif; pointer-events: none; z-index: 10;
   }
 
   footer{border-top:1px solid #35301F;padding:2.6rem 0;font-size:.85rem;color:var(--stone);font-family:'DM Sans', sans-serif;}
@@ -345,24 +321,16 @@
   .oculto{display:none !important;}
   .volver{display:inline-block;margin-bottom:1rem;font-size:.85rem;color:var(--bronze);text-decoration:none;border-bottom:1px solid var(--bronze);cursor:pointer;letter-spacing:.04em;font-family:'DM Sans', sans-serif;}
 
-  /* Carrusel Hero Banner */
+  /* Carrusel Hero Banner Optimizado */
   .carousel-container { position: relative; width: 100%; overflow: hidden; }
   .slide { display: none; width: 100%; }
-  .slide.active { display: block; animation: fade 0.8s ease-in-out; }
-  @keyframes fade { from { opacity: 0.4; } to { opacity: 1; } }
-  .mobile-slide { display: none !important; }
-  .pc-slide { display: block; width: 100%; height: auto; }
+  .slide.active { display: block; }
   .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.5); color: #fff; border: none; font-size: 1.2rem; padding: 10px 15px; cursor: pointer; z-index: 10; border-radius: 4px; }
   .carousel-btn.prev { left: 10px; }
   .carousel-btn.next { right: 10px; }
   .carousel-dots { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
   .dot { width: 10px; height: 10px; background: rgba(255, 255, 255, 0.5); border-radius: 50%; cursor: pointer; }
   .dot.active { background: var(--bronze, #c5a059); width: 25px; border-radius: 10px; }
-
-  @media (max-width: 768px) {
-    .pc-slide { display: none !important; }
-    .mobile-slide { display: block !important; width: 100%; height: auto !important; object-fit: contain; }
-  }
 </style>
 </head>
 <body>
@@ -371,7 +339,7 @@
 
 <nav class="wrap" id="nav-principal">
   <div class="brandmark" onclick="verInicio()" style="cursor:pointer;">
-    <img id="logo-img" src="imagenes/sitio/logo.png" alt="Fortezza Perfums" onerror="this.style.display='none'">
+    <img id="logo-img" src="imagenes/sitio/logo.png" alt="Fortezza Perfums" decoding="async" onerror="this.style.display='none'">
     <span>Fortezza Perfums</span>
   </div>
 
@@ -405,21 +373,30 @@
 
 <section class="hero">
   <div class="carousel-container" id="hero-carousel">
+    <!-- Banners cargados mediante picture para descargar solo la versión necesaria según pantalla -->
     <div class="slide active">
-      <img class="hero-img pc-slide" src="imagenes/banners/banner.jpg" alt="Banner PC 1">
-      <img class="hero-img mobile-slide" src="imagenes/banners/banner_mobile.png" alt="Banner Móvil 1">
+      <picture>
+        <source media="(max-width: 768px)" srcset="imagenes/banners/banner_mobile.png">
+        <img class="hero-img" src="imagenes/banners/banner.jpg" alt="Banner 1" decoding="async">
+      </picture>
     </div>
     <div class="slide">
-      <img class="hero-img pc-slide" src="imagenes/banners/banner2.jpg" alt="Banner PC 2">
-      <img class="hero-img mobile-slide" src="imagenes/banners/banner2_mobile.png" alt="Banner Móvil 2">
+      <picture>
+        <source media="(max-width: 768px)" srcset="imagenes/banners/banner2_mobile.png">
+        <img class="hero-img" src="imagenes/banners/banner2.jpg" alt="Banner 2" loading="lazy" decoding="async">
+      </picture>
     </div>
     <div class="slide">
-      <img class="hero-img pc-slide" src="imagenes/banners/banner3.jpg.png" alt="Banner PC 3">
-      <img class="hero-img mobile-slide" src="imagenes/banners/banner3_mobile.png" alt="Banner Móvil 3">
+      <picture>
+        <source media="(max-width: 768px)" srcset="imagenes/banners/banner3_mobile.png">
+        <img class="hero-img" src="imagenes/banners/banner3.jpg.png" alt="Banner 3" loading="lazy" decoding="async">
+      </picture>
     </div>
     <div class="slide">
-      <img class="hero-img pc-slide" src="imagenes/banners/banner4.jpg" alt="Banner PC 4">
-      <img class="hero-img mobile-slide" src="imagenes/banners/banner4_mobile.png" alt="Banner Móvil 4">
+      <picture>
+        <source media="(max-width: 768px)" srcset="imagenes/banners/banner4_mobile.png">
+        <img class="hero-img" src="imagenes/banners/banner4.jpg" alt="Banner 4" loading="lazy" decoding="async">
+      </picture>
     </div>
     
     <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
@@ -500,7 +477,7 @@
     <div class="breadcrumbs" id="detail-breadcrumbs"></div>
     <div class="product-detail-layout">
       <div class="detail-gallery">
-        <img id="detail-img" src="" alt="" onerror="this.src=FOTO_RESPALDO">
+        <img id="detail-img" src="" alt="" loading="lazy" decoding="async" onerror="this.src=FOTO_RESPALDO">
       </div>
       <div class="detail-info">
         <div class="detail-brand" id="detail-brand"></div>
@@ -734,11 +711,6 @@ function scrollRecomendados(amount) {
   if (container) container.scrollBy({ left: amount, behavior: 'smooth' });
 }
 
-function scrollCarruselMarcas(amount) {
-  const carruseles = document.querySelectorAll(".brand-carousel");
-  carruseles.forEach(c => c.scrollBy({ left: amount, behavior: "smooth" }));
-}
-
 function cambiarGenero(valor) {
   filtroGenero = valor;
   renderCatalogo();
@@ -782,7 +754,7 @@ function renderMarcas() {
     const marcaEscapada = m.replace(/'/g, "\\'");
     return `
       <div class="brand-logo-card" onclick="verColeccion('marca', '${marcaEscapada}')" title="${m}">
-        <img src="${rutaImagen}" alt="${m}" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\\'brand-fallback-text\\'>${m}</span>';">
+        <img src="${rutaImagen}" alt="${m}" loading="lazy" decoding="async" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\\'brand-fallback-text\\'>${m}</span>';">
       </div>
     `;
   }).join('');
@@ -828,7 +800,7 @@ function renderRecomendados() {
   cont.innerHTML = lista.map((p) => `
     <div class="card" onclick="verDetalle('${p.nombre.replace(/'/g, "\\'")}')">
       <div class="card-img-wrap">
-        <img src="${p.imagen}" alt="${p.nombre}" loading="lazy" onerror="this.src=FOTO_RESPALDO">
+        <img src="${p.imagen}" alt="${p.nombre}" loading="lazy" decoding="async" onerror="this.src=FOTO_RESPALDO">
       </div>
       <div class="card-info">
         <div class="card-brand">${p.marca}</div>
@@ -884,7 +856,7 @@ function renderCatalogo() {
   cont.innerHTML = filtrados.map(p => `
     <div class="card" onclick="verDetalle('${p.nombre.replace(/'/g, "\\'")}')">
       <div class="card-img-wrap">
-        <img src="${p.imagen}" alt="${p.nombre}" onerror="this.src=FOTO_RESPALDO">
+        <img src="${p.imagen}" alt="${p.nombre}" loading="lazy" decoding="async" onerror="this.src=FOTO_RESPALDO">
       </div>
       <div class="card-info">
         <div class="card-brand">${p.marca}</div>
@@ -1049,13 +1021,18 @@ const heroContainer = document.getElementById("hero-carousel");
 if (heroContainer) {
   heroContainer.addEventListener("mouseenter", stopCarousel);
   heroContainer.addEventListener("mouseleave", startCarousel);
-  heroContainer.addEventListener("touchstart", stopCarousel);
-  heroContainer.addEventListener("touchend", startCarousel);
+  heroContainer.addEventListener("touchstart", stopCarousel, {passive: true});
+  heroContainer.addEventListener("touchend", startCarousel, {passive: true});
 }
 
+// Carga simultánea paralela mediante Promise.all
 async function cargarDatos() {
   try {
-    const resP = await fetch(SHEET_PERFUMES);
+    const [resP, resT] = await Promise.all([
+      fetch(SHEET_PERFUMES),
+      fetch(SHEET_TESTIMONIOS)
+    ]);
+
     const csvP = await resP.text();
     const rawCat = parseCSV(csvP);
     CATALOGO = rawCat.map(normalizarProducto).filter(p => p.nombre);
@@ -1063,17 +1040,12 @@ async function cargarDatos() {
     renderMarcas();
     renderRecomendados();
     renderCatalogo();
-  } catch(e) {
-    console.error("Error al cargar perfumes:", e);
-  }
 
-  try {
-    const resT = await fetch(SHEET_TESTIMONIOS);
     const csvT = await resT.text();
     TESTIMONIOS = parseCSV(csvT);
     renderTestimonios();
   } catch(e) {
-    console.error("Error al cargar testimonios:", e);
+    console.error("Error al cargar datos:", e);
   }
 }
 
