@@ -109,16 +109,48 @@
   .cat-tile.active{background:var(--bronze);color:var(--onyx);}
 
   /* CARRUSEL DE MARCAS */
- .brand-carousel { display: flex; gap: 1.2rem; overflow-x: auto; scroll-behavior: smooth; padding: 0.6rem 0; width: 100%; scrollbar-width: none; }
-  .brand-carousel::-webkit-scrollbar { display: none; }
-  .brand-logo-card {
-    flex: 0 0 150px; min-width: 150px; height: 75px;
-    background: transparent; border: none; border-radius: 0;
-    display: flex; align-items: center; justify-content: center; padding: 0.6rem; cursor: pointer; transition: transform 0.2s ease;
+ /* CARRUSEL DE MARCAS (INFINITO Y CONTINUO) */
+/* CARRUSEL DE MARCAS (INFINITO Y CONTINUO) */
+  .brand-carousel-wrapper {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    display: flex;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
   }
-  .brand-logo-card:hover { transform: translateY(-3px); }
+
+  .brand-carousel {
+    display: flex;
+    gap: 1.2rem;
+    width: max-content;
+    animation: scrollMarcas 25s linear infinite;
+  }
+
+  .brand-carousel:hover {
+    animation-play-state: paused;
+  }
+
+  .brand-logo-card {
+    flex: 0 0 150px;
+    min-width: 150px;
+    height: 75px;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .brand-logo-card:hover { transform: scale(1.08); }
   .brand-logo-card img { max-height: 100%; max-width: 100%; object-fit: contain; }
-  .brand-fallback-text { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--parchment); text-align: center; }
+
+  @keyframes scrollMarcas {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
   
   /* Botones de texto en la sección de marcas */
   .brand-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem;}
@@ -434,32 +466,20 @@
     </div>
   </section>
 
-  <!-- 2. CARRUSEL DE MARCAS EN INICIO -->
+<!-- 2. CARRUSEL DE MARCAS EN INICIO -->
   <section class="section" id="marcas-inicio">
     <div class="section-head"><h2>Nuestras Marcas</h2></div>
-    <div class="horizontal-scroll-wrapper">
-      <button class="scroll-arrow left" onclick="scrollCarruselMarcas(-300)">&#10094;</button>
+    <div class="brand-carousel-wrapper">
       <div class="brand-carousel" id="brand-carousel-inicio"></div>
-      <button class="scroll-arrow right" onclick="scrollCarruselMarcas(300)">&#10095;</button>
     </div>
   </section>
-
-  <section class="section oculto" id="categorias">
-    <div class="section-head">
-      <h2>Explora por categoría</h2>
-      <span class="sub" id="cat-count"></span>
-    </div>
-    <div class="cat-grid" id="cat-grid"></div>
-  </section>
-
-  <!-- SECCIÓN DEDICADA DE MARCAS -->
+  
+<!-- SECCIÓN DEDICADA DE MARCAS -->
   <section class="section oculto" id="marcas">
     <div class="section-head"><h2>Compra por marca</h2></div>
     
-    <div class="horizontal-scroll-wrapper">
-      <button class="scroll-arrow left" onclick="scrollCarruselMarcas(-300)">&#10094;</button>
+    <div class="brand-carousel-wrapper">
       <div class="brand-carousel" id="brand-carousel-seccion"></div>
-      <button class="scroll-arrow right" onclick="scrollCarruselMarcas(300)">&#10095;</button>
     </div>
 
     <div class="brand-row" id="brand-row"></div>
@@ -761,7 +781,7 @@ function renderCategorias() {
 
 function renderMarcas() {
   const marcas = [...new Set(CATALOGO.map(p => p.marca).filter(Boolean))];
-  
+
   const htmlLogos = marcas.map(m => {
     const nombreArchivo = m.toLowerCase().replace(/[^a-z0-9]/g, "");
     const rutaImagen = `imagenes/marcas/${nombreArchivo}.png`;
@@ -772,6 +792,25 @@ function renderMarcas() {
       </div>
     `;
   }).join('');
+
+  // DUPLICAMOS htmlLogos para que la animación fluya en bucle continuo sin saltos
+  const carruselInfinitoHTML = htmlLogos + htmlLogos;
+
+  const c1 = document.getElementById("brand-carousel-inicio");
+  const c2 = document.getElementById("brand-carousel-seccion");
+
+  if (c1) c1.innerHTML = carruselInfinitoHTML;
+  if (c2) c2.innerHTML = carruselInfinitoHTML;
+
+  // Botones de marcas (si mantienes la sección de botones en la vista dedicada)
+  const cRow = document.getElementById("brand-row");
+  if (cRow) {
+    cRow.innerHTML = marcas.map(m => {
+      const marcaEscapada = m.replace(/'/g, "\\'");
+      return `<button class="brand-chip" onclick="verColeccion('marca', '${marcaEscapada}')">${m}</button>`;
+    }).join('');
+  }
+}
 
   const c1 = document.getElementById("brand-carousel-inicio");
   const c2 = document.getElementById("brand-carousel-seccion");
