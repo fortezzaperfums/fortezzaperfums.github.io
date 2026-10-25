@@ -1600,17 +1600,17 @@ async function cargarDatos() {
     TESTIMONIOS = parseCSV(csvT);
     renderTestimonios();
 
-    // TRUCO PARA MÓVIL: Forzar un pequeño "respiro" al DOM para que el carrusel se pinte solo
+    // Forzar renderizado fluido del carrusel de marcas en móviles
     setTimeout(() => {
       const c1 = document.getElementById("brand-carousel-inicio");
       if (c1) {
         c1.style.animation = 'none';
-        c1.offsetHeight; // Trigger reflow
+        c1.offsetHeight; 
         c1.style.animation = 'scrollMarcas 25s linear infinite';
       }
     }, 300);
 
-  }(e) {
+  } catch(e) {
     console.error("Error al cargar datos:", e);
   }
 }
