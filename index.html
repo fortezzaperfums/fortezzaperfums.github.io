@@ -1602,7 +1602,6 @@ async function cargarDatos() {
     TESTIMONIOS = parseCSV(csvT);
     renderTestimonios();
 
-    // Forzar renderizado fluido del carrusel de marcas en móviles
     setTimeout(() => {
       const c1 = document.getElementById("brand-carousel-inicio");
       if (c1) {
