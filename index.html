@@ -351,14 +351,15 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
   .select-genero{background:var(--onyx-2);border:1px solid #35301F;color:var(--parchment);padding:.5rem .8rem;font-family:'DM Sans', sans-serif;font-size:.85rem;outline:none;cursor:pointer;}
   .select-genero option{background:var(--onyx-2);color:var(--parchment);}
 
-  /* CARRUSEL DE MARCAS */
+/* CARRUSEL DE MARCAS (Optimizado para evitar pantallas negras en móviles) */
   .brand-carousel-wrapper {
     overflow: hidden;
     width: 100%;
     position: relative;
     display: flex;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
     -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    transform: translateZ(0); /* Fuerza al celular a renderizar la capa de inmediato */
   }
 
   .brand-carousel {
@@ -367,6 +368,9 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     width: max-content;
     animation: scrollMarcas 25s linear infinite;
     will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0); /* Estabilidad en gráficos móviles */
   }
 
   .brand-carousel:hover { animation-play-state: paused; }
