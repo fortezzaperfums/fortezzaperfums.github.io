@@ -994,7 +994,8 @@ const FOTO_RESPALDO = "https://images.unsplash.com/photo-1541643600914-78b084683
 
 let CATALOGO = [];
 let TESTIMONIOS = [];
-let CARRITO = [];
+// Cargamos el carrito guardado previamente (si existe)
+let CARRITO = JSON.parse(localStorage.getItem('fortezza_cart')) || [];
 let filtroCategoria = "Todas";
 let filtroMarca = "Todas";
 let filtroEtiqueta = "Todas";
@@ -1121,6 +1122,9 @@ function actualizarCarritoUI() {
   const cartBody = document.getElementById("cart-body");
   const cartBadge = document.getElementById("cart-badge");
   const cartTotalPrice = document.getElementById("cart-total-price");
+
+  // Guardar en el almacenamiento local del navegador
+  localStorage.setItem('fortezza_cart', JSON.stringify(CARRITO));
 
   const totalItems = CARRITO.reduce((acc, item) => acc + item.cantidad, 0);
   cartBadge.textContent = totalItems;
@@ -1620,6 +1624,7 @@ async function cargarDatos() {
 window.addEventListener("DOMContentLoaded", () => {
   cargarDatos();
   startCarousel();
+  actualizarCarritoUI(); // Muestra los productos guardados en el carrito al abrir la página
 });
 
 // --- Función para abrir/cerrar la lupa del buscador ---
