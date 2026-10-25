@@ -779,7 +779,12 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     <div class="empty">Tu carrito está vacío.</div>
   </div>
 <div class="cart-footer">
-    <input type="text" class="cart-shipping-input" id="cart-shipping" placeholder="Escribe tu ciudad (Ej: Pereira, Bogotá...)" style="width: 100%; background: var(--onyx-2); border: 1px solid var(--bronze-dim); color: var(--parchment); padding: .6rem; font-family: 'DM Sans', sans-serif; font-size: .8rem; border-radius: 4px; margin-bottom: 1rem; outline: none;" value="Pereira">
+    <div style="font-size: 0.8rem; color: var(--stone); margin-bottom: 0.4rem; text-align: left; font-family: 'DM Sans', sans-serif;">
+      <strong style="color: var(--bronze);">ENVÍO GRATIS</strong><br>
+      Ingresa la ciudad hacia donde llegaría tu pedido:
+    </div>
+    <input type="text" class="cart-shipping-input" id="cart-shipping" placeholder="Ej: Pereira, Bogotá, Medellín..." style="width: 100%; background: var(--onyx-2); border: 1px solid var(--bronze-dim); color: var(--parchment); padding: .6rem; font-family: 'DM Sans', sans-serif; font-size: .8rem; border-radius: 4px; margin-bottom: 1rem; outline: none;" value="Pereira">
+    
     <div class="cart-total-row">
       <span>Total:</span>
       <span class="cart-total-price" id="cart-total-price">$0</span>
@@ -788,7 +793,6 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
       💬 Finalizar Pedido por WhatsApp
     </button>
   </div>
-</div>
 
 <div class="mobile-menu" id="mobile-menu">
   <a href="#" onclick="verInicio();toggleMenuMovil();return false;">Inicio</a>
