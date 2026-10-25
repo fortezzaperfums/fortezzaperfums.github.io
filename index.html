@@ -628,18 +628,18 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
   .oculto{display:none !important;}
   .volver{display:inline-block;margin-bottom:1rem;font-size:.85rem;color:var(--bronze);text-decoration:none;border-bottom:1px solid var(--bronze);cursor:pointer;letter-spacing:.04em;font-family:'DM Sans', sans-serif;}
 
-/* Carrusel Hero Banner Optimizado y Fluido */
+  /* Carrusel Hero Banner Fluido y Proporcional */
   .carousel-container { 
     position: relative; 
     width: 100%; 
-    height: 450px; /* Altura fija en móvil para evitar que los botones salten */
+    aspect-ratio: 4 / 5; /* Proporción exacta para celular (1080 x 1350) */
     overflow: hidden; 
     background-color: var(--onyx-2);
   }
-  
+
   @media (min-width: 768px) {
     .carousel-container {
-      height: 550px; /* Altura fija para computadores */
+      aspect-ratio: 16 / 9; /* Proporción exacta para PC (1920 x 1080) */
     }
   }
 
@@ -651,19 +651,66 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     height: 100%;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+    transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
   }
   
   .slide.active { 
     opacity: 1;
     visibility: visible;
   }
-  
-  .slide img {
+
+  .slide img, .slide picture {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Asegura que la imagen llene el espacio perfectamente sin deformarse */
     display: block;
+  }
+
+  .slide img {
+    object-fit: cover;
+  }
+
+  /* Botones del carrusel intactos */
+  .carousel-btn { 
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    background: rgba(0, 0, 0, 0.5); 
+    color: #fff; 
+    border: none; 
+    font-size: 1.2rem; 
+    padding: 10px 15px; 
+    cursor: pointer; 
+    z-index: 10; 
+    border-radius: 4px;
+    transition: background 0.2s ease;
+  }
+  .carousel-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+  .carousel-btn.prev { left: 10px; }
+  .carousel-btn.next { right: 10px; }
+  
+  .carousel-dots { 
+    position: absolute; 
+    bottom: 15px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    display: flex; 
+    gap: 8px; 
+    z-index: 10; 
+  }
+  .dot { 
+    width: 10px; 
+    height: 10px; 
+    background: rgba(255, 255, 255, 0.5); 
+    border-radius: 50%; 
+    cursor: pointer; 
+    transition: all 0.3s ease;
+  }
+  .dot.active { 
+    background: var(--bronze, #c5a059); 
+    width: 25px; 
+    border-radius: 10px; 
   }
   
 </style>
