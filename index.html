@@ -778,11 +778,8 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
   <div class="cart-body" id="cart-body">
     <div class="empty">Tu carrito está vacío.</div>
   </div>
-  <div class="cart-footer">
-    <select class="cart-shipping-select" id="cart-shipping">
-      <option value="Pereira / Dosquebradas (Gratis)">Envío: Pereira / Dosquebradas (GRATIS)</option>
-      <option value="Resto de Colombia">Envío: Resto de Colombia (A convenir)</option>
-    </select>
+<div class="cart-footer">
+    <input type="text" class="cart-shipping-input" id="cart-shipping" placeholder="Escribe tu ciudad (Ej: Pereira, Bogotá...)" style="width: 100%; background: var(--onyx-2); border: 1px solid var(--bronze-dim); color: var(--parchment); padding: .6rem; font-family: 'DM Sans', sans-serif; font-size: .8rem; border-radius: 4px; margin-bottom: 1rem; outline: none;" value="Pereira">
     <div class="cart-total-row">
       <span>Total:</span>
       <span class="cart-total-price" id="cart-total-price">$0</span>
@@ -1161,7 +1158,7 @@ function enviarPedidoWhatsApp() {
     return;
   }
 
-  const envioOption = document.getElementById("cart-shipping").value;
+  const envioCiudad = document.getElementById("cart-shipping").value.trim() || "No especificada";
   let totalNum = 0;
 
   let lineasProductos = CARRITO.map(item => {
@@ -1177,7 +1174,7 @@ function enviarPedidoWhatsApp() {
 ${lineasProductos}
 
 -----------------------------------
-📍 *Envío:* ${envioOption}
+📍 *Envío a:* ${envioCiudad} (Gratis)
 💰 *TOTAL A PAGAR:* $${totalNum.toLocaleString('es-CO')}
 -----------------------------------
 
