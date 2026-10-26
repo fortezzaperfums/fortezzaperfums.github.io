@@ -1240,10 +1240,15 @@ function verCatalogoCompleto() {
 
 function verSoloMarcas() { 
   seccionAnterior = "marcas"; 
+  
+  // Forzamos la recarga y generación de los botones de marcas
+  renderMarcas(); 
+
   const breadcrumbsEl = document.getElementById("marcas-breadcrumbs");
   if (breadcrumbsEl) {
     breadcrumbsEl.innerHTML = `<a href="#" onclick="verInicio(); return false;">Inicio</a> / <span>Marcas</span>`;
   }
+  
   mostrarSoloSeccion("marcas"); 
 }
   
