@@ -875,8 +875,9 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     </div>
   </section>
   
-  <!-- SECCIÓN DEDICADA DE MARCAS -->
+<!-- SECCIÓN DEDICADA DE MARCAS -->
   <section class="section oculto" id="marcas">
+    <div class="breadcrumbs" id="marcas-breadcrumbs" style="margin-bottom: 1rem;"></div>
     <div class="section-head"><h2>Compra por marca</h2></div>
     
     <div class="brand-carousel-wrapper">
@@ -1237,7 +1238,14 @@ function verCatalogoCompleto() {
   mostrarSoloSeccion("catalogo");
 }
 
-function verSoloMarcas() { seccionAnterior = "marcas"; mostrarSoloSeccion("marcas"); }
+function verSoloMarcas() { 
+  seccionAnterior = "marcas"; 
+  const breadcrumbsEl = document.getElementById("marcas-breadcrumbs");
+  if (breadcrumbsEl) {
+    breadcrumbsEl.innerHTML = `<a href="#" onclick="verInicio(); return false;">Inicio</a> / <span>Marcas</span>`;
+  }
+  mostrarSoloSeccion("marcas"); 
+}
 function verSoloTestimonios() { seccionAnterior = "testimonios"; mostrarSoloSeccion("testimonios"); }
 
 function verInicio() {
