@@ -1609,16 +1609,16 @@ async function cargarDatos() {
   try {
     let csvP, csvT;
 
-    // 1. Verificamos si los datos ya están guardados en la memoria temporal del navegador
+    // Verificamos si los datos ya están en la memoria temporal del navegador
     const cacheP = sessionStorage.getItem('fortezza_csv_perfumes');
     const cacheT = sessionStorage.getItem('fortezza_csv_testimonios');
 
     if (cacheP && cacheT) {
-      // Si ya existen, los usamos de inmediato (Carga instantánea ⚡)
+      // Si ya existen, los usamos de inmediato para carga instantánea
       csvP = cacheP;
       csvT = cacheT;
     } else {
-      // Si es la primera vez, los descargamos de Google Sheets
+      // Si no, los descargamos de Google Sheets
       const [resP, resT] = await Promise.all([
         fetch(SHEET_PERFUMES),
         fetch(SHEET_TESTIMONIOS)
@@ -1627,12 +1627,12 @@ async function cargarDatos() {
       csvP = await resP.text();
       csvT = await resT.text();
 
-      // Guardamos los textos en la memoria para las siguientes acciones
+      // Los guardamos en la memoria temporal
       sessionStorage.setItem('fortezza_csv_perfumes', csvP);
       sessionStorage.setItem('fortezza_csv_testimonios', csvT);
     }
 
-    // Procesamiento normal de los datos que ya tenías
+    // Procesamos el catálogo
     const rawCat = parseCSV(csvP);
     CATALOGO = rawCat.map(normalizarProducto).filter(p => p.nombre);
 
@@ -1640,7 +1640,7 @@ async function cargarDatos() {
     renderRecomendados();
     renderCatalogo();
 
-    const csvT = await resT.text(); // (Nota: usa la variable csvT ya cargada arriba)
+    // Procesamos los testimonios
     TESTIMONIOS = parseCSV(csvT);
     renderTestimonios();
 
