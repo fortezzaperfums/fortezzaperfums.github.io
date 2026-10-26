@@ -1390,12 +1390,16 @@ function renderRecomendados() {
 function renderCatalogo() {
   const containerBreadcrumbs = document.getElementById("catalogo-breadcrumbs");
   if (containerBreadcrumbs) {
-    let ruta = `<a href="#" onclick="verInicio(); return false;">Inicio</a> / <span>Catálogo</span>`;
-    if (typeof filtroGenero !== "undefined" && filtroGenero !== "Todas") {
-      ruta += ` / <span>${filtroGenero}</span>`;
-    }
+    let ruta = `<a href="#" onclick="verInicio(); return false;">Inicio</a>`;
+    
+    // Si se está filtrando por marca, mostramos el acceso directo a "Marcas"
     if (typeof filtroMarca !== "undefined" && filtroMarca !== "Todas") {
-      ruta += ` / <span>${filtroMarca}</span>`;
+      ruta += ` / <a href="#" onclick="verSoloMarcas(); return false;">Marcas</a> / <span>${filtroMarca}</span>`;
+    } else {
+      ruta += ` / <span>Catálogo</span>`;
+      if (typeof filtroGenero !== "undefined" && filtroGenero !== "Todas") {
+        ruta += ` / <span>${filtroGenero}</span>`;
+      }
     }
     containerBreadcrumbs.innerHTML = ruta;
   }
