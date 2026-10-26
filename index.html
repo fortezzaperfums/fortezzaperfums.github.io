@@ -6,6 +6,9 @@
 <title>Fortezza Perfums — Perfumes de lujo</title>
 <link rel="icon" type="image/png" href="imagenes/sitio/logo.png">
 <meta name="description" content="Catálogo de perfumes árabes y de nicho originales. Domicilios gratis en Pereira y Dosquebradas, envíos a toda Colombia.">
+  
+  <link rel="preconnect" href="https://docs.google.com">
+<link rel="preconnect" href="https://docs.googleusercontent.com">
 
 <!-- Conexiones anticipadas para acelerar la carga -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1608,17 +1611,17 @@ if (heroContainer) {
 async function cargarDatos() {
   try {
     let csvP, csvT;
+    
+    // Verificamos si tenemos los datos guardados localmente
+    const localP = localStorage.getItem('fortezza_cache_perfumes');
+    const localT = localStorage.getItem('fortezza_cache_testimonios');
 
-    // Verificamos si los datos ya están en la memoria temporal del navegador
-    const cacheP = sessionStorage.getItem('fortezza_csv_perfumes');
-    const cacheT = sessionStorage.getItem('fortezza_csv_testimonios');
-
-    if (cacheP && cacheT) {
-      // Si ya existen, los usamos de inmediato para carga instantánea
-      csvP = cacheP;
-      csvT = cacheT;
+    if (localP && localT) {
+      // Si ya están guardados, los usamos al instante ⚡
+      csvP = localP;
+      csvT = localT;
     } else {
-      // Si no, los descargamos de Google Sheets
+      // Si es la primera vez, los descargamos de Google Sheets
       const [resP, resT] = await Promise.all([
         fetch(SHEET_PERFUMES),
         fetch(SHEET_TESTIMONIOS)
@@ -1627,12 +1630,11 @@ async function cargarDatos() {
       csvP = await resP.text();
       csvT = await resT.text();
 
-      // Los guardamos en la memoria temporal
-      sessionStorage.setItem('fortezza_csv_perfumes', csvP);
-      sessionStorage.setItem('fortezza_csv_testimonios', csvT);
+      // Los guardamos permanentemente en el navegador
+      localStorage.setItem('fortezza_cache_perfumes', csvP);
+      localStorage.setItem('fortezza_cache_testimonios', csvT);
     }
 
-    // Procesamos el catálogo
     const rawCat = parseCSV(csvP);
     CATALOGO = rawCat.map(normalizarProducto).filter(p => p.nombre);
 
@@ -1640,7 +1642,6 @@ async function cargarDatos() {
     renderRecomendados();
     renderCatalogo();
 
-    // Procesamos los testimonios
     TESTIMONIOS = parseCSV(csvT);
     renderTestimonios();
 
@@ -1657,6 +1658,7 @@ async function cargarDatos() {
     console.error("Error al cargar datos:", e);
   }
 }
+
   
 window.addEventListener("DOMContentLoaded", () => {
   cargarDatos();
