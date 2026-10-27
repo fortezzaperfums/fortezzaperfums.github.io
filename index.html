@@ -936,8 +936,8 @@ let seccionAnterior = "inicio";
 let slideIndex = 0;
 let carouselTimer = null;
 
-const SECCIONES = ["hero", "recomendados", "marcas-inicio", "categorias", "marcas", "catalogo", "detalle-producto", "testimonios"];
-
+const SECCIONES = ["hero", "recomendados", "marcas-inicio", "marcas", "catalogo", "detalle-producto", "testimonios"];
+  
 function parseCSV(texto) {
   if (texto.charCodeAt(0) === 0xFEFF) texto = texto.slice(1);
   const filas = [];
