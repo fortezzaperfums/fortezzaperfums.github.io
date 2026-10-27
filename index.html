@@ -1295,6 +1295,9 @@ function verInicio() {
   window.scrollTo({top:0, behavior:"smooth"});
 }
 
+  const heroSection = document.querySelector(".hero");
+if (heroSection) heroSection.style.display = "block";
+
 function scrollRecomendados(amount) {
   const container = document.getElementById("recomendados-grid");
   if (container) container.scrollBy({ left: amount, behavior: 'smooth' });
@@ -1690,7 +1693,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-let filtroBannerActual = ""; // Almacena el banner activo
+let filtroBannerActual = "";
 
 function filtrarPorBanner(idBanner) {
   filtroBannerActual = idBanner; // Ejemplo: "banner1", "banner2"
@@ -1704,8 +1707,13 @@ function filtrarPorBanner(idBanner) {
   const buscador = document.getElementById("buscador");
   if (buscador) buscador.value = ""; // Limpiamos el buscador
 
-  renderCatalogo();
+  // OCULTAR EL CARRUSEL DE BANNERS PARA QUE NO SE VEAN LAS FLECHAS
+  const heroSection = document.querySelector(".hero");
+  if (heroSection) heroSection.style.display = "none";
+
+  // Mostramos el catálogo y renderizamos los productos
   mostrarSoloSeccion("catalogo");
+  renderCatalogo();
 }
 
 function limpiarFiltroBanner() {
