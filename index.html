@@ -1193,6 +1193,74 @@ function verInicio() {
   window.scrollTo({top:0, behavior:"smooth"});
 }
 
+function verColeccion(tipo, valor) {
+  seccionAnterior = "catalogo";
+  filtroBannerActual = "";
+  filtroCategoria = "Todas";
+  filtroMarca = "Todas";
+  filtroEtiqueta = "Todas";
+  filtroGenero = "Todas";
+  
+  if (tipo === "categoria") filtroCategoria = valor;
+  if (tipo === "marca") filtroMarca = valor;
+  if (tipo === "etiqueta") filtroEtiqueta = valor;
+  
+  const heroSection = document.querySelector(".hero");
+  if (heroSection) heroSection.style.display = "";
+
+  renderMarcas();
+  renderCatalogo();
+  mostrarSoloSeccion("catalogo");
+}
+
+function verCatalogoCompleto() {
+  seccionAnterior = "catalogo";
+  filtroBannerActual = "";
+  filtroCategoria = "Todas"; 
+  filtroMarca = "Todas"; 
+  filtroEtiqueta = "Todas"; 
+  filtroGenero = "Todas";
+  
+  const elGen = document.getElementById("filtro-genero");
+  if (elGen) elGen.value = "Todas";
+  const elBusc = document.getElementById("buscador");
+  if (elBusc) elBusc.value = "";
+  
+  const heroSection = document.querySelector(".hero");
+  if (heroSection) heroSection.style.display = "";
+
+  renderMarcas(); 
+  renderCatalogo();
+  mostrarSoloSeccion("catalogo");
+}
+
+function verSoloMarcas() { 
+  seccionAnterior = "marcas"; 
+  filtroBannerActual = "";
+  
+  const heroSection = document.querySelector(".hero");
+  if (heroSection) heroSection.style.display = "";
+
+  renderMarcas(); 
+
+  const breadcrumbsEl = document.getElementById("marcas-breadcrumbs");
+  if (breadcrumbsEl) {
+    breadcrumbsEl.innerHTML = `<a href="#" onclick="verInicio(); return false;">Inicio</a> / <span>Marcas</span>`;
+  }
+  
+  mostrarSoloSeccion("marcas"); 
+}
+
+function verSoloTestimonios() { 
+  seccionAnterior = "testimonios"; 
+  filtroBannerActual = "";
+  
+  const heroSection = document.querySelector(".hero");
+  if (heroSection) heroSection.style.display = "";
+
+  mostrarSoloSeccion("testimonios"); 
+}
+
 function scrollRecomendados(amount) {
   const container = document.getElementById("recomendados-grid");
   if (container) container.scrollBy({ left: amount, behavior: 'smooth' });
