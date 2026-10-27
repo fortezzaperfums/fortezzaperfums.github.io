@@ -1386,9 +1386,9 @@ function renderCatalogo() {
   if (!cont) return;
   const q = (document.getElementById("buscador")?.value || "").toLowerCase().trim();
 
-  let filtrados = CATALOGO.filter(p => {
+let filtrados = CATALOGO.filter(p => {
     if (filtroBannerActual) {
-      return (p.banner || "").trim().toLowerCase() === filtroBannerActual.toLowerCase();
+      return (p.banner || "").toLowerCase().includes(filtroBannerActual.toLowerCase());
     }
 
     const matchCat = filtroCategoria === "Todas" || p.categoria === filtroCategoria;
