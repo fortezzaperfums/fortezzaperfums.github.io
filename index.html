@@ -7,16 +7,12 @@
 <link rel="icon" type="image/png" href="imagenes/sitio/logo.png">
 <meta name="description" content="Catálogo de perfumes árabes y de nicho originales. Domicilios gratis en Pereira y Dosquebradas, envíos a toda Colombia.">
   
-  <link rel="preconnect" href="https://docs.google.com">
+<link rel="preconnect" href="https://docs.google.com">
 <link rel="preconnect" href="https://docs.googleusercontent.com">
-
-<!-- Conexiones anticipadas para acelerar la carga -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://docs.google.com">
 <link rel="dns-prefetch" href="https://images.unsplash.com">
 
-<!-- Carga diferida no bloqueante de fuentes -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Oswald:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Oswald:wght@400;500;600;700&display=swap"></noscript>
 
@@ -52,16 +48,13 @@
   img{max-width:100%;display:block;}
   .wrap{max-width:1180px;margin:0 auto;padding:0 1.5rem;}
 
-  /* Promo bar */
   .promo{background:var(--bronze);color:var(--onyx);text-align:center;
     font-family:'DM Sans', sans-serif;font-size:.78rem;letter-spacing:.08em;padding:.55rem 1rem;font-weight:500;text-transform:uppercase;}
 
-  /* Nav */
-nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-top:1.1rem;padding-bottom:1.1rem;
+  nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-top:1.1rem;padding-bottom:1.1rem;
     position:relative;background:var(--onyx);z-index:80;border-bottom:1px solid transparent;
     transition:border-color .2s, box-shadow .2s;gap:1rem;}
   
-  /* Ajustes del Logo (Sin texto) */
   .brandmark{display:flex;align-items:center;}
   .brandmark img{height:42px;width:auto;object-fit:contain;}
 
@@ -70,7 +63,6 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
   .navlinks a{text-decoration:none;border-bottom:1px solid transparent;transition:all 0.2s;}
   .navlinks a:hover{border-color:var(--bronze);color:var(--bronze);}
 
-  /* Buscador de Lupa Minimalista */
   .nav-search-box{position:relative;display:flex;align-items:center;}
   
   .search-toggle-btn{
@@ -117,7 +109,6 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     color:var(--bronze);
   }
 
-  /* BOTÓN CARRITO DE COMPRAS NAV */
   .cart-toggle-btn {
     background: transparent;
     border: none;
@@ -147,7 +138,6 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     justify-content: center;
   }
 
-  /* ESTILOS DEL PANEL LATERAL DEL CARRITO (DRAWER) */
   .cart-overlay {
     position: fixed;
     top: 0;
@@ -268,18 +258,6 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     border-top: 1px solid var(--bronze-dim);
     background: var(--onyx);
   }
-  .cart-shipping-select {
-    width: 100%;
-    background: var(--onyx-2);
-    border: 1px solid var(--bronze-dim);
-    color: var(--parchment);
-    padding: .6rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: .8rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    outline: none;
-  }
   .cart-total-row {
     display: flex;
     justify-content: space-between;
@@ -309,9 +287,8 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
   }
   .btn-cart-checkout:hover { background: #20bd5a; transform: translateY(-2px); }
 
-  /* Hero */
+  /* Hero Section & Carrusel integrados de forma limpia */
   .hero{position:relative;background:var(--onyx);border-bottom:1px solid var(--bronze-dim);display:flex;flex-direction:column;width:100%;}
-  .hero-img{width:100%;height:auto;object-fit:cover;display:block;}
   .hero-inner{padding:1.6rem 1.5rem;max-width:1180px;margin:0 auto;width:100%;}
   .cta-row{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;}
   .btn{display:inline-block;padding:.7rem 1.4rem;font-size:.82rem;text-decoration:none;
@@ -320,23 +297,20 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
   .btn-outline{color:var(--parchment);}
 
   #btn-volver-anterior {
-  background-color: var(--onyx-2) !important; /* Fondo gris oscuro */
-  color: var(--parchment) !important;        /* Texto blanco/crema */
-  border: 1px solid var(--bronze-dim);       /* Borde sutil */
-  transition: all 0.3s ease;
-}
+    background-color: var(--onyx-2) !important;
+    color: var(--parchment) !important;
+    border: 1px solid var(--bronze-dim);
+    transition: all 0.3s ease;
+  }
+  #btn-volver-anterior:hover {
+    background-color: #333333 !important;
+    border-color: var(--bronze);
+  }
 
-#btn-volver-anterior:hover {
-  background-color: #333333 !important;      /* Gris un poco más claro al pasar el mouse */
-  border-color: var(--bronze);
-}
-
-  /* Sections */
   .section{padding:3.2rem 0;}
   .section-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #35301F;padding-bottom:.8rem;margin-bottom:1.8rem;flex-wrap:wrap;gap:.8rem;}
   .section-head h2{font-size:1.7rem;font-family:'DM Sans', sans-serif;}
 
-  /* BLOQUE DE ESTADÍSTICAS */
   .stats-section { padding: 2.5rem 0 1rem 0; }
   .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; }
   .stat-card {
@@ -349,12 +323,10 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
   .stat-label { font-size: 0.78rem; color: var(--stone); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.4rem; font-weight: 500; }
   .stats-caption { text-align: center; font-size: 0.85rem; color: var(--stone); margin-top: 1.2rem; letter-spacing: 0.04em; }
 
-  /* Filtros Catálogo */
   .catalog-controls{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;}
   .select-genero{background:var(--onyx-2);border:1px solid #35301F;color:var(--parchment);padding:.5rem .8rem;font-family:'DM Sans', sans-serif;font-size:.85rem;outline:none;cursor:pointer;}
   .select-genero option{background:var(--onyx-2);color:var(--parchment);}
 
-/* CARRUSEL DE MARCAS (Optimizado para evitar pantallas negras en móviles) */
   .brand-carousel-wrapper {
     overflow: hidden;
     width: 100%;
@@ -362,7 +334,7 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     display: flex;
     -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
     mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    transform: translateZ(0); /* Fuerza al celular a renderizar la capa de inmediato */
+    transform: translateZ(0);
   }
 
   .brand-carousel {
@@ -373,7 +345,7 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     will-change: transform;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    transform: translateZ(0); /* Estabilidad en gráficos móviles */
+    transform: translateZ(0);
   }
 
   .brand-carousel:hover { animation-play-state: paused; }
@@ -405,7 +377,6 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     cursor:pointer;background:var(--onyx-2);color:var(--parchment);font-family:'DM Sans', sans-serif;letter-spacing:.05em;border-radius:6px;transition:all .2s;}
   .brand-chip.active,.brand-chip:hover{background:var(--bronze);color:var(--onyx);border-color:var(--bronze);}
 
-/* Catálogo y Tarjetas de Productos (Limpio y Transparente) */
   .grid{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
@@ -488,11 +459,8 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     margin-top:auto;
   }
 
-  /* REGULARES Y AJUSTES DE CELULAR (2 COLUMNAS PERFECTAS Y SIMÉTRICAS) */
 @media (max-width: 600px) {
-    .wrap {
-      padding: 0 0.8rem;
-    }
+    .wrap { padding: 0 0.8rem; }
     .grid {
       grid-template-columns: repeat(2, 1fr) !important;
       gap: 1.2rem 0.6rem !important;
@@ -514,22 +482,13 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
       border-radius: 0 !important;
       padding: 0;
     }
-    .card-title {
-      font-size: 0.8rem;
-      height: 2.4em;
-      line-height: 1.2em;
-    }
-    .card-brand {
-      font-size: 0.65rem;
-    }
-    .card-price {
-      font-size: 0.95rem;
-    }
+    .card-title { font-size: 0.8rem; height: 2.4em; line-height: 1.2em; }
+    .card-brand { font-size: 0.65rem; }
+    .card-price { font-size: 0.95rem; }
   }
 
   .empty{color:var(--stone);font-size:.9rem;padding:2rem 0;font-family:'DM Sans', sans-serif;width:100%;text-align:center;}
 
-  /* Carrusel Horizontal Lanzamientos */
   .horizontal-scroll-wrapper{position:relative;width:100%;display:flex;align-items:center;}
   .scroll-container{display:flex;gap:1.2rem;overflow-x:auto;scroll-behavior:smooth;padding-bottom:1rem;width:100%;scrollbar-width:thin;scrollbar-color:var(--bronze-dim) transparent;}
   .scroll-container::-webkit-scrollbar{height:6px;}
@@ -540,7 +499,6 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
   .scroll-arrow.left{left:-15px;}
   .scroll-arrow.right{right:-15px;}
 
-  /* Vista Detalle */
   .breadcrumbs{font-size:.8rem;color:var(--stone);margin-bottom:1.5rem;letter-spacing:.04em;font-family:'DM Sans', sans-serif;}
   .breadcrumbs a{color:var(--parchment);text-decoration:none;margin:0 .3rem;}
   .breadcrumbs a:hover{border-bottom:1px solid var(--bronze);}
@@ -553,7 +511,6 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
   .detail-desc{font-size:1.05rem;color:var(--stone);line-height:1.6;margin-bottom:1.8rem;border-top:1px solid #35301F;border-bottom:1px solid #35301F;padding:1.2rem 0;font-family:'DM Sans', sans-serif;}
   .detail-actions{display:flex;flex-direction:column;gap:1rem;}
 
-  /* TESTIMONIOS */
   .test-grid {
     display: flex; gap: 1.2rem; overflow-x: auto; scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch; padding: 0.5rem 0.5rem 1.2rem 0.5rem;
@@ -581,19 +538,11 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
 
   .test-card-video-wrapper iframe {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0 !important;
-    outline: none !important;
-    pointer-events: none;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border: 0 !important; outline: none !important; pointer-events: none;
   }
 
-  .test-click-blocker {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%; z-index: 5;
-  }
+  .test-click-blocker { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; }
 
   .test-overlay-sound {
     position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
@@ -635,48 +584,32 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
   .oculto{display:none !important;}
   .volver{display:inline-block;margin-bottom:1rem;font-size:.85rem;color:var(--bronze);text-decoration:none;border-bottom:1px solid var(--bronze);cursor:pointer;letter-spacing:.04em;font-family:'DM Sans', sans-serif;}
 
-  /* Carrusel Hero Banner Fluido y Proporcional */
+  /* Carrusel Hero Banner & Controles agrupados correctamente dentro del hero */
   .carousel-container { 
     position: relative; 
     width: 100%; 
-    aspect-ratio: 4 / 5; /* Proporción exacta para celular (1080 x 1350) */
+    aspect-ratio: 4 / 5; 
     overflow: hidden; 
     background-color: var(--onyx-2);
   }
 
   @media (min-width: 768px) {
-    .carousel-container {
-      aspect-ratio: 16 / 9; /* Proporción exacta para PC (1920 x 1080) */
-    }
+    .carousel-container { aspect-ratio: 16 / 9; }
   }
 
   .slide { 
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%; 
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
   }
   
-  .slide.active { 
-    opacity: 1;
-    visibility: visible;
-  }
+  .slide.active { opacity: 1; visibility: visible; }
+  .slide img, .slide picture { width: 100%; height: 100%; display: block; }
+  .slide img { object-fit: cover; }
 
-  .slide img, .slide picture {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-
-  .slide img {
-    object-fit: cover;
-  }
-
-  /* Botones del carrusel intactos */
   .carousel-btn { 
     position: absolute; 
     top: 50%; 
@@ -691,9 +624,7 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     border-radius: 4px;
     transition: background 0.2s ease;
   }
-  .carousel-btn:hover {
-    background: rgba(0, 0, 0, 0.8);
-  }
+  .carousel-btn:hover { background: rgba(0, 0, 0, 0.8); }
   .carousel-btn.prev { left: 10px; }
   .carousel-btn.next { right: 10px; }
   
@@ -707,22 +638,15 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     z-index: 10; 
   }
   .dot { 
-    width: 10px; 
-    height: 10px; 
+    width: 10px; height: 10px; 
     background: rgba(255, 255, 255, 0.5); 
     border-radius: 50%; 
     cursor: pointer; 
     transition: all 0.3s ease;
   }
-  .dot.active { 
-    background: var(--bronze, #c5a059); 
-    width: 25px; 
-    border-radius: 10px; 
-  }
-  
+  .dot.active { background: var(--bronze, #c5a059); width: 25px; border-radius: 10px; }
 </style>
 
-<!-- Favicon oficial para la pestaña y buscadores -->
 <link rel="icon" type="image/png" href="imagenes/sitio/logo.png">
 <link rel="apple-touch-icon" href="imagenes/sitio/logo.png">
 </head>
@@ -731,7 +655,6 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
 <div class="promo">DOMICILIOS Y ENVÍOS GRATIS A TODA COLOMBIA</div>
 
 <nav class="wrap" id="nav-principal">
-  <!-- 1. Solo el logo (se eliminó la etiqueta <span> con el texto) -->
   <div class="brandmark" onclick="verInicio()" style="cursor:pointer;">
     <img id="logo-img" src="imagenes/sitio/logo.png" alt="Fortezza Perfums" decoding="async" onerror="this.style.display='none'">
   </div>
@@ -746,7 +669,6 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
       <a href="#" onclick="verSoloTestimonios();return false;">Testimonios</a>
     </div>
 
-    <!-- 2. Lupa minimalista estilo icono desplegable -->
     <div class="nav-search-box">
       <button class="search-toggle-btn" onclick="toggleBuscadorNav(event)" aria-label="Buscar">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -757,7 +679,6 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
       <input id="buscador-global" class="nav-search-input" type="text" placeholder="Buscar..." oninput="buscarGlobal(this.value)">
     </div>
 
-    <!-- 3. Ícono de Bolsa de Carrito en la Navegación -->
     <button class="cart-toggle-btn" onclick="toggleCarrito()" aria-label="Carrito de Compras">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
@@ -771,7 +692,6 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
   </div>
 </nav>
 
-<!-- PANEL LATERAL FLOTANTE DEL CARRITO -->
 <div class="cart-overlay" id="cart-overlay" onclick="toggleCarrito()"></div>
 <div class="cart-drawer" id="cart-drawer">
   <div class="cart-header">
@@ -782,7 +702,7 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     <div class="empty">Tu carrito está vacío.</div>
   </div>
 
-<div class="cart-footer">
+  <div class="cart-footer">
     <div style="font-size: 0.8rem; color: var(--stone); margin-bottom: 0.4rem; text-align: left; font-family: 'DM Sans', sans-serif;">
       <strong style="color: var(--bronze);">ENVÍO GRATIS</strong><br>
       Ingresa la ciudad hacia donde llegaría tu pedido:
@@ -808,6 +728,7 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
   <a href="#" onclick="verSoloTestimonios();toggleMenuMovil();return false;">Testimonios</a>
 </div>
 
+<!-- SECCIÓN HERO (CONTENEDOR CORRECTAMENTE ORGANIZADO) -->
 <section class="hero">
   <div class="carousel-container" id="hero-carousel">
     
@@ -843,9 +764,7 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
       </picture>
     </div>
 
-  </div>
-</section>
-    
+    <!-- Controles de flechas y puntos DENTRO del carrusel para que se oculten correctamente -->
     <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
     <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
     
@@ -869,7 +788,6 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
 
   <div class="volver oculto" id="volver-inicio-bar" onclick="verInicio()" style="margin-top:1.5rem;">← Volver al inicio</div>
 
-  <!-- 1. LANZAMIENTOS -->
   <section class="section" id="recomendados">
     <div class="section-head"><h2>Nuevos lanzamientos</h2></div>
     <div class="horizontal-scroll-wrapper">
@@ -881,7 +799,6 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     </div>
   </section>
 
-  <!-- 2. CARRUSEL DE MARCAS EN INICIO -->
   <section class="section" id="marcas-inicio">
     <div class="section-head"><h2>Nuestras Marcas</h2></div>
     <div class="brand-carousel-wrapper">
@@ -889,7 +806,6 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     </div>
   </section>
   
-<!-- SECCIÓN DEDICADA DE MARCAS -->
   <section class="section oculto" id="marcas">
     <div class="breadcrumbs" id="marcas-breadcrumbs" style="margin-bottom: 1rem;"></div>
     <div class="section-head"><h2>Compra por marca</h2></div>
@@ -941,11 +857,10 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
     </div>
   </section>
 
-  <!-- 3. TESTIMONIOS -->
   <section class="section" id="testimonios">
     <div class="section-head"><h2>Experiencias en Fortezza Perfums</h2></div>
     
-    <div class="test-grid" id="test-grid"><div class="empty">Cargando testimonios...</div></div>
+    <div class="test-grid" id="test-grid"><div class="empty">Próximamente testimonios...</div></div>
 
     <div class="stats-section" id="stats-bloque" style="margin-top:2rem;">
       <div class="stats-grid">
@@ -1009,11 +924,12 @@ const FOTO_RESPALDO = "https://images.unsplash.com/photo-1541643600914-78b084683
 
 let CATALOGO = [];
 let TESTIMONIOS = [];
-let CARRITO = JSON.parse(localStorage.getItem('fortezza_cart')) || []; // <--- Debe quedar así
+let CARRITO = JSON.parse(localStorage.getItem('fortezza_cart')) || [];
 let filtroCategoria = "Todas";
 let filtroMarca = "Todas";
 let filtroEtiqueta = "Todas";
 let filtroGenero = "Todas";
+let filtroBannerActual = "";
 let seccionAnterior = "inicio";
 let slideIndex = 0;
 let carouselTimer = null;
@@ -1042,7 +958,6 @@ function parseCSV(texto) {
     }
   }
   if (campo !== "" || fila.length) { fila.push(campo); filas.push(fila); }
-
   if (filas.length === 0) return [];
 
   const sinTildes = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -1076,7 +991,6 @@ function normalizarProducto(item) {
     etiqueta: getVal(["etiqueta", "tag", "estado"]),
     descripcion: getVal(["descripcion", "description", "desc"]),
     imagen: imgUnica || FOTO_RESPALDO,
-    // NUEVA LÍNEA: Lee el banner asignado en Google Sheets
     banner: getVal(["banner", "coleccion", "etiqueta_banner"]) || ""
   };
 }
@@ -1087,7 +1001,6 @@ function linkWhatsapp(nombre, precio) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 }
 
-/* LÓGICA DEL CARRITO DE COMPRAS FLOTANTE */
 function toggleCarrito() {
   document.getElementById("cart-overlay").classList.toggle("open");
   document.getElementById("cart-drawer").classList.toggle("open");
@@ -1140,7 +1053,6 @@ function actualizarCarritoUI() {
   const cartBadge = document.getElementById("cart-badge");
   const cartTotalPrice = document.getElementById("cart-total-price");
 
-  // 👉 ESTA LÍNEA ES LA QUE GUARDA EN EL NAVEGADOR
   localStorage.setItem('fortezza_cart', JSON.stringify(CARRITO));
 
   const totalItems = CARRITO.reduce((acc, item) => acc + item.cantidad, 0);
@@ -1229,57 +1141,42 @@ function mostrarSoloSeccion(idMostrar) {
   window.scrollTo({top:0, behavior:"instant"});
 }
 
-function verColeccion(tipo, valor) {
-  seccionAnterior = "catalogo";
-  filtroCategoria = "Todas";
+function filtrarPorBanner(idBanner) {
+  filtroBannerActual = idBanner;
   filtroMarca = "Todas";
+  filtroCategoria = "Todas";
+  filtroGenero = "Todas";
   filtroEtiqueta = "Todas";
   
-  if (tipo === "categoria") filtroCategoria = valor;
-  if (tipo === "marca") filtroMarca = valor;
-  if (tipo === "etiqueta") filtroEtiqueta = valor;
-  
-  renderMarcas();
+  const buscador = document.getElementById("buscador");
+  if (buscador) buscador.value = "";
+
+  const heroSection = document.querySelector(".hero");
+  if (heroSection) heroSection.style.display = "none";
+
+  mostrarSoloSeccion("catalogo");
   renderCatalogo();
-  mostrarSoloSeccion("catalogo");
 }
 
-function verCatalogoCompleto() {
-  seccionAnterior = "catalogo";
-  filtroCategoria = "Todas"; filtroMarca = "Todas"; filtroEtiqueta = "Todas"; filtroGenero = "Todas";
-  const elGen = document.getElementById("filtro-genero");
-  if (elGen) elGen.value = "Todas";
-  const elBusc = document.getElementById("buscador");
-  if (elBusc) elBusc.value = "";
-  renderMarcas(); renderCatalogo();
-  mostrarSoloSeccion("catalogo");
+function limpiarFiltroBanner() {
+  filtroBannerActual = "";
 }
-
-function verSoloMarcas() { 
-  seccionAnterior = "marcas"; 
-  
-  // Forzamos la recarga y generación de los botones de marcas
-  renderMarcas(); 
-
-  const breadcrumbsEl = document.getElementById("marcas-breadcrumbs");
-  if (breadcrumbsEl) {
-    breadcrumbsEl.innerHTML = `<a href="#" onclick="verInicio(); return false;">Inicio</a> / <span>Marcas</span>`;
-  }
-  
-  mostrarSoloSeccion("marcas"); 
-}
-  
-function verSoloTestimonios() { seccionAnterior = "testimonios"; mostrarSoloSeccion("testimonios"); }
 
 function verInicio() {
   seccionAnterior = "inicio";
+  filtroBannerActual = ""; // Reseteamos el filtro de banner al volver al inicio
   filtroCategoria = "Todas";
   filtroMarca = "Todas";
   filtroEtiqueta = "Todas";
   filtroGenero = "Todas";
+  
   const elGen = document.getElementById("filtro-genero");
   if (elGen) elGen.value = "Todas";
   
+  // Mostramos nuevamente el carrusel de inicio asegurando display block
+  const heroSection = document.querySelector(".hero");
+  if (heroSection) heroSection.style.display = "flex";
+
   SECCIONES.forEach(id => {
     const el = id === "hero" ? document.querySelector(".hero") : document.getElementById(id);
     if (el) {
@@ -1294,9 +1191,6 @@ function verInicio() {
   renderRecomendados();
   window.scrollTo({top:0, behavior:"smooth"});
 }
-
-  const heroSection = document.querySelector(".hero");
-if (heroSection) heroSection.style.display = "block";
 
 function scrollRecomendados(amount) {
   const container = document.getElementById("recomendados-grid");
@@ -1479,7 +1373,6 @@ function verDetalle(nombre) {
 
   document.getElementById("detail-desc").textContent = p.descripcion || "Perfume original de alta fijación.";
   
-  // Botones de la vista de detalle
   const nombreEscapado = p.nombre.replace(/'/g, "\\'");
   document.getElementById("detail-add-cart-btn").onclick = () => agregarAlCarrito(nombreEscapado);
   document.getElementById("detail-wa-btn").href = linkWhatsapp(p.nombre, precioAEnviar);
@@ -1618,17 +1511,13 @@ if (heroContainer) {
 async function cargarDatos() {
   try {
     let csvP, csvT;
-    
-    // Verificamos si tenemos los datos guardados localmente
     const localP = localStorage.getItem('fortezza_cache_perfumes');
     const localT = localStorage.getItem('fortezza_cache_testimonios');
 
     if (localP && localT) {
-      // Si ya están guardados, los usamos al instante ⚡
       csvP = localP;
       csvT = localT;
     } else {
-      // Si es la primera vez, los descargamos de Google Sheets
       const [resP, resT] = await Promise.all([
         fetch(SHEET_PERFUMES),
         fetch(SHEET_TESTIMONIOS)
@@ -1637,7 +1526,6 @@ async function cargarDatos() {
       csvP = await resP.text();
       csvT = await resT.text();
 
-      // Los guardamos permanentemente en el navegador
       localStorage.setItem('fortezza_cache_perfumes', csvP);
       localStorage.setItem('fortezza_cache_testimonios', csvT);
     }
@@ -1666,60 +1554,29 @@ async function cargarDatos() {
   }
 }
 
-  
 window.addEventListener("DOMContentLoaded", () => {
   cargarDatos();
   startCarousel();
-  actualizarCarritoUI(); // <--- Añade esto aquí para que dibuje lo guardado al abrir
+  actualizarCarritoUI();
 });
 
-// --- Función para abrir/cerrar la lupa del buscador ---
-  function toggleBuscadorNav(event) {
-    event.stopPropagation();
-    const searchBox = document.querySelector('.nav-search-box');
-    const searchInput = document.getElementById('buscador-global');
-    
-    searchBox.classList.toggle('activa');
-    if (searchBox.classList.contains('activa')) {
-      searchInput.focus();
-    }
+function toggleBuscadorNav(event) {
+  event.stopPropagation();
+  const searchBox = document.querySelector('.nav-search-box');
+  const searchInput = document.getElementById('buscador-global');
+  
+  searchBox.classList.toggle('activa');
+  if (searchBox.classList.contains('activa')) {
+    searchInput.focus();
   }
-
-  // Cierra el buscador si el usuario hace clic en cualquier otra parte de la pantalla
-  document.addEventListener('click', function(e) {
-    const searchBox = document.querySelector('.nav-search-box');
-    if (searchBox && !searchBox.contains(e.target)) {
-      searchBox.classList.remove('activa');
-    }
-  });
-
-let filtroBannerActual = "";
-
-function filtrarPorBanner(idBanner) {
-  filtroBannerActual = idBanner; // Ejemplo: "banner1", "banner2"
-  
-  // Reseteamos los demás filtros para que no interfieran
-  filtroMarca = "Todas";
-  filtroCategoria = "Todas";
-  filtroGenero = "Todas";
-  filtroEtiqueta = "Todas";
-  
-  const buscador = document.getElementById("buscador");
-  if (buscador) buscador.value = ""; // Limpiamos el buscador
-
-  // OCULTAR EL CARRUSEL DE BANNERS PARA QUE NO SE VEAN LAS FLECHAS
-  const heroSection = document.querySelector(".hero");
-  if (heroSection) heroSection.style.display = "none";
-
-  // Mostramos el catálogo y renderizamos los productos
-  mostrarSoloSeccion("catalogo");
-  renderCatalogo();
 }
 
-function limpiarFiltroBanner() {
-  filtroBannerActual = "";
-}
-  
+document.addEventListener('click', function(e) {
+  const searchBox = document.querySelector('.nav-search-box');
+  if (searchBox && !searchBox.contains(e.target)) {
+    searchBox.classList.remove('activa');
+  }
+});
 </script>
 </body>
 </html>
