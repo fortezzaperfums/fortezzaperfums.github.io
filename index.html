@@ -810,30 +810,41 @@ nav.wrap{display:flex;justify-content:space-between;align-items:center;padding-t
 
 <section class="hero">
   <div class="carousel-container" id="hero-carousel">
-    <div class="slide active">
+    
+    <!-- BANNER 1 -->
+    <div class="slide active" onclick="filtrarPorBanner('banner1')" style="cursor: pointer;">
       <picture>
         <source media="(max-width: 768px)" srcset="imagenes/banners/banner_mobile.png">
         <img class="hero-img" src="imagenes/banners/banner.png" alt="Banner 1" decoding="async">
       </picture>
     </div>
-    <div class="slide">
+
+    <!-- BANNER 2 -->
+    <div class="slide" onclick="filtrarPorBanner('banner2')" style="cursor: pointer;">
       <picture>
         <source media="(max-width: 768px)" srcset="imagenes/banners/banner2_mobile.png">
         <img class="hero-img" src="imagenes/banners/banner2.png" alt="Banner 2" loading="lazy" decoding="async">
       </picture>
     </div>
-    <div class="slide">
+
+    <!-- BANNER 3 -->
+    <div class="slide" onclick="filtrarPorBanner('banner3')" style="cursor: pointer;">
       <picture>
         <source media="(max-width: 768px)" srcset="imagenes/banners/banner3_mobile.png">
         <img class="hero-img" src="imagenes/banners/banner3.jpg.png" alt="Banner 3" loading="lazy" decoding="async">
       </picture>
     </div>
-    <div class="slide">
+
+    <!-- BANNER 4 -->
+    <div class="slide" onclick="filtrarPorBanner('banner4')" style="cursor: pointer;">
       <picture>
         <source media="(max-width: 768px)" srcset="imagenes/banners/banner4_mobile.png">
         <img class="hero-img" src="imagenes/banners/banner4.png" alt="Banner 4" loading="lazy" decoding="async">
       </picture>
     </div>
+
+  </div>
+</section>
     
     <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
     <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
@@ -1053,6 +1064,7 @@ function normalizarProducto(item) {
   };
 
   const catVal = getVal(["categoria", "category"]);
+  const imgUnica = getVal(["imagen", "foto", "image", "url", "img"]);
 
   return {
     nombre: getVal(["nombre", "producto", "title", "perfume"]),
@@ -1063,7 +1075,9 @@ function normalizarProducto(item) {
     genero: getVal(["genero", "gender"]) || catVal, 
     etiqueta: getVal(["etiqueta", "tag", "estado"]),
     descripcion: getVal(["descripcion", "description", "desc"]),
-    imagen: getVal(["imagen", "foto", "image", "url", "img"]) || FOTO_RESPALDO
+    imagen: imgUnica || FOTO_RESPALDO,
+    // NUEVA LÍNEA: Lee el banner asignado en Google Sheets
+    banner: getVal(["banner", "coleccion", "etiqueta_banner"]) || ""
   };
 }
 
@@ -1394,41 +1408,33 @@ function renderCatalogo() {
   const containerBreadcrumbs = document.getElementById("catalogo-breadcrumbs");
   if (containerBreadcrumbs) {
     let ruta = `<a href="#" onclick="verInicio(); return false;">Inicio</a>`;
-    
-    // Si se está filtrando por marca, mostramos el acceso directo a "Marcas"
-    if (typeof filtroMarca !== "undefined" && filtroMarca !== "Todas") {
-      ruta += ` / <a href="#" onclick="verSoloMarcas(); return false;">Marcas</a> / <span>${filtroMarca}</span>`;
+    if (filtroBannerActual) {
+      ruta += ` / <span>Colección Exclusiva</span>`;
     } else {
       ruta += ` / <span>Catálogo</span>`;
-      if (typeof filtroGenero !== "undefined" && filtroGenero !== "Todas") {
-        ruta += ` / <span>${filtroGenero}</span>`;
-      }
     }
     containerBreadcrumbs.innerHTML = ruta;
   }
-  
+
   const cont = document.getElementById("catalogo-grid");
   if (!cont) return;
   const q = (document.getElementById("buscador")?.value || "").toLowerCase().trim();
 
   let filtrados = CATALOGO.filter(p => {
+    if (filtroBannerActual) {
+      return (p.banner || "").trim().toLowerCase() === filtroBannerActual.toLowerCase();
+    }
+
     const matchCat = filtroCategoria === "Todas" || p.categoria === filtroCategoria;
     const matchMarca = filtroMarca === "Todas" || p.marca === filtroMarca;
-    const matchEtiq = filtroEtiqueta === "Todas" || (p.etiqueta || "").toLowerCase() === filtroEtiqueta.toLowerCase();
-    
-    const matchGen = filtroGenero === "Todas" || 
-                     (p.genero || "").toLowerCase().includes(filtroGenero.toLowerCase());
-                     
-    const matchBusq = !q || 
-                      p.nombre.toLowerCase().includes(q) || 
-                      p.marca.toLowerCase().includes(q) || 
-                      (p.descripcion && p.descripcion.toLowerCase().includes(q));
+    const matchGen = filtroGenero === "Todas" || (p.genero || "").toLowerCase().includes(filtroGenero.toLowerCase());
+    const matchBusq = !q || p.nombre.toLowerCase().includes(q) || p.marca.toLowerCase().includes(q);
 
-    return matchCat && matchMarca && matchEtiq && matchGen && matchBusq;
+    return matchCat && matchMarca && matchGen && matchBusq;
   });
 
   if (filtrados.length === 0) {
-    cont.innerHTML = `<div class="empty">No se encontraron productos con el filtro aplicado.</div>`;
+    cont.innerHTML = `<div class="empty">No se encontraron productos para esta colección.</div>`;
     return;
   }
 
@@ -1441,15 +1447,13 @@ function renderCatalogo() {
         <div class="card-brand">${p.marca}</div>
         <div class="card-title" title="${p.nombre}">${p.nombre}</div>
         <div class="card-price">
-          ${p.precio_oferta ? `
-            <span style="text-decoration: line-through; color: #ff4d4d; font-size: 0.8em; margin-right: 3px;">$${p.precio}</span> <span>$${p.precio_oferta}</span>
-          ` : (p.precio ? `$${p.precio}` : '')}
+          ${p.precio_oferta ? `<span style="text-decoration: line-through; color: #ff4d4d; font-size: 0.8em; margin-right: 3px;">$${p.precio}</span> <span>$${p.precio_oferta}</span>` : `$${p.precio}`}
         </div>
       </div>
     </div>
   `).join('');
 }
-
+  
 function verDetalle(nombre) {
   const p = CATALOGO.find(item => item.nombre === nombre);
   if (!p) return;
@@ -1685,6 +1689,29 @@ window.addEventListener("DOMContentLoaded", () => {
       searchBox.classList.remove('activa');
     }
   });
+
+let filtroBannerActual = ""; // Almacena el banner activo
+
+function filtrarPorBanner(idBanner) {
+  filtroBannerActual = idBanner; // Ejemplo: "banner1", "banner2"
+  
+  // Reseteamos los demás filtros para que no interfieran
+  filtroMarca = "Todas";
+  filtroCategoria = "Todas";
+  filtroGenero = "Todas";
+  filtroEtiqueta = "Todas";
+  
+  const buscador = document.getElementById("buscador");
+  if (buscador) buscador.value = ""; // Limpiamos el buscador
+
+  renderCatalogo();
+  mostrarSoloSeccion("catalogo");
+}
+
+function limpiarFiltroBanner() {
+  filtroBannerActual = "";
+}
+  
 </script>
 </body>
 </html>
