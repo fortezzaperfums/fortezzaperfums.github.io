@@ -1160,13 +1160,9 @@ function filtrarPorBanner(idBanner) {
   renderCatalogo();
 }
 
-function limpiarFiltroBanner() {
-  filtroBannerActual = "";
-}
-
 function verInicio() {
   seccionAnterior = "inicio";
-  filtroBannerActual = ""; // Reseteamos el filtro de banner al volver al inicio
+  filtroBannerActual = "";
   filtroCategoria = "Todas";
   filtroMarca = "Todas";
   filtroEtiqueta = "Todas";
@@ -1175,7 +1171,7 @@ function verInicio() {
   const elGen = document.getElementById("filtro-genero");
   if (elGen) elGen.value = "Todas";
   
-  // Mostramos nuevamente el carrusel de inicio asegurando display block
+  // Vuelve a encender la sección del hero/banner de inicio
   const heroSection = document.querySelector(".hero");
   if (heroSection) heroSection.style.display = "flex";
 
@@ -1189,7 +1185,10 @@ function verInicio() {
       }
     }
   });
-  document.getElementById("volver-inicio-bar").classList.add("oculto");
+  
+  const volverBar = document.getElementById("volver-inicio-bar");
+  if (volverBar) volverBar.classList.add("oculto");
+
   renderRecomendados();
   window.scrollTo({top:0, behavior:"smooth"});
 }
