@@ -1171,9 +1171,9 @@ function verInicio() {
   const elGen = document.getElementById("filtro-genero");
   if (elGen) elGen.value = "Todas";
   
-  // Vuelve a encender la sección del hero/banner de inicio
+  // Reseteamos el estilo visual del hero para que vuelva a mostrarse
   const heroSection = document.querySelector(".hero");
-  if (heroSection) heroSection.style.display = "flex";
+  if (heroSection) heroSection.style.display = ""; 
 
   SECCIONES.forEach(id => {
     const el = id === "hero" ? document.querySelector(".hero") : document.getElementById(id);
