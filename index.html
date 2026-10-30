@@ -1580,8 +1580,9 @@ if (heroContainer) {
 async function cargarDatos() {
   try {
     let csvP, csvT;
-    const localP = localStorage.getItem('fortezza_cache_perfumes');
-    const localT = localStorage.getItem('fortezza_cache_testimonios');
+    // Cambiamos las claves para forzar la lectura de datos nuevos
+    const localP = localStorage.getItem('fortezza_cache_perfumes_v2');
+    const localT = localStorage.getItem('fortezza_cache_testimonios_v2');
 
     if (localP && localT) {
       csvP = localP;
@@ -1589,15 +1590,17 @@ async function cargarDatos() {
     } else {
       const [resP, resT] = await Promise.all([
         fetch(SHEET_PERFUMES),
-        fetch(SHEET_TESTIMONIOS)
+        fetch(SHEET_TESTIMONIOS]
       ]);
 
       csvP = await resP.text();
       csvT = await resT.text();
 
-      localStorage.setItem('fortezza_cache_perfumes', csvP);
-      localStorage.setItem('fortezza_cache_testimonios', csvT);
+      // Guardamos con la nueva versión
+      localStorage.setItem('fortezza_cache_perfumes_v2', csvP);
+      localStorage.setItem('fortezza_cache_testimonios_v2', csvT);
     }
+    // ... resto del código ...
 
     const rawCat = parseCSV(csvP);
     CATALOGO = rawCat.map(normalizarProducto).filter(p => p.nombre);
