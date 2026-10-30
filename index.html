@@ -1590,7 +1590,7 @@ async function cargarDatos() {
     } else {
       const [resP, resT] = await Promise.all([
         fetch(SHEET_PERFUMES),
-        fetch(SHEET_TESTIMONIOS]
+        fetch(SHEET_TESTIMONIOS)
       ]);
 
       csvP = await resP.text();
@@ -1600,7 +1600,6 @@ async function cargarDatos() {
       localStorage.setItem('fortezza_cache_perfumes_v2', csvP);
       localStorage.setItem('fortezza_cache_testimonios_v2', csvT);
     }
-    // ... resto del código ...
 
     const rawCat = parseCSV(csvP);
     CATALOGO = rawCat.map(normalizarProducto).filter(p => p.nombre);
